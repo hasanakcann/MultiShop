@@ -65,6 +65,5 @@ https://medium.com/software-development-turkey/micro-orm-lerin-kral%C4%B1-dapper
 * SignalR
 * Ajax
 
-## Topoloji
+![image](https://github.com/user-attachments/assets/db402f27-e8fb-4157-a739-fb69c52e0420)
 
-![ecommerce_diagram](https://github.com/user-attachments/assets/a38f04bb-5bcd-4bfb-9d5d-f167b570c05e)
