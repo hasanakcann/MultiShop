@@ -2,10 +2,10 @@
 
 - [Mikroservis Mimarisi](#mikroservis-mimarisi)
 - [Api Gateway](#api-gateway)
-- [MongoDb](#mongodb)
-- [AutoMapper](#automapper)
 - [Asenkron Programlama](#asenkron-programlama)
+- [MongoDb](#mongodb)
 - [Dto (Data Transfer Object)](#dto-data-transfer-object)
+- [AutoMapper](#automapper)
 - [Singleton, Scoped ve Transient Kavramları](#singleton-scoped-ve-transient-kavramları)
 
 ## Mikroservis Mimarisi
@@ -28,7 +28,15 @@ Mikro servis mimarisi, bir uygulamanın küçük, bağımsız çalışan servisl
 
 ![image](https://github.com/user-attachments/assets/12c20149-f889-4801-9d87-3f0205b7b53e)
 
+## Asenkron Programlama
+
+Asenkron programlama, özellikle uzun süren işlemler sırasında (veritabanı sorgusu, dosya okuma, HTTP isteği vs.) uygulamanın bloklanmasını önlemek için kullanılır. Temel amaç, işlemin tamamlanmasını beklerken uygulamanın yanıt vermeye devam etmesini sağlamaktır.
+
+![image](https://github.com/user-attachments/assets/0845f8f5-f129-4f8e-84dd-3009b0298b2c)
+
 ## MongoDb
+
+MongoDb, açık kaynaklı bir NoSQL (Not Only SQL) veritabanıdır. Doküman tabanlı bir veritabanı sistemidir ve verileri JSON-benzeri, yani BSON (Binary JSON) formatında saklar. Bu, MongoDb’nin yapısal olmayan veya yarı yapısal verileri çok verimli bir şekilde depolamasına olanak tanır. MongoDb, SQL tabanlı veritabanlarından farklı olarak, veritabanı tabloları yerine koleksiyonlar kullanır ve her bir koleksiyon içinde çok daha esnek veri yapıları bulunabilir.
 
 ![image](https://github.com/user-attachments/assets/dc44a259-9192-43d0-ac6b-46542f8c90cf)
 
@@ -40,21 +48,15 @@ Bu öznitelik, belirli bir özelliğin MongoDb belgesine dönüştürülürken v
 [BsonIgnore] kullanmazsanız, Category özelliği MongoDb belgesine dönüştürülürken dikkate alınacak ve belgelere dahil edilecektir. Ancak, Category özelliği veri tabanında bir alanı temsil etmiyor, bu nedenle MongoDb'de gereksiz bir alana dönüşecektir. 
 Bu durum, gereksiz veri saklamak ve gereksiz bellek kullanımına neden olabilir. Ayrıca, Category özelliğinin değerlerini güncelleme veya sorgulama gibi işlemleri gerçekleştirmek istediğinizde, MongoDb tarafında ekstra iş yükü oluşturabilir.
 
+## Dto (Data Transfer Object)
+
+DTO(Data Transfer Object) Entity yerine kullanılır. Veri alış verişi için Entity'leri kullanırsak güvenlik zafiyeti olur password gibi kolonlar taşınmak istenmeyebilir veya bazı kolonların gizlenmesi gerekebilir. Gizlenmesi gerektiği durumda DTO'larda gizlenmek istenen kolonlar yer almaz. DTO'larda farklı tablolardan gelen JOIN'lenmiş verilerde olabilir. JOIN için farklı nesnelerdeki(Entity)'lerin farklı kolonları DTO'ya yansıtılabilir. DTO'ya Complex Type'de denilmektedir. Entity'den DTO'ya - DTO'dan ise Entity'ye dönüşüm için elle eşlemek gerekir. Elle eşlemek zor ve zahmetli olduğu için .NET'de AutoMapper kütüphanesi kullanılır.
+
 ## AutoMapper
 
 - Mapping işlemi contructor içerisinde gerçekleşir. Mapping işlemi entitylerden nesne örnekleri oluşturmak yerine (new ile örneklemek yerine), entitylerin propertyleri ile dto daki propertylerin eşleştirilmesini sağlar. AutoMapper kullanarak DTO sınıflarını oluşturduğumuzda, client tarafında göstermek istediğimiz alanları sınırlandırarak, gerçek nesnemizin güvenliğini sağlamış oluruz.
 
 ![image](https://github.com/user-attachments/assets/c10ba3f7-e843-40b0-9985-d98a3af26a54)
-
-## Asenkron Programlama
-
-Asenkron programlama, özellikle uzun süren işlemler sırasında (veritabanı sorgusu, dosya okuma, HTTP isteği vs.) uygulamanın bloklanmasını önlemek için kullanılır. Temel amaç, işlemin tamamlanmasını beklerken uygulamanın yanıt vermeye devam etmesini sağlamaktır.
-
-![image](https://github.com/user-attachments/assets/0845f8f5-f129-4f8e-84dd-3009b0298b2c)
-
-## Dto (Data Transfer Object)
-
-DTO(Data Transfer Object) Entity yerine kullanılır. Veri alış verişi için Entity'leri kullanırsak güvenlik zafiyeti olur password gibi kolonlar taşınmak istenmeyebilir veya bazı kolonların gizlenmesi gerekebilir. Gizlenmesi gerektiği durumda DTO'larda gizlenmek istenen kolonlar yer almaz. DTO'larda farklı tablolardan gelen JOIN'lenmiş verilerde olabilir. JOIN için farklı nesnelerdeki(Entity)'lerin farklı kolonları DTO'ya yansıtılabilir. DTO'ya Complex Type'de denilmektedir. Entity'den DTO'ya - DTO'dan ise Entity'ye dönüşüm için elle eşlemek gerekir. Elle eşlemek zor ve zahmetli olduğu için .NET'de AutoMapper kütüphanesi kullanılır.
 
 ## Singleton, Scoped ve Transient Kavramları
 
@@ -76,6 +78,6 @@ Her istek geldiğinde istek başına bir tane nesne üretilir.
 Her seferinde yeni nesne üretildiği için performansı olumsuz etkileyebilir. 
 İstek tamamlanmadan başka bir istek gelirse yenisi yaratılır eskisi verilmez. Transient ile Scoped farkı budur.
 
-![image](https://github.com/user-attachments/assets/9a2c9d15-b339-4e47-8ea9-2e4158c31558)
+![image](https://github.com/user-attachments/assets/e7e1c8c5-5b23-4dd0-b4ef-bf01e44a7004)
 
 ![image](https://github.com/user-attachments/assets/619aebab-1556-494a-ad5d-9bc54ce74792)
