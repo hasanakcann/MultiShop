@@ -1,69 +1,84 @@
+![image](https://github.com/user-attachments/assets/db402f27-e8fb-4157-a739-fb69c52e0420)
+
+- [Mikroservis Mimarisi](#mikroservis-mimarisi)
+- [API Gateway](#api-gateway)
+- [Catalog Mikro Servisi](#catalog-mikro-servisi)
+- [Discount Mikro Servisi](#discount-mikro-servisi)
+
 ## Mikroservis Mimarisi
 
-**Mikroservis Makale**: 
+Mikro servis mimarisi, bir uygulamanın küçük, bağımsız çalışan servisler (hizmetler) olarak geliştirilmesini ve bu servislerin birbiriyle genellikle HTTP/REST, gRPC veya mesaj kuyrukları (RabbitMQ, Kafka) gibi hafif iletişim protokolleri üzerinden haberleşmesini sağlayan mimari yaklaşımdır. Her mikro servis belirli bir işlevi yerine getirir ve genellikle bağımsız olarak dağıtılabilir, test edilebilir ve geliştirilebilir.
 
-https://medium.com/@furkanbegen/mikroservis-mimarisi-nedir-ve-avantajlar%C4%B1-nelerdir-1369175cc4e6
+![image](https://github.com/user-attachments/assets/6111c5a0-e7e3-4173-9187-fdc46cc36691)
+
+![image](https://github.com/user-attachments/assets/cc34de45-756b-4aef-8c32-41ce3b367192)
+
+![image](https://github.com/user-attachments/assets/8776da6f-a77e-4cba-acb3-0dc22d13ceae)
+
+![image](https://github.com/user-attachments/assets/6bd2f7a4-6929-4390-9846-77f9a22fb418)
+
+## Api Gateway
+
+![image](https://github.com/user-attachments/assets/7c022acf-b5d0-41f6-bd1c-cecbf02f1310)
+
+![image](https://github.com/user-attachments/assets/6aa32cf3-fd08-4fa2-891f-989b24fce24e)
+
+![image](https://github.com/user-attachments/assets/12c20149-f889-4801-9d87-3f0205b7b53e)
 
 ## Catalog Mikro Servisi 
 
 ASP.NET Core Web API projesi oluşturulmuştur.
 
-**MongoDB Makale:** 
+**MongoDB:** 
 
-https://medium.com/@berkekurnaz/nedir-bu-mongodb-994a94a9d1df
+![image](https://github.com/user-attachments/assets/dc44a259-9192-43d0-ac6b-46542f8c90cf)
 
-**Auto Mapper Makale:** 
+- MongoDb ilişkisel veritabanı olmadığı için id string tutulur ve guid değer atanır.
+- [BsonId] -> id olduğu belirtir.
+- [BsonRepresentation(BsonType.ObjectId)] -> benzersiz olduğunu belirtir.
+- [BsonIgnore] MongoDb için belge ve nesne eşleştirme işlemlerinde kullanılan bir özniteliktir. 
+Bu öznitelik, belirli bir özelliğin MongoDb belgesine dönüştürülürken veya belgeden nesneye dönüştürülürken dikkate alınmamasını sağlar, yani MongoDb tarafında depolanmaz veya yüklenmez. 
+[BsonIgnore] kullanmazsanız, Category özelliği MongoDb belgesine dönüştürülürken dikkate alınacak ve belgelere dahil edilecektir. Ancak, Category özelliği veri tabanında bir alanı temsil etmiyor, bu nedenle MongoDb'de gereksiz bir alana dönüşecektir. 
+Bu durum, gereksiz veri saklamak ve gereksiz bellek kullanımına neden olabilir. Ayrıca, Category özelliğinin değerlerini güncelleme veya sorgulama gibi işlemleri gerçekleştirmek istediğinizde, MongoDb tarafında ekstra iş yükü oluşturabilir.
 
-https://medium.com/@ecanyuksel/automapper-nedir-db05f85facd2
+**Auto Mapper:** 
 
-**Asenkron Programlama Makale:** 
+- Mapping işlemi contructor içerisinde gerçekleşir. Mapping işlemi entitylerden nesne örnekleri oluşturmak yerine (new ile örneklemek yerine), entitylerin propertyleri ile dto daki propertylerin eşleştirilmesini sağlar. AutoMapper kullanarak DTO sınıflarını oluşturduğumuzda, client tarafında göstermek istediğimiz alanları sınırlandırarak, gerçek nesnemizin güvenliğini sağlamış oluruz.
 
-https://atarikguney.medium.com/asenkron-asynchronous-programlama-nedir-296230121f9d
+![image](https://github.com/user-attachments/assets/c10ba3f7-e843-40b0-9985-d98a3af26a54)
+
+**Asenkron Programlama:** 
+
+Asenkron programlama, özellikle uzun süren işlemler sırasında (veritabanı sorgusu, dosya okuma, HTTP isteği vs.) uygulamanın bloklanmasını önlemek için kullanılır. Temel amaç, işlemin tamamlanmasını beklerken uygulamanın yanıt vermeye devam etmesini sağlamaktır.
+
+![image](https://github.com/user-attachments/assets/0845f8f5-f129-4f8e-84dd-3009b0298b2c)
+
+**Dto (Data Transfer Object):** 
+
+DTO(Data Transfer Object) Entity yerine kullanılır. Veri alış verişi için Entity'leri kullanırsak güvenlik zafiyeti olur password gibi kolonlar taşınmak istenmeyebilir veya bazı kolonların gizlenmesi gerekebilir. Gizlenmesi gerektiği durumda DTO'larda gizlenmek istenen kolonlar yer almaz. DTO'larda farklı tablolardan gelen JOIN'lenmiş verilerde olabilir. JOIN için farklı nesnelerdeki(Entity)'lerin farklı kolonları DTO'ya yansıtılabilir. DTO'ya Complex Type'de denilmektedir. Entity'den DTO'ya - DTO'dan ise Entity'ye dönüşüm için elle eşlemek gerekir. Elle eşlemek zor ve zahmetli olduğu için .NET'de AutoMapper kütüphanesi kullanılır.
+
+**Singleton, Scoped ve Transient:**
+
+.NET’te Singleton, Scoped ve Transient kavramları, uygulama içerisindeki servislerin ömür süresini (lifetime) tanımlar. Dependency Injection (DI) kullanılırken bu yaşam süreleri, nesnelerin ne zaman oluşturulacağı ve ne kadar süreyle kullanılacağı üzerinde tam kontrol sağlar.
+
+* Singleton Nedir? 
+Singleton bir tasarım şablonudur. Bellekte bir nesneden sadece bir tane olabilir. 
+Her istek geldiğinde o nesne(aynı nesne) verilir. Program sonlanana kadar bellekte varlığını korur.
+
+* Scoped Nedir?
+Scoped bir nevi Prototype tasarım şablonudur. 
+AddScoped nesne örneği oluşturur. Her istek geldiğinde istek başına bir tane nesne üretilir. 
+Her seferinde yeni nesne üretildiği için performansı olumsuz etkileyebilir. 
+İstek tamamlanmadan başka bir istek gelirse yenisi yaratılmadan zaten var olan verilir.
+
+* Transient Nedir? 
+Transient bir nevi Prototype tasarım şablonudur. 
+Her istek geldiğinde istek başına bir tane nesne üretilir. 
+Her seferinde yeni nesne üretildiği için performansı olumsuz etkileyebilir. 
+İstek tamamlanmadan başka bir istek gelirse yenisi yaratılır eskisi verilmez. Transient ile Scoped farkı budur.
+
+![image](https://github.com/user-attachments/assets/9a2c9d15-b339-4e47-8ea9-2e4158c31558)
+
+![image](https://github.com/user-attachments/assets/619aebab-1556-494a-ad5d-9bc54ce74792)
 
 ## Discount Mikro Servisi
-
-**Dapper Makale:** 
-
-https://medium.com/software-development-turkey/micro-orm-lerin-kral%C4%B1-dapper-nedir-ec5838b115ac
-
-## Kurulumlar:
-* Visual Studio 2022
-* MongoDb
-* MSSQL Server
-* Docker
-* Portainer
-* DBeaver
-* Postman
-
-## Kullanılan Teknolojiler - Paketler - Tasarım Desenleri - Mimari Yaklaşımlar
-* .Net 8.0
-* Redis
-* Dapper
-* Docker
-* MongoDB
-* PostgreSQL
-* MSSQL
-* SQLLite
-* Google Drive Entegreli Fotoğraf Yükleme
-* Identity Server
-* Api Gateway
-* Ocelot Gateway
-* Postman
-* Swagger
-* Onion Architecture
-* N-Tier Architecture
-* CQRS Design Pattern
-* Mediator Design Pattern
-* Repository Design Pattern
-* AspNet Core Api
-* Api Consume
-* Rapid Api
-* Authentication
-* Authorization
-* Json Web Token
-* JWT Bearer
-* SignalR
-* Ajax
-
-![image](https://github.com/user-attachments/assets/db402f27-e8fb-4157-a739-fb69c52e0420)
-
