@@ -1,9 +1,12 @@
 ![image](https://github.com/user-attachments/assets/db402f27-e8fb-4157-a739-fb69c52e0420)
 
 - [Mikroservis Mimarisi](#mikroservis-mimarisi)
-- [API Gateway](#api-gateway)
-- [Catalog Mikro Servisi](#catalog-mikro-servisi)
-- [Discount Mikro Servisi](#discount-mikro-servisi)
+- [Api Gateway](#api-gateway)
+- [MongoDb](#mongodb)
+- [AutoMapper](#automapper)
+- [Asenkron Programlama](#asenkron-programlama)
+- [Dto (Data Transfer Object)](#dto-data-transfer-object)
+- [Singleton, Scoped ve Transient Kavramları](#singleton-scoped-ve-transient-kavramları)
 
 ## Mikroservis Mimarisi
 
@@ -25,11 +28,7 @@ Mikro servis mimarisi, bir uygulamanın küçük, bağımsız çalışan servisl
 
 ![image](https://github.com/user-attachments/assets/12c20149-f889-4801-9d87-3f0205b7b53e)
 
-## Catalog Mikro Servisi 
-
-ASP.NET Core Web API projesi oluşturulmuştur.
-
-**MongoDB:** 
+## MongoDb
 
 ![image](https://github.com/user-attachments/assets/dc44a259-9192-43d0-ac6b-46542f8c90cf)
 
@@ -41,23 +40,23 @@ Bu öznitelik, belirli bir özelliğin MongoDb belgesine dönüştürülürken v
 [BsonIgnore] kullanmazsanız, Category özelliği MongoDb belgesine dönüştürülürken dikkate alınacak ve belgelere dahil edilecektir. Ancak, Category özelliği veri tabanında bir alanı temsil etmiyor, bu nedenle MongoDb'de gereksiz bir alana dönüşecektir. 
 Bu durum, gereksiz veri saklamak ve gereksiz bellek kullanımına neden olabilir. Ayrıca, Category özelliğinin değerlerini güncelleme veya sorgulama gibi işlemleri gerçekleştirmek istediğinizde, MongoDb tarafında ekstra iş yükü oluşturabilir.
 
-**Auto Mapper:** 
+## AutoMapper
 
 - Mapping işlemi contructor içerisinde gerçekleşir. Mapping işlemi entitylerden nesne örnekleri oluşturmak yerine (new ile örneklemek yerine), entitylerin propertyleri ile dto daki propertylerin eşleştirilmesini sağlar. AutoMapper kullanarak DTO sınıflarını oluşturduğumuzda, client tarafında göstermek istediğimiz alanları sınırlandırarak, gerçek nesnemizin güvenliğini sağlamış oluruz.
 
 ![image](https://github.com/user-attachments/assets/c10ba3f7-e843-40b0-9985-d98a3af26a54)
 
-**Asenkron Programlama:** 
+## Asenkron Programlama
 
 Asenkron programlama, özellikle uzun süren işlemler sırasında (veritabanı sorgusu, dosya okuma, HTTP isteği vs.) uygulamanın bloklanmasını önlemek için kullanılır. Temel amaç, işlemin tamamlanmasını beklerken uygulamanın yanıt vermeye devam etmesini sağlamaktır.
 
 ![image](https://github.com/user-attachments/assets/0845f8f5-f129-4f8e-84dd-3009b0298b2c)
 
-**Dto (Data Transfer Object):** 
+## Dto (Data Transfer Object)
 
 DTO(Data Transfer Object) Entity yerine kullanılır. Veri alış verişi için Entity'leri kullanırsak güvenlik zafiyeti olur password gibi kolonlar taşınmak istenmeyebilir veya bazı kolonların gizlenmesi gerekebilir. Gizlenmesi gerektiği durumda DTO'larda gizlenmek istenen kolonlar yer almaz. DTO'larda farklı tablolardan gelen JOIN'lenmiş verilerde olabilir. JOIN için farklı nesnelerdeki(Entity)'lerin farklı kolonları DTO'ya yansıtılabilir. DTO'ya Complex Type'de denilmektedir. Entity'den DTO'ya - DTO'dan ise Entity'ye dönüşüm için elle eşlemek gerekir. Elle eşlemek zor ve zahmetli olduğu için .NET'de AutoMapper kütüphanesi kullanılır.
 
-**Singleton, Scoped ve Transient:**
+## Singleton, Scoped ve Transient Kavramları
 
 .NET’te Singleton, Scoped ve Transient kavramları, uygulama içerisindeki servislerin ömür süresini (lifetime) tanımlar. Dependency Injection (DI) kullanılırken bu yaşam süreleri, nesnelerin ne zaman oluşturulacağı ve ne kadar süreyle kullanılacağı üzerinde tam kontrol sağlar.
 
@@ -80,5 +79,3 @@ Her seferinde yeni nesne üretildiği için performansı olumsuz etkileyebilir.
 ![image](https://github.com/user-attachments/assets/9a2c9d15-b339-4e47-8ea9-2e4158c31558)
 
 ![image](https://github.com/user-attachments/assets/619aebab-1556-494a-ad5d-9bc54ce74792)
-
-## Discount Mikro Servisi
