@@ -5,7 +5,7 @@ using MultiShop.Catalog.Services.ProductDetailServices;
 
 namespace MultiShop.Catalog.Controllers;
 
-[Authorize]//Login olma zorunluluğu.
+//[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class ProductDetailsController : ControllerBase
@@ -20,42 +20,87 @@ public class ProductDetailsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllProductDetailList()
     {
-        var values = await _productDetailService.GetAllProductDetailAsync();
-        return Ok(values);
+        try
+        {
+            var details = await _productDetailService.GetAllProductDetailAsync();
+            return Ok(details);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving product details: {ex.Message}");
+        }
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetProductDetailById(string id)
     {
-        var values = await _productDetailService.GetByIdProductDetailAsync(id);
-        return Ok(values);
+        try
+        {
+            var detail = await _productDetailService.GetByIdProductDetailAsync(id);
+            if (detail == null)
+                return NotFound("Product detail not found.");
+
+            return Ok(detail);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving the product detail: {ex.Message}");
+        }
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateProductDetail(CreateProductDetailDto createProductDetailDto)
     {
-        await _productDetailService.CreateProductDetailAsync(createProductDetailDto);
-        return Ok("Ürün detayı başarıyla eklendi.");
+        try
+        {
+            await _productDetailService.CreateProductDetailAsync(createProductDetailDto);
+            return Ok("Product detail successfully created.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while creating the product detail: {ex.Message}");
+        }
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteProductDetail(string id)
     {
-        await _productDetailService.DeleteProductDetailAsync(id);
-        return Ok("Ürün detayı başarıyla silindi.");
+        try
+        {
+            await _productDetailService.DeleteProductDetailAsync(id);
+            return Ok("Product detail successfully deleted.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while deleting the product detail: {ex.Message}");
+        }
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateProductDetail(UpdateProductDetailDto updateProductDetailDto)
     {
-        await _productDetailService.UpdateProductDetailAsync(updateProductDetailDto);
-        return Ok("Ürün detayı başarıyla güncellendi.");
+        try
+        {
+            await _productDetailService.UpdateProductDetailAsync(updateProductDetailDto);
+            return Ok("Product detail successfully updated.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while updating the product detail: {ex.Message}");
+        }
     }
 
     [HttpGet("GetProductDetailByProductId/{id}")]
     public async Task<IActionResult> GetProductDetailByProductId(string id)
     {
-        var values = await _productDetailService.GetByProductIdProductDetailAsync(id);
-        return Ok(values);
+        try
+        {
+            var details = await _productDetailService.GetByProductIdProductDetailAsync(id);
+            return Ok(details);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving product details by product ID: {ex.Message}");
+        }
     }
 }

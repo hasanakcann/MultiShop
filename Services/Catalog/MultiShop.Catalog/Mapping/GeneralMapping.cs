@@ -16,10 +16,6 @@ namespace MultiShop.Catalog.Mapping;
 
 public class GeneralMapping : Profile
 {
-    /// <summary>
-    ///     Mapping işlemi contructor içerisinde gerçekleşir.
-    ///     Mapping işlemi entitylerden nesne örnekleri oluşturmak yerine entitylerin propertyleri ile dto daki propertylerin eşleştirilmesini sağlar.
-    /// </summary>
     public GeneralMapping()
     {
         CreateMap<Category, ResultCategoryDto>().ReverseMap();

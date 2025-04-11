@@ -5,7 +5,7 @@ using MultiShop.Catalog.Services.ProductServices;
 
 namespace MultiShop.Catalog.Controllers;
 
-[Authorize]//Login olma zorunluluğu.
+//[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class ProductsController : ControllerBase
@@ -20,49 +20,101 @@ public class ProductsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllProductList()
     {
-        var values = await _productService.GetAllProductAsync();
-        return Ok(values);
+        try
+        {
+            var products = await _productService.GetAllProductAsync();
+            return Ok(products);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving products: {ex.Message}");
+        }
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetProductById(string id)
     {
-        var values = await _productService.GetByIdProductAsync(id);
-        return Ok(values);
+        try
+        {
+            var product = await _productService.GetByIdProductAsync(id);
+            if (product == null)
+                return NotFound("Product not found.");
+
+            return Ok(product);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving the product: {ex.Message}");
+        }
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateProduct(CreateProductDto createProductDto)
     {
-        await _productService.CreateProductAsync(createProductDto);
-        return Ok("Ürün başarıyla eklendi.");
+        try
+        {
+            await _productService.CreateProductAsync(createProductDto);
+            return Ok("Product successfully created.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while creating the product: {ex.Message}");
+        }
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteProduct(string id)
     {
-        await _productService.DeleteProductAsync(id);
-        return Ok("Ürün başarıyla silindi.");
+        try
+        {
+            await _productService.DeleteProductAsync(id);
+            return Ok("Product successfully deleted.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while deleting the product: {ex.Message}");
+        }
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateProduct(UpdateProductDto updateProductDto)
     {
-        await _productService.UpdateProductAsync(updateProductDto);
-        return Ok("Ürün başarıyla güncellendi.");
+        try
+        {
+            await _productService.UpdateProductAsync(updateProductDto);
+            return Ok("Product successfully updated.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while updating the product: {ex.Message}");
+        }
     }
 
     [HttpGet("ProductListWithCategory")]
     public async Task<IActionResult> ProductListWithCategory()
     {
-        var values = await _productService.GetProductsWithCategoryAsync();
-        return Ok(values);
+        try
+        {
+            var products = await _productService.GetProductsWithCategoryAsync();
+            return Ok(products);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving products with categories: {ex.Message}");
+        }
     }
 
     [HttpGet("ProductsWithCategoryByCategoryId/{id}")]
     public async Task<IActionResult> GetProductsWithCategoryByCategoryId(string id)
     {
-        var values = await _productService.GetProductsWithCategoryByCategoryIdAsync(id);
-        return Ok(values);
+        try
+        {
+            var products = await _productService.GetProductsWithCategoryByCategoryIdAsync(id);
+            return Ok(products);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving products by category: {ex.Message}");
+        }
     }
 }

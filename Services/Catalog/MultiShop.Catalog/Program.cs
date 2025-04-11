@@ -20,14 +20,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 #region Service Registration
-//Singleton Nedir?
-//Singleton bir tasarım şablonudur. Bellekte bir nesneden sadece bir tane olabilir. Her istek geldiğinde o nesne(aynı nesne) verilir. Program sonlanana kadar bellekte varlığını korur.
-
-//Scoped Nedir?
-//Scoped bir nevi Prototype tasarım şablonudur. AddScoped nesne örneği oluşturur. Her istek geldiğinde istek başına bir tane nesne üretilir. Her seferinde yeni nesne üretildiği için performansı olumsuz etkileyebilir. İstek tamamlanmadan başka bir istek gelirse yenisi yaratılmadan zaten var olan verilir.
-
-//Transient Nedir? 
-//Transient bir nevi Prototype tasarım şablonudur. Her istek geldiğinde istek başına bir tane nesne üretilir. Her seferinde yeni nesne üretildiği için performansı olumsuz etkileyebilir. İstek tamamlanmadan başka bir istek gelirse yenisi yaratılır eskisi verilmez. Transient ile Scoped farkı budur.
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
@@ -42,7 +34,6 @@ builder.Services.AddScoped<IAboutService, AboutService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IStatisticService, StatisticService>();
 
-//AutoMapper kullanarak DTO sınıflarını oluşturduğumuzda, client tarafında göstermek istediğimiz alanları sınırlandırarak, gerçek nesnemizin güvenliğini sağlamış oluruz.
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseSettings"));
@@ -54,14 +45,11 @@ builder.Services.AddScoped<IDatabaseSettings>(serviceProvider =>
 #endregion
 
 #region Authentication
-//JwtBearer token geçerliliğini kontrol eden pakettir.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
-    //Authority JwtBearer'ı kiminle kullanıcağını belirtir. IdentityServerUrl appsettings.json'dan gelir.
-    //Catalog mikro servisi ayağa kalkarken IdentityServer mikro servisi de ayağa kalkar.
     options.Authority = builder.Configuration["IdentityServerUrl"];
-    options.Audience = "ResourceCatalog";//Config tarafında dinleyici olan key ResourceCatalog ApiResource setlenir.
-    options.RequireHttpsMetadata = false;//IdentityServerUrl http olduğu için false set edildi.
+    options.Audience = "ResourceCatalog";
+    options.RequireHttpsMetadata = false;
 });
 #endregion
 

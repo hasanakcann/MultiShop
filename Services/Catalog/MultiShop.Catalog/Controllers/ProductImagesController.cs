@@ -5,7 +5,7 @@ using MultiShop.Catalog.Services.ProductImageServices;
 
 namespace MultiShop.Catalog.Controllers;
 
-[Authorize]//Login olma zorunluluğu.
+//[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class ProductImagesController : ControllerBase
@@ -20,42 +20,87 @@ public class ProductImagesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllProductImageList()
     {
-        var values = await _productImageService.GetAllProductImageAsync();
-        return Ok(values);
+        try
+        {
+            var images = await _productImageService.GetAllProductImageAsync();
+            return Ok(images);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving product images: {ex.Message}");
+        }
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetProductImageById(string id)
     {
-        var values = await _productImageService.GetByIdProductImageAsync(id);
-        return Ok(values);
+        try
+        {
+            var image = await _productImageService.GetByIdProductImageAsync(id);
+            if (image == null)
+                return NotFound("Product image not found.");
+
+            return Ok(image);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving the product image: {ex.Message}");
+        }
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateProductImage(CreateProductImageDto createProductImageDto)
     {
-        await _productImageService.CreateProductImageAsync(createProductImageDto);
-        return Ok("Ürün görselleri başarıyla eklendi.");
+        try
+        {
+            await _productImageService.CreateProductImageAsync(createProductImageDto);
+            return Ok("Product image successfully added.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while adding the product image: {ex.Message}");
+        }
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteProductImage(string id)
     {
-        await _productImageService.DeleteProductImageAsync(id);
-        return Ok("Ürün görselleri başarıyla silindi.");
+        try
+        {
+            await _productImageService.DeleteProductImageAsync(id);
+            return Ok("Product image successfully deleted.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while deleting the product image: {ex.Message}");
+        }
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateProductImage(UpdateProductImageDto updateProductImageDto)
     {
-        await _productImageService.UpdateProductImageAsync(updateProductImageDto);
-        return Ok("Ürün görselleri başarıyla güncellendi.");
+        try
+        {
+            await _productImageService.UpdateProductImageAsync(updateProductImageDto);
+            return Ok("Product image successfully updated.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while updating the product image: {ex.Message}");
+        }
     }
 
     [HttpGet("ProductImagesByProductId/{id}")]
     public async Task<IActionResult> ProductImagesByProductId(string id)
     {
-        var values = await _productImageService.GetByProductIdProductImageAsync(id);
-        return Ok(values);
+        try
+        {
+            var images = await _productImageService.GetByProductIdProductImageAsync(id);
+            return Ok(images);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving images by product ID: {ex.Message}");
+        }
     }
 }

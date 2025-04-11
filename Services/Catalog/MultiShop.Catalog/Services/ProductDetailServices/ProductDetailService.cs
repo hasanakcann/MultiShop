@@ -4,54 +4,106 @@ using MultiShop.Catalog.Dtos.ProductDetailDtos;
 using MultiShop.Catalog.Entities;
 using MultiShop.Catalog.Settings;
 
-namespace MultiShop.Catalog.Services.ProductDetailServices
+namespace MultiShop.Catalog.Services.ProductDetailServices;
+
+public class ProductDetailService : IProductDetailService
 {
-    public class ProductDetailService : IProductDetailService
+    private readonly IMongoCollection<ProductDetail> _productDetailCollection;
+    private readonly IMapper _mapper;
+
+    public ProductDetailService(IMapper mapper, IDatabaseSettings _databaseSettings)
     {
-        private readonly IMongoCollection<ProductDetail> _productDetailCollection;
-        private readonly IMapper _mapper;
+        var client = new MongoClient(_databaseSettings.ConnectionString);
+        var database = client.GetDatabase(_databaseSettings.DatabaseName);
+        _productDetailCollection = database.GetCollection<ProductDetail>(_databaseSettings.ProductDetailCollectionName);
+        _mapper = mapper;
+    }
 
-        public ProductDetailService(IMapper mapper, IDatabaseSettings _databaseSettings)
+    public async Task CreateProductDetailAsync(CreateProductDetailDto createProductDetailDto)
+    {
+        try
         {
-            var client = new MongoClient(_databaseSettings.ConnectionString);
-            var database = client.GetDatabase(_databaseSettings.DatabaseName);
-            _productDetailCollection = database.GetCollection<ProductDetail>(_databaseSettings.ProductDetailCollectionName);
-            _mapper = mapper;
+            var detail = _mapper.Map<ProductDetail>(createProductDetailDto);
+            await _productDetailCollection.InsertOneAsync(detail);
         }
-
-        public async Task CreateProductDetailAsync(CreateProductDetailDto createProductDetailDto)
+        catch (Exception ex)
         {
-            var values = _mapper.Map<ProductDetail>(createProductDetailDto);
-            await _productDetailCollection.InsertOneAsync(values);
+            throw new ApplicationException("An error occurred while creating product detail.", ex);
         }
+    }
 
-        public async Task DeleteProductDetailAsync(string id)
+    public async Task DeleteProductDetailAsync(string id)
+    {
+        try
         {
-            await _productDetailCollection.DeleteOneAsync(x => x.ProductDetailId == id);
+            var result = await _productDetailCollection.DeleteOneAsync(x => x.ProductDetailId == id);
+            if (result.DeletedCount == 0)
+                throw new KeyNotFoundException("Product detail not found.");
         }
-
-        public async Task<List<ResultProductDetailDto>> GetAllProductDetailAsync()
+        catch (Exception ex)
         {
-            var values = await _productDetailCollection.Find(x => true).ToListAsync();
-            return _mapper.Map<List<ResultProductDetailDto>>(values);
+            throw new ApplicationException("An error occurred while deleting product detail.", ex);
         }
+    }
 
-        public async Task<GetByIdProductDetailDto> GetByIdProductDetailAsync(string id)
+    public async Task<List<ResultProductDetailDto>> GetAllProductDetailAsync()
+    {
+        try
         {
-            var values = await _productDetailCollection.Find(x => x.ProductDetailId == id).FirstOrDefaultAsync();
-            return _mapper.Map<GetByIdProductDetailDto>(values);
+            var details = await _productDetailCollection.Find(x => true).ToListAsync();
+            return _mapper.Map<List<ResultProductDetailDto>>(details);
         }
-
-        public async Task UpdateProductDetailAsync(UpdateProductDetailDto updateProductDetailDto)
+        catch (Exception ex)
         {
-            var values = _mapper.Map<ProductDetail>(updateProductDetailDto);
-            await _productDetailCollection.FindOneAndReplaceAsync(x => x.ProductDetailId == updateProductDetailDto.ProductDetailId, values);
+            throw new ApplicationException("An error occurred while retrieving all product details.", ex);
         }
+    }
 
-        public async Task<GetByIdProductDetailDto> GetByProductIdProductDetailAsync(string id)
+    public async Task<GetByIdProductDetailDto> GetByIdProductDetailAsync(string id)
+    {
+        try
         {
-            var values = await _productDetailCollection.Find(x => x.ProductId == id).FirstOrDefaultAsync();
-            return _mapper.Map<GetByIdProductDetailDto>(values);
+            var detail = await _productDetailCollection.Find(x => x.ProductDetailId == id).FirstOrDefaultAsync();
+            if (detail == null)
+                throw new KeyNotFoundException("Product detail not found.");
+
+            return _mapper.Map<GetByIdProductDetailDto>(detail);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving product detail by ID.", ex);
+        }
+    }
+
+    public async Task UpdateProductDetailAsync(UpdateProductDetailDto updateProductDetailDto)
+    {
+        try
+        {
+            var detail = _mapper.Map<ProductDetail>(updateProductDetailDto);
+            var result = await _productDetailCollection.FindOneAndReplaceAsync(x => x.ProductDetailId == updateProductDetailDto.ProductDetailId, detail);
+
+            if (result == null)
+                throw new KeyNotFoundException("Product detail to update not found.");
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while updating product detail.", ex);
+        }
+    }
+
+    public async Task<GetByIdProductDetailDto> GetByProductIdProductDetailAsync(string id)
+    {
+        try
+        {
+            var detail = await _productDetailCollection.Find(x => x.ProductId == id).FirstOrDefaultAsync();
+            if (detail == null)
+                throw new KeyNotFoundException("Product detail not found for the given product ID.");
+
+            return _mapper.Map<GetByIdProductDetailDto>(detail);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving product detail by product ID.", ex);
         }
     }
 }

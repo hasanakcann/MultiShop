@@ -4,54 +4,106 @@ using MultiShop.Catalog.Dtos.ProductImageDtos;
 using MultiShop.Catalog.Entities;
 using MultiShop.Catalog.Settings;
 
-namespace MultiShop.Catalog.Services.ProductImageServices
+namespace MultiShop.Catalog.Services.ProductImageServices;
+
+public class ProductImageService : IProductImageService
 {
-    public class ProductImageService : IProductImageService
+    private readonly IMongoCollection<ProductImage> _productImageCollection;
+    private readonly IMapper _mapper;
+
+    public ProductImageService(IMapper mapper, IDatabaseSettings _databaseSettings)
     {
-        private readonly IMongoCollection<ProductImage> _productImageCollection;
-        private readonly IMapper _mapper;
+        var client = new MongoClient(_databaseSettings.ConnectionString);
+        var database = client.GetDatabase(_databaseSettings.DatabaseName);
+        _productImageCollection = database.GetCollection<ProductImage>(_databaseSettings.ProductImageCollectionName);
+        _mapper = mapper;
+    }
 
-        public ProductImageService(IMapper mapper, IDatabaseSettings _databaseSettings)
+    public async Task CreateProductImageAsync(CreateProductImageDto createProductImageDto)
+    {
+        try
         {
-            var client = new MongoClient(_databaseSettings.ConnectionString); //Bağlantı
-            var database = client.GetDatabase(_databaseSettings.DatabaseName); // Veritabanı
-            _productImageCollection = database.GetCollection<ProductImage>(_databaseSettings.ProductImageCollectionName); //Tablo
-            _mapper = mapper;
+            var image = _mapper.Map<ProductImage>(createProductImageDto);
+            await _productImageCollection.InsertOneAsync(image);
         }
-
-        public async Task CreateProductImageAsync(CreateProductImageDto createProductImageDto)
+        catch (Exception ex)
         {
-            var values = _mapper.Map<ProductImage>(createProductImageDto);
-            await _productImageCollection.InsertOneAsync(values);
+            throw new ApplicationException("An error occurred while creating product image.", ex);
         }
+    }
 
-        public async Task DeleteProductImageAsync(string id)
+    public async Task DeleteProductImageAsync(string id)
+    {
+        try
         {
-            await _productImageCollection.DeleteOneAsync(x => x.ProductImageId == id);
+            var result = await _productImageCollection.DeleteOneAsync(x => x.ProductImageId == id);
+            if (result.DeletedCount == 0)
+                throw new KeyNotFoundException("Product image not found.");
         }
-
-        public async Task<List<ResultProductImageDto>> GetAllProductImageAsync()
+        catch (Exception ex)
         {
-            var values = await _productImageCollection.Find(x => true).ToListAsync();
-            return _mapper.Map<List<ResultProductImageDto>>(values);
+            throw new ApplicationException("An error occurred while deleting product image.", ex);
         }
+    }
 
-        public async Task<GetByIdProductImageDto> GetByIdProductImageAsync(string id)
+    public async Task<List<ResultProductImageDto>> GetAllProductImageAsync()
+    {
+        try
         {
-            var values = await _productImageCollection.Find(x => x.ProductImageId == id).FirstOrDefaultAsync();
-            return _mapper.Map<GetByIdProductImageDto>(values);
+            var images = await _productImageCollection.Find(x => true).ToListAsync();
+            return _mapper.Map<List<ResultProductImageDto>>(images);
         }
-
-        public async Task UpdateProductImageAsync(UpdateProductImageDto updateProductImageDto)
+        catch (Exception ex)
         {
-            var values = _mapper.Map<ProductImage>(updateProductImageDto);
-            await _productImageCollection.FindOneAndReplaceAsync(x => x.ProductImageId == updateProductImageDto.ProductImageId, values);
+            throw new ApplicationException("An error occurred while retrieving product images.", ex);
         }
+    }
 
-        public async Task<GetByIdProductImageDto> GetByProductIdProductImageAsync(string id)
+    public async Task<GetByIdProductImageDto> GetByIdProductImageAsync(string id)
+    {
+        try
         {
-            var values = await _productImageCollection.Find(x => x.ProductId == id).FirstOrDefaultAsync();
-            return _mapper.Map<GetByIdProductImageDto>(values);
+            var image = await _productImageCollection.Find(x => x.ProductImageId == id).FirstOrDefaultAsync();
+            if (image == null)
+                throw new KeyNotFoundException("Product image not found.");
+
+            return _mapper.Map<GetByIdProductImageDto>(image);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving product image by ID.", ex);
+        }
+    }
+
+    public async Task UpdateProductImageAsync(UpdateProductImageDto updateProductImageDto)
+    {
+        try
+        {
+            var image = _mapper.Map<ProductImage>(updateProductImageDto);
+            var result = await _productImageCollection.FindOneAndReplaceAsync(x => x.ProductImageId == updateProductImageDto.ProductImageId, image);
+
+            if (result == null)
+                throw new KeyNotFoundException("Product image to update not found.");
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while updating product image.", ex);
+        }
+    }
+
+    public async Task<GetByIdProductImageDto> GetByProductIdProductImageAsync(string id)
+    {
+        try
+        {
+            var image = await _productImageCollection.Find(x => x.ProductId == id).FirstOrDefaultAsync();
+            if (image == null)
+                throw new KeyNotFoundException("Product image not found for the given product ID.");
+
+            return _mapper.Map<GetByIdProductImageDto>(image);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving product image by product ID.", ex);
         }
     }
 }
