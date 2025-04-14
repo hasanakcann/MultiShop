@@ -7,6 +7,7 @@
 - [Dto (Data Transfer Object)](#dto-data-transfer-object)
 - [AutoMapper](#automapper)
 - [Singleton, Scoped ve Transient Kavramları](#singleton-scoped-ve-transient-kavramları)
+- [Dapper](#dapper)
 
 ## Mikroservis Mimarisi
 
@@ -81,3 +82,38 @@ Her seferinde yeni nesne üretildiği için performansı olumsuz etkileyebilir.
 ![image](https://github.com/user-attachments/assets/e7e1c8c5-5b23-4dd0-b4ef-bf01e44a7004)
 
 ![image](https://github.com/user-attachments/assets/619aebab-1556-494a-ad5d-9bc54ce74792)
+
+## Dapper
+
+- Dapper, .NET platformu üzerinde kullanılan mikro ORM (Object-Relational Mapper) kütüphanesidir. ORM’ler, veritabanı ile nesneler arasında köprü kurarak veritabanı işlemlerini daha okunabilir ve yönetilebilir hale getirir. Dapper ise bu işi çok hafif, hızlı ve doğrudan SQL yazarak yapan bir araçtır. 
+
+- Dapper, Stack Overflow ekibi tarafından geliştirilmiş ve System.Data.IDbConnection arayüzünü genişleten extension method'lar aracılığıyla çalışan bir kütüphanedir. ADO.NET’in sunduğu altyapıyı kullanır ama onun karmaşasını ortadan kaldırır. Sorgular SQL cümleleri olarak yazılır, Dapper bu sorguların sonuçlarını otomatik olarak C# nesnelerine eşler.
+
+![image](https://github.com/user-attachments/assets/bba0a9b2-9538-4ff3-a14e-75a43385181a)
+
+🔎 Özetle Ne Zaman Hangi Teknoloji?
+
+- EF Core: Migration, change tracking, navigasyonlar, domain odaklı yapı isteniyorsa.
+
+- Dapper: Performans öncelikliyse, SQL bilgisi varsa, basit ve hızlı bir yapı gerekiyorsa.
+
+- NHibernate: Karmaşık ilişkiler, gelişmiş konfigürasyonlar, legacy sistemlerle uyum gerekiyorsa.
+
+- ADO.NET: Düşük seviyede tam kontrol ve maksimum performans gerekiyorsa (örneğin bulk işlemler).
+
+![image](https://github.com/user-attachments/assets/6ec85484-3c45-4eaf-92c5-6a1a1114d063)
+
+![image](https://github.com/user-attachments/assets/94775af8-d567-4aac-8468-024bd06b30dc)
+
+![image](https://github.com/user-attachments/assets/bf2254bc-a785-4483-ab02-50466e770f0e)
+
+![image](https://github.com/user-attachments/assets/cd93f831-f71d-480a-8e85-9fa5dbde9956)
+
+
+
+
+
+
+
+
+
