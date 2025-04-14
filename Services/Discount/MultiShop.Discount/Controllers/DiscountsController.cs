@@ -5,7 +5,7 @@ using MultiShop.Discount.Services;
 
 namespace MultiShop.Discount.Controllers;
 
-[Authorize]//Login olma zorunluluğu eklendi.
+//[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class DiscountsController : ControllerBase
@@ -20,56 +20,118 @@ public class DiscountsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> DiscountCouponList()
     {
-        var values = await _discountService.GetAllDiscountCouponAsync();
-        return Ok(values);
+        try
+        {
+            var discountList = await _discountService.GetAllDiscountCouponAsync();
+            return Ok(discountList);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "An error occurred while retrieving the discount coupons.");
+        }
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetDiscountCouponById(int id)
     {
-        var values = await _discountService.GetByIdDiscountCouponAsync(id);
-        return Ok(values);
+        try
+        {
+            var discountCoupon = await _discountService.GetByIdDiscountCouponAsync(id);
+            if (discountCoupon == null)
+                return NotFound("Discount coupon not found.");
+
+            return Ok(discountCoupon);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "An error occurred while retrieving the discount coupon.");
+        }
     }
 
     [HttpGet("GetCodeDetailByCodeAsync")]
     public async Task<IActionResult> GetCodeDetailByCodeAsync(string code)
     {
-        var values = await _discountService.GetCodeDetailByCodeAsync(code);
-        return Ok(values);
+        try
+        {
+            var discountCoupon = await _discountService.GetCodeDetailByCodeAsync(code);
+            if (discountCoupon == null)
+                return NotFound("Discount coupon with the specified code was not found.");
+
+            return Ok(discountCoupon);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "An error occurred while retrieving the discount code details.");
+        }
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateDiscountCoupon(CreateDiscountCouponDto createCouponDto)
     {
-        await _discountService.CreateDiscountCouponAsync(createCouponDto);
-        return Ok("İndirim kuponu başarıyla oluşturuldu.");
+        try
+        {
+            await _discountService.CreateDiscountCouponAsync(createCouponDto);
+            return Ok("Discount coupon has been created successfully.");
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "An error occurred while creating the discount coupon.");
+        }
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteDiscountCoupon(int id)
     {
-        await _discountService.DeleteDiscountCouponAsync(id);
-        return Ok("İndirim kuponu başarıyla silindi.");
+        try
+        {
+            await _discountService.DeleteDiscountCouponAsync(id);
+            return Ok("Discount coupon has been deleted successfully.");
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "An error occurred while deleting the discount coupon.");
+        }
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateDiscountCoupon(UpdateDiscountCouponDto updateCouponDto)
     {
-        await _discountService.UpdateDiscountCouponAsync(updateCouponDto);
-        return Ok("İndirim kuponu başarıyla güncellendi.");
+        try
+        {
+            await _discountService.UpdateDiscountCouponAsync(updateCouponDto);
+            return Ok("Discount coupon has been updated successfully.");
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "An error occurred while updating the discount coupon.");
+        }
     }
 
     [HttpGet("GetDiscountCouponRate")]
     public IActionResult GetDiscountCouponRate(string code)
     {
-        var values = _discountService.GetDiscountCouponRate(code);
-        return Ok(values);
+        try
+        {
+            var discountRate = _discountService.GetDiscountCouponRate(code);
+            return Ok(discountRate);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "An error occurred while retrieving the discount rate.");
+        }
     }
 
     [HttpGet("GetDiscountCouponCount")]
     public async Task<IActionResult> GetDiscountCouponCount()
     {
-        var values = await _discountService.GetDiscountCouponCount();
-        return Ok(values);
+        try
+        {
+            var couponCount = await _discountService.GetDiscountCouponCount();
+            return Ok($"Total discount coupons: {couponCount}");
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "An error occurred while retrieving the discount coupon count.");
+        }
     }
 }

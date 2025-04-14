@@ -13,9 +13,6 @@ public class DiscountService : IDiscountService
         _context = context;
     }
 
-    /// <summary>
-    ///     Dapper üzerinde ekleme işlemi sağlanır. Yeni bir indirim kuponu ekleme işlemi yapılır.
-    /// </summary>
     public async Task CreateDiscountCouponAsync(CreateDiscountCouponDto createCouponDto)
     {
         string query = "Insert Into Coupons (Code, Rate, IsActive, ValidDate) values (@code, @rate, @isActive, @validDate)";
@@ -24,100 +21,147 @@ public class DiscountService : IDiscountService
         parameters.Add("@rate", createCouponDto.Rate);
         parameters.Add("@isActive", createCouponDto.IsActive);
         parameters.Add("@validDate", createCouponDto.ValidDate);
-        using (var connection = _context.CreateConnection())
+
+        try
         {
-            await connection.ExecuteAsync(query, parameters);
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
+        }
+        catch (Exception)
+        {
+            throw new Exception("An error occurred while creating the discount coupon.");
         }
     }
 
-    /// <summary>
-    ///     İndirim kuponu işlemlerinde silme işlemi yapılır.
-    /// </summary>
     public async Task DeleteDiscountCouponAsync(int id)
     {
         string query = "Delete From Coupons where CouponId=@couponId";
         var parameters = new DynamicParameters();
         parameters.Add("@couponId", id);
-        using (var connection = _context.CreateConnection())
-        {
-            await connection.ExecuteAsync(query, parameters);
-        };
-    }
 
-    /// <summary>
-    ///     Tüm indirim kuponları getirilir.
-    /// </summary>
-    public async Task<List<ResultDiscountCouponDto>> GetAllDiscountCouponAsync()
-    {
-        string query = "Select * From Coupons";
-        using (var connection = _context.CreateConnection())
+        try
         {
-            var values = await connection.QueryAsync<ResultDiscountCouponDto>(query);
-            return values.ToList();
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
+        }
+        catch (Exception)
+        {
+            throw new Exception("An error occurred while deleting the discount coupon.");
         }
     }
 
-    /// <summary>
-    ///     Id'ye göre indirim kuponları getirilir.
-    /// </summary>
+    public async Task<List<ResultDiscountCouponDto>> GetAllDiscountCouponAsync()
+    {
+        string query = "Select * From Coupons";
+
+        try
+        {
+            using (var connection = _context.CreateConnection())
+            {
+                var coupons = await connection.QueryAsync<ResultDiscountCouponDto>(query);
+                return coupons?.ToList() ?? new List<ResultDiscountCouponDto>();
+            }
+        }
+        catch (Exception)
+        {
+            throw new Exception("An error occurred while retrieving the discount coupons.");
+        }
+    }
+
     public async Task<GetByIdDiscountCouponDto> GetByIdDiscountCouponAsync(int id)
     {
         string query = "Select * From Coupons Where CouponId=@couponId";
         var parameters = new DynamicParameters();
         parameters.Add("@couponId", id);
-        using (var connection = _context.CreateConnection())
+
+        try
         {
-            var values = await connection.QueryFirstOrDefaultAsync<GetByIdDiscountCouponDto>(query, parameters);
-            return values;
+            using (var connection = _context.CreateConnection())
+            {
+                var coupon = await connection.QueryFirstOrDefaultAsync<GetByIdDiscountCouponDto>(query, parameters);
+
+                if (coupon == null)
+                    throw new Exception("Discount coupon not found.");
+
+                return coupon;
+            }
+        }
+        catch (Exception)
+        {
+            throw new Exception("An error occurred while retrieving the discount coupon.");
         }
     }
 
-    /// <summary>
-    ///     Koda göre kupon detayları getirilir.
-    /// </summary>
     public async Task<ResultDiscountCouponDto> GetCodeDetailByCodeAsync(string code)
     {
         string query = "Select * From Coupons Where Code=@code";
         var parameters = new DynamicParameters();
         parameters.Add("@code", code);
-        using (var connection = _context.CreateConnection())
+
+        try
         {
-            var values = await connection.QueryFirstOrDefaultAsync<ResultDiscountCouponDto>(query, parameters);
-            return values;
+            using (var connection = _context.CreateConnection())
+            {
+                var couponDetail = await connection.QueryFirstOrDefaultAsync<ResultDiscountCouponDto>(query, parameters);
+
+                if (couponDetail == null)
+                    throw new Exception("Discount code not found.");
+
+                return couponDetail;
+            }
+        }
+        catch (Exception)
+        {
+            throw new Exception("An error occurred while retrieving the discount code details.");
         }
     }
 
-    /// <summary>
-    ///     Kupon sayısı getirilir.
-    /// </summary>
     public async Task<int> GetDiscountCouponCount()
     {
         string query = "Select Count(*) From Coupons";
-        using (var connection = _context.CreateConnection())
+
+        try
         {
-            var values = await connection.QueryFirstOrDefaultAsync<int>(query);
-            return values;
+            using (var connection = _context.CreateConnection())
+            {
+                var couponCount = await connection.QueryFirstOrDefaultAsync<int>(query);
+                return couponCount;
+            }
+        }
+        catch (Exception)
+        {
+            throw new Exception("An error occurred while retrieving the discount coupon count.");
         }
     }
 
-    /// <summary>
-    ///     İndirim oranı getirilir.
-    /// </summary>
     public int GetDiscountCouponRate(string code)
     {
         string query = "Select Rate From Coupons Where Code=@code";
         var parameters = new DynamicParameters();
         parameters.Add("@code", code);
-        using (var connection = _context.CreateConnection())
+
+        try
         {
-            var values = connection.QueryFirstOrDefault<int>(query, parameters);
-            return values;
+            using (var connection = _context.CreateConnection())
+            {
+                var discountRate = connection.QueryFirstOrDefault<int?>(query, parameters);
+
+                if (discountRate == null)
+                    throw new Exception("Rate for the given discount code was not found.");
+
+                return discountRate.Value;
+            }
+        }
+        catch (Exception)
+        {
+            throw new Exception("An error occurred while retrieving the discount rate.");
         }
     }
 
-    /// <summary>
-    ///     Güncelleme işlemi yapılır.
-    /// </summary>
     public async Task UpdateDiscountCouponAsync(UpdateDiscountCouponDto updateCouponDto)
     {
         string query = "Update Coupons Set Code=@code, Rate=@rate, IsActive=@isActive, ValidDate=@validDate where CouponId=@couponId";
@@ -127,9 +171,17 @@ public class DiscountService : IDiscountService
         parameters.Add("@isActive", updateCouponDto.IsActive);
         parameters.Add("@validDate", updateCouponDto.ValidDate);
         parameters.Add("@couponId", updateCouponDto.CouponId);
-        using (var connection = _context.CreateConnection())
+
+        try
         {
-            await connection.ExecuteAsync(query, parameters);
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
+        }
+        catch (Exception)
+        {
+            throw new Exception("An error occurred while updating the discount coupon.");
         }
     }
 }

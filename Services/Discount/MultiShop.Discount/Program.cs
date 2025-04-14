@@ -12,14 +12,11 @@ builder.Services.AddTransient<IDiscountService, DiscountService>();
 #endregion
 
 #region Authentication
-//JwtBearer token geçerliliğini kontrol eden pakettir.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
-    //Authority JwtBearer'ı kiminle kullanıcağını belirtir. IdentityServerUrl appsettings.json'dan gelir.
-    //Discount mikro servisi ayağa kalkarken IdentityServer mikro servisi de ayağa kalkar.
     options.Authority = builder.Configuration["IdentityServerUrl"];
-    options.Audience = "ResourceDiscount";//Config tarafında dinleyici olan key ResourceDiscount ApiResource setlenir.
-    options.RequireHttpsMetadata = false;//IdentityServerUrl http olduğu için false set edildi.
+    options.Audience = "ResourceDiscount";
+    options.RequireHttpsMetadata = false;
 });
 #endregion
 
