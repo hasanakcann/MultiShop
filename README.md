@@ -3,6 +3,7 @@
 - [Solid Prensibles](#solid-prensibles)
 - [Mikroservisler](#mikroservisler)
 - [Mikroservis Mimarisi](#mikroservis-mimarisi)
+- [HttpClient ve HttpClientFactory Kullanımı](#httpclient-ve-httpclientfactory-kullanımı)
 - [Api Gateway](#api-gateway)
 - [Asenkron Programlama](#asenkron-programlama)
 - [MongoDb](#mongodb)
