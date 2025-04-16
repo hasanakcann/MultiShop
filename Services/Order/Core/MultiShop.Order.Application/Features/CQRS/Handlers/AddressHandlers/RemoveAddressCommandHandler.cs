@@ -6,16 +6,16 @@ namespace MultiShop.Order.Application.Features.CQRS.Handlers.AddressHandlers;
 
 public class RemoveAddressCommandHandler
 {
-    private readonly IRepository<Address> _repository;
+    private readonly IRepository<Address> _addressRepository;
 
-    public RemoveAddressCommandHandler(IRepository<Address> repository)
+    public RemoveAddressCommandHandler(IRepository<Address> addressRepository)
     {
-        _repository = repository;
+        _addressRepository = addressRepository;
     }
 
     public async Task Handle(RemoveAddressCommand command)
     {
-        var value = await _repository.GetByIdAsync(command.Id);
-        await _repository.DeleteAsync(value);
+        var address = await _addressRepository.GetByIdAsync(command.Id);
+        await _addressRepository.DeleteAsync(address);
     }
 }

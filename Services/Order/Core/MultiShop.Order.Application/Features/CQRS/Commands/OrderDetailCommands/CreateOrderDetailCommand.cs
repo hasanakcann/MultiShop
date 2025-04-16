@@ -1,30 +1,11 @@
-﻿namespace MultiShop.Order.Application.Features.CQRS.Commands.OrderDetailCommands
+﻿namespace MultiShop.Order.Application.Features.CQRS.Commands.OrderDetailCommands;
+
+public class CreateOrderDetailCommand
 {
-    public class CreateOrderDetailCommand
-    {
-        /// <summary>
-        ///     Ürün id bilgisidir. 
-        /// </summary>
-        public string ProductId { get; set; }
-        /// <summary>
-        ///     Ürün adı bilgisidir.
-        /// </summary>
-        public string ProductName { get; set; }
-        /// <summary>
-        ///     Ürün fiyat bilgisidir.
-        /// </summary>
-        public decimal ProductPrice { get; set; }
-        /// <summary>
-        ///     Ürün miktarı, adet bilgisidir.
-        /// </summary>
-        public int ProductAmount { get; set; }
-        /// <summary>
-        ///     Ürün toplam fiyat bilgisidir.
-        /// </summary>
-        public decimal ProductTotalPrice { get; set; }
-        /// <summary>
-        ///     Sipariş id bilgisidir.
-        /// </summary>
-        public int OrderingId { get; set; }
-    }
+    public string ProductId { get; set; }
+    public string ProductName { get; set; }
+    public decimal ProductPrice { get; set; }
+    public int ProductAmount { get; set; }
+    public decimal ProductTotalPrice { get; set; }
+    public int OrderingId { get; set; }
 }

@@ -3,30 +3,29 @@ using MultiShop.Order.Application.Features.CQRS.Results.OrderDetailResults;
 using MultiShop.Order.Application.Interfaces;
 using MultiShop.Order.Domain.Entities;
 
-namespace MultiShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers
+namespace MultiShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers;
+
+public class GetOrderDetailByIdQueryHandler
 {
-    public class GetOrderDetailByIdQueryHandler
+    private readonly IRepository<OrderDetail> _orderDetailRepository;
+
+    public GetOrderDetailByIdQueryHandler(IRepository<OrderDetail> orderDetailRepository)
     {
-        private readonly IRepository<OrderDetail> _repository;
+        _orderDetailRepository = orderDetailRepository;
+    }
 
-        public GetOrderDetailByIdQueryHandler(IRepository<OrderDetail> repository)
+    public async Task<GetOrderDetailByIdQueryResult> Handle(GetOrderDetailByIdQuery query)
+    {
+        var orderDetail = await _orderDetailRepository.GetByIdAsync(query.Id);
+        return new GetOrderDetailByIdQueryResult
         {
-            _repository = repository;
-        }
-
-        public async Task<GetOrderDetailByIdQueryResult> Handle(GetOrderDetailByIdQuery query)
-        {
-            var values = await _repository.GetByIdAsync(query.Id);
-            return new GetOrderDetailByIdQueryResult
-            {
-                OrderDetailId = values.OrderDetailId,
-                OrderingId = values.OrderingId,
-                ProductAmount = values.ProductAmount,
-                ProductId = values.ProductId,
-                ProductName = values.ProductName,
-                ProductPrice = values.ProductPrice,
-                ProductTotalPrice = values.ProductTotalPrice
-            };
-        }
+            OrderDetailId = orderDetail.OrderDetailId,
+            OrderingId = orderDetail.OrderingId,
+            ProductAmount = orderDetail.ProductAmount,
+            ProductId = orderDetail.ProductId,
+            ProductName = orderDetail.ProductName,
+            ProductPrice = orderDetail.ProductPrice,
+            ProductTotalPrice = orderDetail.ProductTotalPrice
+        };
     }
 }

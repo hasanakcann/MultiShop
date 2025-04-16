@@ -3,21 +3,20 @@ using MultiShop.Order.Application.Features.Mediator.Commands.OrderingCommands;
 using MultiShop.Order.Application.Interfaces;
 using MultiShop.Order.Domain.Entities;
 
-namespace MultiShop.Order.Application.Features.Mediator.Handlers.OrderingHandlers
+namespace MultiShop.Order.Application.Features.Mediator.Handlers.OrderingHandlers;
+
+public class RemoveOrderingCommandHandler : IRequestHandler<RemoveOrderingCommand>
 {
-    public class RemoveOrderingCommandHandler : IRequestHandler<RemoveOrderingCommand>
+    private readonly IRepository<Ordering> _repository;
+
+    public RemoveOrderingCommandHandler(IRepository<Ordering> repository)
     {
-        private readonly IRepository<Ordering> _repository;
+        _repository = repository;
+    }
 
-        public RemoveOrderingCommandHandler(IRepository<Ordering> repository)
-        {
-            _repository = repository;
-        }
-
-        public async Task Handle(RemoveOrderingCommand request, CancellationToken cancellationToken)
-        {
-            var values = await _repository.GetByIdAsync(request.Id);
-            await _repository.DeleteAsync(values);
-        }
+    public async Task Handle(RemoveOrderingCommand request, CancellationToken cancellationToken)
+    {
+        var values = await _repository.GetByIdAsync(request.Id);
+        await _repository.DeleteAsync(values);
     }
 }

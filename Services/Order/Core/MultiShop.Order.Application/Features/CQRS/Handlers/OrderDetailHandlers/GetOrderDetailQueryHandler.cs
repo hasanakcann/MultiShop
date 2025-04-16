@@ -2,30 +2,29 @@
 using MultiShop.Order.Application.Interfaces;
 using MultiShop.Order.Domain.Entities;
 
-namespace MultiShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers
+namespace MultiShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers;
+
+public class GetOrderDetailQueryHandler
 {
-    public class GetOrderDetailQueryHandler
+    private readonly IRepository<OrderDetail> _orderDetailRepository;
+
+    public GetOrderDetailQueryHandler(IRepository<OrderDetail> orderDetailRepository)
     {
-        private readonly IRepository<OrderDetail> _repository;
+        _orderDetailRepository = orderDetailRepository;
+    }
 
-        public GetOrderDetailQueryHandler(IRepository<OrderDetail> repository)
+    public async Task<List<GetOrderDetailQueryResult>> Handle()
+    {
+        var orderDetails = await _orderDetailRepository.GetAllAsync();
+        return orderDetails.Select(order => new GetOrderDetailQueryResult
         {
-            _repository = repository;
-        }
-
-        public async Task<List<GetOrderDetailQueryResult>> Handle()
-        {
-            var values = await _repository.GetAllAsync();
-            return values.Select(x=> new GetOrderDetailQueryResult
-            {
-                OrderDetailId = x.OrderDetailId,
-                OrderingId = x.OrderingId,  
-                ProductAmount = x.ProductAmount,
-                ProductId = x.ProductId,  
-                ProductName = x.ProductName,    
-                ProductPrice = x.ProductPrice,
-                ProductTotalPrice = x.ProductTotalPrice
-            }).ToList();
-        }
+            OrderDetailId = order.OrderDetailId,
+            OrderingId = order.OrderingId,
+            ProductAmount = order.ProductAmount,
+            ProductId = order.ProductId,
+            ProductName = order.ProductName,
+            ProductPrice = order.ProductPrice,
+            ProductTotalPrice = order.ProductTotalPrice
+        }).ToList();
     }
 }

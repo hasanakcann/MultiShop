@@ -6,20 +6,22 @@ namespace MultiShop.Order.Application.Features.CQRS.Handlers.AddressHandlers;
 
 public class UpdateAddressCommandHandler
 {
-    private readonly IRepository<Address> _repository;
+    private readonly IRepository<Address> _addressRepository;
 
-    public UpdateAddressCommandHandler(IRepository<Address> repository)
+    public UpdateAddressCommandHandler(IRepository<Address> addressRepository)
     {
-        _repository = repository;
+        _addressRepository = addressRepository;
     }
 
     public async Task Handle(UpdateAddressCommand command)
     {
-        var values = await _repository.GetByIdAsync(command.AddressId);
-        values.Detail1 = command.Detail;
-        values.District = command.District;
-        values.City = command.City;
-        values.UserId = command.UserId;
-        await _repository.UpdateAsync(values);
+        var address = await _addressRepository.GetByIdAsync(command.AddressId);
+
+        address.Detail1 = command.Detail;
+        address.District = command.District;
+        address.City = command.City;
+        address.UserId = command.UserId;
+
+        await _addressRepository.UpdateAsync(address);
     }
 }

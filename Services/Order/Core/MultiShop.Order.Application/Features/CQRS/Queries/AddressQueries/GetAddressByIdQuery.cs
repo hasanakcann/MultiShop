@@ -1,12 +1,10 @@
-﻿namespace MultiShop.Order.Application.Features.CQRS.Queries.AddressQueries
-{
-    public class GetAddressByIdQuery
-    {
-        public int Id { get; set; }
+﻿namespace MultiShop.Order.Application.Features.CQRS.Queries.AddressQueries;
 
-        public GetAddressByIdQuery(int id)
-        {
-            Id = id;
-        }
+public class GetAddressByIdQuery
+{
+    public int Id { get; set; }
+    public GetAddressByIdQuery(int id)
+    {
+        Id = id;
     }
 }

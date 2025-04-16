@@ -6,7 +6,7 @@ using MultiShop.Order.Application.Features.CQRS.Queries.AddressQueries;
 
 namespace MultiShop.Order.WebApi.Controllers;
 
-[Authorize]//Login olma zorunluluğu eklendi.
+//[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class AddressesController : ControllerBase
@@ -29,35 +29,35 @@ public class AddressesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> AddressList()
     {
-        var values = await _getAddressQueryHandler.Handle();
-        return Ok(values);
+        var addressList = await _getAddressQueryHandler.Handle();
+        return Ok(addressList);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAddressById(int id)
     {
-        var values = await _getAddressByIdQueryHandler.Handle(new GetAddressByIdQuery(id));
-        return Ok(values);
+        var address = await _getAddressByIdQueryHandler.Handle(new GetAddressByIdQuery(id));
+        return Ok(address);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateAddress(CreateAddressCommand command)
     {
         await _createAddressCommandHandler.Handle(command);
-        return Ok("Adres bilgisi başarıyla eklendi.");
+        return Ok("Address information has been successfully added.");
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateAddress(UpdateAddressCommand command)
     {
-        await _updateAddressCommandHandler.Handle(command);
-        return Ok("Adres bilgisi başarıyla güncellendi.");
+        await _updateAddressCommandHandler.Handle(command);  
+        return Ok("Address information has been successfully updated.");
     }
 
     [HttpDelete]
     public async Task<IActionResult> RemoveAddress(int id)
     {
         await _removeAddressCommandHandler.Handle(new RemoveAddressCommand(id));
-        return Ok("Adres bilgisi başarıyla silindi.");
+        return Ok("Address information has been successfully deleted.");
     }
 }

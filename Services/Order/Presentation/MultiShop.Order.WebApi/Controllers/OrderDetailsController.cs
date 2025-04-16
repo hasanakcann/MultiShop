@@ -6,7 +6,7 @@ using MultiShop.Order.Application.Features.CQRS.Queries.OrderDetailQueries;
 
 namespace MultiShop.Order.WebApi.Controllers;
 
-[Authorize]//Login olma zorunluluğu eklendi.
+//[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class OrderDetailsController : ControllerBase
@@ -29,35 +29,35 @@ public class OrderDetailsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> OrderDetailList()
     {
-        var values = await _getOrderDetailQueryHandler.Handle();
-        return Ok(values);
+        var orderDetails = await _getOrderDetailQueryHandler.Handle();
+        return Ok(orderDetails);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetOrderDetailById(int id)
     {
-        var values = await _getOrderDetailByIdQueryHandler.Handle(new GetOrderDetailByIdQuery(id));
-        return Ok(values);
+        var orderDetail = await _getOrderDetailByIdQueryHandler.Handle(new GetOrderDetailByIdQuery(id));
+        return Ok(orderDetail);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateOrderDetail(CreateOrderDetailCommand command)
     {
         await _createOrderDetailCommandHandler.Handle(command);
-        return Ok("Sipariş detayı başarıyla eklendi.");
+        return Ok("Order detail has been successfully added.");
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateOrderDetail(UpdateOrderDetailCommand command)
     {
         await _updateOrderDetailCommandHandler.Handle(command);
-        return Ok("Sipariş detayı başarıyla güncellendi.");
+        return Ok("Order detail has been successfully updated.");
     }
 
     [HttpDelete]
     public async Task<IActionResult> RemoveOrderDetail(int id)
     {
         await _removeOrderDetailCommandHandler.Handle(new RemoveOrderDetailCommand(id));
-        return Ok("Sipariş detayı başarıyla silindi.");
+        return Ok("Order detail has been successfully deleted.");
     }
 }

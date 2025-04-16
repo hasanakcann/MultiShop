@@ -2,21 +2,20 @@
 using MultiShop.Order.Application.Interfaces;
 using MultiShop.Order.Domain.Entities;
 
-namespace MultiShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers
+namespace MultiShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers;
+
+public class RemoveOrderDetailCommandHandler
 {
-    public class RemoveOrderDetailCommandHandler
+    private readonly IRepository<OrderDetail> _orderDetailRepository;
+
+    public RemoveOrderDetailCommandHandler(IRepository<OrderDetail> orderDetailRepository)
     {
-        private readonly IRepository<OrderDetail> _repository;
+        _orderDetailRepository = orderDetailRepository;
+    }
 
-        public RemoveOrderDetailCommandHandler(IRepository<OrderDetail> repository)
-        {
-            _repository = repository;
-        }
-
-        public async Task Handle(RemoveOrderDetailCommand command)
-        {
-            var value = await _repository.GetByIdAsync(command.Id);
-            await _repository.DeleteAsync(value);
-        }
+    public async Task Handle(RemoveOrderDetailCommand command)
+    {
+        var orderDetailToRemove = await _orderDetailRepository.GetByIdAsync(command.Id);
+        await _orderDetailRepository.DeleteAsync(orderDetailToRemove);
     }
 }

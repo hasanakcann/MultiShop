@@ -4,27 +4,26 @@ using MultiShop.Order.Application.Features.Mediator.Results.OrderingResults;
 using MultiShop.Order.Application.Interfaces;
 using MultiShop.Order.Domain.Entities;
 
-namespace MultiShop.Order.Application.Features.Mediator.Handlers.OrderingHandlers
+namespace MultiShop.Order.Application.Features.Mediator.Handlers.OrderingHandlers;
+
+public class GetOrderingByIdQueryHandler : IRequestHandler<GetOrderingByIdQuery, GetOrderingByIdQueryResult>
 {
-    public class GetOrderingByIdQueryHandler : IRequestHandler<GetOrderingByIdQuery, GetOrderingByIdQueryResult>
+    private readonly IRepository<Ordering> _repository;
+
+    public GetOrderingByIdQueryHandler(IRepository<Ordering> repository)
     {
-        private readonly IRepository<Ordering> _repository;
+        _repository = repository;
+    }
 
-        public GetOrderingByIdQueryHandler(IRepository<Ordering> repository)
+    public async Task<GetOrderingByIdQueryResult> Handle(GetOrderingByIdQuery request, CancellationToken cancellationToken)
+    {
+        var values = await _repository.GetByIdAsync(request.Id);
+        return new GetOrderingByIdQueryResult
         {
-            _repository = repository;
-        }
-
-        public async Task<GetOrderingByIdQueryResult> Handle(GetOrderingByIdQuery request, CancellationToken cancellationToken)
-        {
-            var values = await _repository.GetByIdAsync(request.Id);
-            return new GetOrderingByIdQueryResult
-            {
-                OrderingId = values.OrderingId,
-                OrderDate = values.OrderDate,
-                TotalPrice = values.TotalPrice,
-                UserId = values.UserId
-            };
-        }
+            OrderingId = values.OrderingId,
+            OrderDate = values.OrderDate,
+            TotalPrice = values.TotalPrice,
+            UserId = values.UserId
+        };
     }
 }

@@ -24,7 +24,6 @@ builder.Services.AddApplicationService(builder.Configuration);
 #endregion
 
 #region CQRS Registration
-//Handler'lar servis örneklerimiz oluyor.
 builder.Services.AddScoped<GetAddressQueryHandler>();
 builder.Services.AddScoped<GetAddressByIdQueryHandler>();
 builder.Services.AddScoped<CreateAddressCommandHandler>();
@@ -39,14 +38,11 @@ builder.Services.AddScoped<RemoveOrderDetailCommandHandler>();
 #endregion
 
 #region Authentication
-//JwtBearer token geçerliliğini kontrol eden pakettir.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
-    //Authority JwtBearer'ı kiminle kullanıcağını belirtir. IdentityServerUrl appsettings.json'dan gelir.
-    //Order mikro servisi ayağa kalkarken IdentityServer mikro servisi de ayağa kalkar.
     options.Authority = builder.Configuration["IdentityServerUrl"];
-    options.Audience = "ResourceOrder";//Config tarafında dinleyici olan key ResourceOrder ApiResource setlenir.
-    options.RequireHttpsMetadata = false;//IdentityServerUrl http olduğu için false set edildi.
+    options.Audience = "ResourceOrder";
+    options.RequireHttpsMetadata = false;
 });
 #endregion
 

@@ -1,26 +1,10 @@
-﻿namespace MultiShop.Order.Application.Features.CQRS.Commands.AddressCommands
+﻿namespace MultiShop.Order.Application.Features.CQRS.Commands.AddressCommands;
+
+public class UpdateAddressCommand
 {
-    public class UpdateAddressCommand
-    {
-        /// <summary>
-        ///     Adres id bilgisidir.
-        /// </summary>
-        public int AddressId { get; set; }
-        /// <summary>
-        ///     Kullanıcı id bilgisidir.
-        /// </summary>
-        public string UserId { get; set; }
-        /// <summary>
-        ///     İlçe bilgisidir.
-        /// </summary>
-        public string District { get; set; }
-        /// <summary>
-        ///      Şehir bilgisidir.
-        /// </summary>
-        public string City { get; set; }
-        /// <summary>
-        ///     Detay bilgisidir. Apt.no cad.no bina no gibi bilgilerdir.
-        /// </summary>
-        public string Detail { get; set; }
-    }
+    public int AddressId { get; set; }
+    public string UserId { get; set; }
+    public string District { get; set; }
+    public string City { get; set; }
+    public string Detail { get; set; }
 }
