@@ -107,6 +107,27 @@ Mikro servis mimarisi, bir uygulamanın küçük, bağımsız çalışan servisl
 
 ![image](https://github.com/user-attachments/assets/6bd2f7a4-6929-4390-9846-77f9a22fb418)
 
+## HttpClient ve HttpClientFactory Kullanımı
+
+### HttpClient
+
+HttpClient, .NET içerisinde HTTP istekleri yapmak için kullanılan bir sınıftır. 
+
+❗ Sorun: HttpClient'in yanlış kullanımı
+
+Çoğu geliştirici HttpClient nesnesini her istekte yeniden oluşturur, bu da socket exhaustion (soket tükenmesi) sorununa neden olabilir. Çünkü HttpClient arka planda bağlantıları kapatmaz, TCP bağlantıları bir süre açık kalır.
+
+### Http Client Factory
+
+IHttpClientFactory, .NET Core 2.1+ ile gelen bir yapıdır ve HttpClient'in doğru ve verimli yönetilmesini sağlar. Dependency Injection ile birlikte çalışır.
+
+![image](https://github.com/user-attachments/assets/2cd55a64-73de-431a-b1f3-5f5107ea0589)
+
+✅ Sonuç
+
+- Küçük ve tek seferlik bir uygulama yazıyorsan HttpClient kullanılabilir.
+- Ancak gerçek bir uygulama, çoklu servis çağrıları ya da yük altında çalışan bir servis geliştiriyorsan, IHttpClientFactory kesinlikle tercih edilmelidir.
+
 ## Api Gateway
 
 ![image](https://github.com/user-attachments/assets/7c022acf-b5d0-41f6-bd1c-cecbf02f1310)
