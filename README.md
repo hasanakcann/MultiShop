@@ -22,6 +22,7 @@
 - [EventBus](#eventbus)
 - [Outbox Pattern](#outbox-pattern)
 - [Domain-Driven Design (DDD)](#domain-driven-design-ddd)
+- [Docker](#docker)
 
 ## Solid Prensibles
 
@@ -95,6 +96,20 @@ Bu prensip, yüksek seviyeli modüllerin düşük seviyeli modüllere değil, he
 - MultiShop.Order.Domain
 - MultiShop.Order.Persistance
 - MultiShop.Order.WebApi
+
+Docker üzerinden OrderDb ayağa kaldırıldı.
+
+Docker yönetimi Portainer arayüzü üzerinden sağlandı.
+
+**Docker Download:**
+
+https://www.docker.com/products/docker-desktop/
+
+**Portainer Download:**
+
+docker volume create portainer_data
+
+docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 
 ## Mikroservis Mimarisi
 
@@ -433,10 +448,21 @@ Domain-Driven Design (DDD), karmaşık yazılım sistemlerinin, iş alanı (doma
 
 ![image](https://github.com/user-attachments/assets/ed334714-33ce-467c-8031-ca67b7f9a921)
 
+### Portainer
 
+- Portainer, Docker ve Kubernetes gibi konteyner orkestrasyon platformlarının yönetimini kolaylaştıran bir açık kaynaklı web tabanlı yönetim aracıdır.
+- Portainer, Docker ortamlarını ve Kubernetes kümelerini görsel bir arayüz üzerinden yönetmenizi sağlar. Yani, Docker konteynerlerini ve Kubernetes pod’larını terminal komutları yazmak yerine grafiksel bir arayüz üzerinden yönetmek için kullanılır.
 
+### DBeaver
 
+**DBeaver Download:**
 
+https://dbeaver.io/
+
+- DBeaver, veritabanı yönetimi ve SQL geliştirme için kullanılan popüler bir açık kaynaklı, çok platformlu (Windows, macOS, Linux) veritabanı istemcisi ve yönetim aracıdır.
+- DBeaver, SQL sorguları yazmak, veritabanlarını yönetmek, verileri görselleştirmek ve daha birçok veritabanı işlemini kolayca gerçekleştirmek için kullanılan güçlü bir araçtır.
+- DBeaver, relational (ilişkisel) ve non-relational (ilişkisiz) birçok veritabanı sistemini destekler.
+- DBeaver’ın en büyük avantajlarından biri, çoklu veritabanı sistemlerini tek bir arabirimde desteklemesidir.
 
 
 
