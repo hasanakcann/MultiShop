@@ -8,22 +8,35 @@ namespace MultiShop.Order.Application.Features.Mediator.Handlers.OrderingHandler
 
 public class GetOrderingQueryHandler : IRequestHandler<GetOrderingQuery, List<GetOrderingQueryResult>>
 {
-    private readonly IRepository<Ordering> _repository;
+    private readonly IRepository<Ordering> _orderingRepository;
 
-    public GetOrderingQueryHandler(IRepository<Ordering> repository)
+    public GetOrderingQueryHandler(IRepository<Ordering> orderingRepository)
     {
-        _repository = repository;
+        _orderingRepository = orderingRepository;
     }
 
     public async Task<List<GetOrderingQueryResult>> Handle(GetOrderingQuery request, CancellationToken cancellationToken)
     {
-        var values = await _repository.GetAllAsync();
-        return values.Select(x => new GetOrderingQueryResult
+        try
         {
-            OrderingId = x.OrderingId,
-            OrderDate = x.OrderDate,
-            TotalPrice = x.TotalPrice,
-            UserId = x.UserId
-        }).ToList();
+            var orderings = await _orderingRepository.GetAllAsync();
+
+            if (orderings == null || !orderings.Any())
+                return new List<GetOrderingQueryResult>();
+
+            var result = orderings.Select(ordering => new GetOrderingQueryResult
+            {
+                OrderingId = ordering.OrderingId,
+                OrderDate = ordering.OrderDate,
+                TotalPrice = ordering.TotalPrice,
+                UserId = ordering.UserId
+            }).ToList();
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving the orders.", ex);
+        }
     }
 }

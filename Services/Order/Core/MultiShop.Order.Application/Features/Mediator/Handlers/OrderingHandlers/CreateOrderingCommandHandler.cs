@@ -7,20 +7,29 @@ namespace MultiShop.Order.Application.Features.Mediator.Handlers.OrderingHandler
 
 public class CreateOrderingCommandHandler : IRequestHandler<CreateOrderingCommand>
 {
-    private readonly IRepository<Ordering> _repository;
+    private readonly IRepository<Ordering> _orderingRepository;
 
-    public CreateOrderingCommandHandler(IRepository<Ordering> repository)
+    public CreateOrderingCommandHandler(IRepository<Ordering> orderingRepository)
     {
-        _repository = repository;
+        _orderingRepository = orderingRepository;
     }
 
     public async Task Handle(CreateOrderingCommand request, CancellationToken cancellationToken)
     {
-        await _repository.CreateAsync(new Ordering
+        try
         {
-            OrderDate = request.OrderDate,
-            TotalPrice = request.TotalPrice,
-            UserId = request.UserId
-        });
+            var newOrdering = new Ordering
+            {
+                OrderDate = request.OrderDate,
+                TotalPrice = request.TotalPrice,
+                UserId = request.UserId
+            };
+
+            await _orderingRepository.CreateAsync(newOrdering);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while creating the order.", ex);
+        }
     }
 }

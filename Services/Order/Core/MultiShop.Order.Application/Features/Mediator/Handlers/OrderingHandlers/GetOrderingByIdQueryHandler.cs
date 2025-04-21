@@ -8,22 +8,33 @@ namespace MultiShop.Order.Application.Features.Mediator.Handlers.OrderingHandler
 
 public class GetOrderingByIdQueryHandler : IRequestHandler<GetOrderingByIdQuery, GetOrderingByIdQueryResult>
 {
-    private readonly IRepository<Ordering> _repository;
+    private readonly IRepository<Ordering> _orderingRepository;
 
-    public GetOrderingByIdQueryHandler(IRepository<Ordering> repository)
+    public GetOrderingByIdQueryHandler(IRepository<Ordering> orderingRepository)
     {
-        _repository = repository;
+        _orderingRepository = orderingRepository;
     }
 
     public async Task<GetOrderingByIdQueryResult> Handle(GetOrderingByIdQuery request, CancellationToken cancellationToken)
     {
-        var values = await _repository.GetByIdAsync(request.Id);
-        return new GetOrderingByIdQueryResult
+        try
         {
-            OrderingId = values.OrderingId,
-            OrderDate = values.OrderDate,
-            TotalPrice = values.TotalPrice,
-            UserId = values.UserId
-        };
+            var ordering = await _orderingRepository.GetByIdAsync(request.Id);
+
+            if (ordering == null)
+                throw new ApplicationException($"Ordering with ID {request.Id} was not found.");
+
+            return new GetOrderingByIdQueryResult
+            {
+                OrderingId = ordering.OrderingId,
+                OrderDate = ordering.OrderDate,
+                TotalPrice = ordering.TotalPrice,
+                UserId = ordering.UserId
+            };
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving the order by ID.", ex);
+        }
     }
 }

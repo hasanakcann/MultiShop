@@ -7,16 +7,27 @@ namespace MultiShop.Order.Application.Features.Mediator.Handlers.OrderingHandler
 
 public class RemoveOrderingCommandHandler : IRequestHandler<RemoveOrderingCommand>
 {
-    private readonly IRepository<Ordering> _repository;
+    private readonly IRepository<Ordering> _orderingRepository;
 
-    public RemoveOrderingCommandHandler(IRepository<Ordering> repository)
+    public RemoveOrderingCommandHandler(IRepository<Ordering> orderingRepository)
     {
-        _repository = repository;
+        _orderingRepository = orderingRepository;
     }
 
     public async Task Handle(RemoveOrderingCommand request, CancellationToken cancellationToken)
     {
-        var values = await _repository.GetByIdAsync(request.Id);
-        await _repository.DeleteAsync(values);
+        try
+        {
+            var orderingToRemove = await _orderingRepository.GetByIdAsync(request.Id);
+
+            if (orderingToRemove == null)
+                throw new ApplicationException($"Ordering with ID {request.Id} not found.");
+
+            await _orderingRepository.DeleteAsync(orderingToRemove);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while removing the order.", ex);
+        }
     }
 }

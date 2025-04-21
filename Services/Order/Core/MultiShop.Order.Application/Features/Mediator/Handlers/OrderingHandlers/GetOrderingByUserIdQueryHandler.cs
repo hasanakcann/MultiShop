@@ -8,6 +8,7 @@ namespace MultiShop.Order.Application.Features.Mediator.Handlers.OrderingHandler
 public class GetOrderingByUserIdQueryHandler : IRequestHandler<GetOrderingByUserIdQuery, List<GetOrderingByUserIdQueryResult>>
 {
     private readonly IOrderingRepository _orderingRepository;
+
     public GetOrderingByUserIdQueryHandler(IOrderingRepository orderingRepository)
     {
         _orderingRepository = orderingRepository;
@@ -15,13 +16,24 @@ public class GetOrderingByUserIdQueryHandler : IRequestHandler<GetOrderingByUser
 
     public async Task<List<GetOrderingByUserIdQueryResult>> Handle(GetOrderingByUserIdQuery request, CancellationToken cancellationToken)
     {
-        var values = _orderingRepository.GetOrderingsByUserId(request.Id);
-        return values.Select(x => new GetOrderingByUserIdQueryResult
+        try
         {
-            OrderDate = x.OrderDate,
-            OrderingId = x.OrderingId,
-            TotalPrice = x.TotalPrice,
-            UserId = x.UserId
-        }).ToList();
+            var orderings = await _orderingRepository.GetOrderingsByUserIdAsync(request.Id);
+
+            if (orderings == null || !orderings.Any())
+                throw new ApplicationException($"No orders found for user with ID {request.Id}.");
+
+            return orderings.Select(order => new GetOrderingByUserIdQueryResult
+            {
+                OrderingId = order.OrderingId,
+                OrderDate = order.OrderDate,
+                TotalPrice = order.TotalPrice,
+                UserId = order.UserId
+            }).ToList();
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving orders for the user.", ex);
+        }
     }
 }

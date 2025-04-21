@@ -6,7 +6,7 @@ using MultiShop.Order.Application.Features.Mediator.Queries.OrderingQueries;
 
 namespace MultiShop.Order.WebApi.Controllers;
 
-[Authorize]//Login olma zorunluluğu eklendi.
+//[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class OrderingsController : ControllerBase
@@ -18,49 +18,45 @@ public class OrderingsController : ControllerBase
         _mediator = mediator;
     }
 
-    /// <summary>
-    ///     Mediator de handle metotlarına erişim için Send kullanılır.
-    ///     IRequest'i miras alan sınıf çağrılır.
-    /// </summary>
     [HttpGet]
     public async Task<IActionResult> OrderingList()
     {
-        var values = await _mediator.Send(new GetOrderingQuery());
-        return Ok(values);
+        var orderList = await _mediator.Send(new GetOrderingQuery());
+        return Ok(orderList);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetOrderingById(int id)
     {
-        var values = await _mediator.Send(new GetOrderingByIdQuery(id));
-        return Ok(values);
+        var order = await _mediator.Send(new GetOrderingByIdQuery(id));
+        return Ok(order);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateOrdering(CreateOrderingCommand command)
     {
         await _mediator.Send(command);
-        return Ok("Sipariş başarıyla eklendi.");
+        return Ok("Order has been successfully created.");
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateOrdering(UpdateOrderingCommand command)
     {
         await _mediator.Send(command);
-        return Ok("Sipariş başarıyla güncellendi.");
+        return Ok("Order has been successfully updated.");
     }
 
     [HttpDelete]
     public async Task<IActionResult> RemoveOrdering(int id)
     {
         await _mediator.Send(new RemoveOrderingCommand(id));
-        return Ok("Sipariş başarıyla silindi.");
+        return Ok("Order has been successfully deleted.");
     }
 
     [HttpGet("GetOrderingByUserId/{id}")]
     public async Task<IActionResult> GetOrderingByUserId(string id)
     {
-        var values = await _mediator.Send(new GetOrderingByUserIdQuery(id));
-        return Ok(values);
+        var userOrders = await _mediator.Send(new GetOrderingByUserIdQuery(id));
+        return Ok(userOrders);
     }
 }

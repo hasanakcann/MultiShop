@@ -7,19 +7,31 @@ namespace MultiShop.Order.Application.Features.Mediator.Handlers.OrderingHandler
 
 public class UpdateOrderingCommandHandler : IRequestHandler<UpdateOrderingCommand>
 {
-    private readonly IRepository<Ordering> _repository;
+    private readonly IRepository<Ordering> _orderingRepository;
 
-    public UpdateOrderingCommandHandler(IRepository<Ordering> repository)
+    public UpdateOrderingCommandHandler(IRepository<Ordering> orderingRepository)
     {
-        _repository = repository;
+        _orderingRepository = orderingRepository;
     }
 
     public async Task Handle(UpdateOrderingCommand request, CancellationToken cancellationToken)
     {
-        var values = await _repository.GetByIdAsync(request.OrderingId);
-        values.UserId = request.UserId;
-        values.TotalPrice = request.TotalPrice;
-        values.OrderDate = request.OrderDate;
-        await _repository.UpdateAsync(values);
+        try
+        {
+            var orderingToUpdate = await _orderingRepository.GetByIdAsync(request.OrderingId);
+
+            if (orderingToUpdate == null)
+                throw new ApplicationException($"Ordering with ID {request.OrderingId} not found.");
+
+            orderingToUpdate.UserId = request.UserId;
+            orderingToUpdate.TotalPrice = request.TotalPrice;
+            orderingToUpdate.OrderDate = request.OrderDate;
+
+            await _orderingRepository.UpdateAsync(orderingToUpdate);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while updating the order.", ex);
+        }
     }
 }
