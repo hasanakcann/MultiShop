@@ -258,6 +258,10 @@ Onion mimarisi, N-tier katmanlı mimarinin ileride yaşatacağı sorunları çö
 
 ![image](https://github.com/user-attachments/assets/8c10e9f8-7914-4d10-8ce4-2151838b0eac)
 
+**Folder Structure:** 
+
+![image](https://github.com/user-attachments/assets/c7fa97ae-c5ff-41ee-9178-1224fd922870)
+
 ## Repository
 
 ![image](https://github.com/user-attachments/assets/611f10aa-1227-4519-b13c-9463d4a61a5f)
