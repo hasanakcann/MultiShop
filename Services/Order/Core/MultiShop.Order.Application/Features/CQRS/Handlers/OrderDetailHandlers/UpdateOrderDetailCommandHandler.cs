@@ -15,15 +15,32 @@ public class UpdateOrderDetailCommandHandler
 
     public async Task Handle(UpdateOrderDetailCommand command)
     {
-        var existingOrderDetail = await _orderDetailRepository.GetByIdAsync(command.OrderDetailId);
+        if (command == null)
+        {
+            throw new ArgumentNullException(nameof(command), "UpdateOrderDetailCommand cannot be null.");
+        }
 
-        existingOrderDetail.OrderingId = command.OrderingId;
-        existingOrderDetail.ProductId = command.ProductId;
-        existingOrderDetail.ProductName = command.ProductName;
-        existingOrderDetail.ProductPrice = command.ProductPrice;
-        existingOrderDetail.ProductTotalPrice = command.ProductTotalPrice;
-        existingOrderDetail.ProductAmount = command.ProductAmount;
+        try
+        {
+            var existingOrderDetail = await _orderDetailRepository.GetByIdAsync(command.OrderDetailId);
 
-        await _orderDetailRepository.UpdateAsync(existingOrderDetail);
+            if (existingOrderDetail == null)
+            {
+                throw new KeyNotFoundException($"Order detail with ID {command.OrderDetailId} not found.");
+            }
+
+            existingOrderDetail.OrderingId = command.OrderingId;
+            existingOrderDetail.ProductId = command.ProductId;
+            existingOrderDetail.ProductName = command.ProductName;
+            existingOrderDetail.ProductPrice = command.ProductPrice;
+            existingOrderDetail.ProductTotalPrice = command.ProductTotalPrice;
+            existingOrderDetail.ProductAmount = command.ProductAmount;
+
+            await _orderDetailRepository.UpdateAsync(existingOrderDetail);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while updating the order detail.", ex);
+        }
     }
 }

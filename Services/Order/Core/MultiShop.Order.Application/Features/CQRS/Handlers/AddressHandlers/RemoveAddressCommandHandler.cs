@@ -15,7 +15,25 @@ public class RemoveAddressCommandHandler
 
     public async Task Handle(RemoveAddressCommand command)
     {
+        if (command == null)
+        {
+            throw new ArgumentNullException(nameof(command), "RemoveAddressCommand cannot be null.");
+        }
+
         var address = await _addressRepository.GetByIdAsync(command.Id);
-        await _addressRepository.DeleteAsync(address);
+
+        if (address == null)
+        {
+            throw new KeyNotFoundException($"Address with ID {command.Id} not found.");
+        }
+
+        try
+        {
+            await _addressRepository.DeleteAsync(address);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while deleting the address.", ex);
+        }
     }
 }

@@ -15,15 +15,27 @@ public class GetAddressQueryHandler
 
     public async Task<List<GetAddressQueryResult>> Handle()
     {
-        var addressList = await _addressRepository.GetAllAsync();
-
-        return addressList.Select(address => new GetAddressQueryResult
+        try
         {
-            AddressId = address.AddressId,
-            City = address.City,
-            Detail = address.Detail1,
-            District = address.District,
-            UserId = address.UserId
-        }).ToList();
+            var addressList = await _addressRepository.GetAllAsync();
+
+            if (addressList == null || !addressList.Any())
+            {
+                return new List<GetAddressQueryResult>();
+            }
+
+            return addressList.Select(address => new GetAddressQueryResult
+            {
+                AddressId = address.AddressId,
+                City = address.City,
+                Detail = address.Detail1,
+                District = address.District,
+                UserId = address.UserId
+            }).ToList();
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving addresses.", ex);
+        }
     }
 }

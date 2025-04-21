@@ -15,6 +15,11 @@ public class CreateAddressCommandHandler
 
     public async Task Handle(CreateAddressCommand command)
     {
+        if (command == null)
+        {
+            throw new ArgumentNullException(nameof(command), "CreateAddressCommand cannot be null.");
+        }
+
         var newAddress = new Address
         {
             UserId = command.UserId,
@@ -30,6 +35,13 @@ public class CreateAddressCommandHandler
             Detail2 = command.Detail2
         };
 
-        await _addressRepository.CreateAsync(newAddress);
+        try
+        {
+            await _addressRepository.CreateAsync(newAddress);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while creating the address.", ex);
+        }
     }
 }

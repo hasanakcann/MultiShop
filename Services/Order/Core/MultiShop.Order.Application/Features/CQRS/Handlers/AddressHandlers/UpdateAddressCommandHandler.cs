@@ -17,11 +17,23 @@ public class UpdateAddressCommandHandler
     {
         var address = await _addressRepository.GetByIdAsync(command.AddressId);
 
+        if (address == null)
+        {
+            throw new KeyNotFoundException($"Address with ID {command.AddressId} not found.");
+        }
+
         address.Detail1 = command.Detail;
         address.District = command.District;
         address.City = command.City;
         address.UserId = command.UserId;
 
-        await _addressRepository.UpdateAsync(address);
+        try
+        {
+            await _addressRepository.UpdateAsync(address);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while updating the address.", ex);
+        }
     }
 }

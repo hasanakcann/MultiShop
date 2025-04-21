@@ -15,7 +15,25 @@ public class RemoveOrderDetailCommandHandler
 
     public async Task Handle(RemoveOrderDetailCommand command)
     {
-        var orderDetailToRemove = await _orderDetailRepository.GetByIdAsync(command.Id);
-        await _orderDetailRepository.DeleteAsync(orderDetailToRemove);
+        if (command == null)
+        {
+            throw new ArgumentNullException(nameof(command), "RemoveOrderDetailCommand cannot be null.");
+        }
+
+        try
+        {
+            var orderDetailToRemove = await _orderDetailRepository.GetByIdAsync(command.Id);
+
+            if (orderDetailToRemove == null)
+            {
+                throw new KeyNotFoundException($"Order detail with ID {command.Id} not found.");
+            }
+
+            await _orderDetailRepository.DeleteAsync(orderDetailToRemove);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while deleting the order detail.", ex);
+        }
     }
 }

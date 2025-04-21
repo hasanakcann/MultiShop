@@ -16,7 +16,17 @@ public class GetAddressByIdQueryHandler
 
     public async Task<GetAddressByIdQueryResult> Handle(GetAddressByIdQuery query)
     {
+        if (query == null)
+        {
+            throw new ArgumentNullException(nameof(query), "Query cannot be null.");
+        }
+
         var address = await _addressRepository.GetByIdAsync(query.Id);
+
+        if (address == null)
+        {
+            throw new KeyNotFoundException($"Address with ID {query.Id} not found.");
+        }
 
         return new GetAddressByIdQueryResult
         {

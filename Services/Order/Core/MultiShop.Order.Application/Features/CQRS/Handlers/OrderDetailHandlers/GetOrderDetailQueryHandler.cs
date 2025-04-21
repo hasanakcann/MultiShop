@@ -15,16 +15,29 @@ public class GetOrderDetailQueryHandler
 
     public async Task<List<GetOrderDetailQueryResult>> Handle()
     {
-        var orderDetails = await _orderDetailRepository.GetAllAsync();
-        return orderDetails.Select(order => new GetOrderDetailQueryResult
+        try
         {
-            OrderDetailId = order.OrderDetailId,
-            OrderingId = order.OrderingId,
-            ProductAmount = order.ProductAmount,
-            ProductId = order.ProductId,
-            ProductName = order.ProductName,
-            ProductPrice = order.ProductPrice,
-            ProductTotalPrice = order.ProductTotalPrice
-        }).ToList();
+            var orderDetails = await _orderDetailRepository.GetAllAsync();
+
+            if (orderDetails == null || !orderDetails.Any())
+            {
+                return new List<GetOrderDetailQueryResult>();
+            }
+
+            return orderDetails.Select(order => new GetOrderDetailQueryResult
+            {
+                OrderDetailId = order.OrderDetailId,
+                OrderingId = order.OrderingId,
+                ProductAmount = order.ProductAmount,
+                ProductId = order.ProductId,
+                ProductName = order.ProductName,
+                ProductPrice = order.ProductPrice,
+                ProductTotalPrice = order.ProductTotalPrice
+            }).ToList();
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving order details.", ex);
+        }
     }
 }

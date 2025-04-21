@@ -16,16 +16,34 @@ public class GetOrderDetailByIdQueryHandler
 
     public async Task<GetOrderDetailByIdQueryResult> Handle(GetOrderDetailByIdQuery query)
     {
-        var orderDetail = await _orderDetailRepository.GetByIdAsync(query.Id);
-        return new GetOrderDetailByIdQueryResult
+        if (query == null)
         {
-            OrderDetailId = orderDetail.OrderDetailId,
-            OrderingId = orderDetail.OrderingId,
-            ProductAmount = orderDetail.ProductAmount,
-            ProductId = orderDetail.ProductId,
-            ProductName = orderDetail.ProductName,
-            ProductPrice = orderDetail.ProductPrice,
-            ProductTotalPrice = orderDetail.ProductTotalPrice
-        };
+            throw new ArgumentNullException(nameof(query), "Query cannot be null.");
+        }
+
+        try
+        {
+            var orderDetail = await _orderDetailRepository.GetByIdAsync(query.Id);
+
+            if (orderDetail == null)
+            {
+                throw new KeyNotFoundException($"Order detail with ID {query.Id} not found.");
+            }
+
+            return new GetOrderDetailByIdQueryResult
+            {
+                OrderDetailId = orderDetail.OrderDetailId,
+                OrderingId = orderDetail.OrderingId,
+                ProductAmount = orderDetail.ProductAmount,
+                ProductId = orderDetail.ProductId,
+                ProductName = orderDetail.ProductName,
+                ProductPrice = orderDetail.ProductPrice,
+                ProductTotalPrice = orderDetail.ProductTotalPrice
+            };
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving the order detail.", ex);
+        }
     }
 }
