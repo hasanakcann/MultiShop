@@ -415,11 +415,23 @@ Domain-Driven Design (DDD), karmaşık yazılım sistemlerinin, iş alanı (doma
 
 ![image](https://github.com/user-attachments/assets/9f500d73-78bb-46be-8b14-a0ca55fd0a43)
 
+## Docker
 
+![image](https://github.com/user-attachments/assets/f4e9778a-0b7c-475a-a6c0-750a1482e050)
 
+![image](https://github.com/user-attachments/assets/ddf3b161-6f01-4c28-8ef5-c901fea07808)
 
+![image](https://github.com/user-attachments/assets/c954901d-d587-49b2-904c-77aac36dccd7)
 
+![image](https://github.com/user-attachments/assets/cf9eda24-1c3e-41ae-a3a1-6607a20d85ea)
 
+🐳 Ne Zaman Docker Kullanılmalı?
+
+![image](https://github.com/user-attachments/assets/5226ba48-4fc5-41ce-b7ff-8c01764845e8)
+
+🖥️ Ne Zaman VM (Sanal Makine) Kullanılmalı?
+
+![image](https://github.com/user-attachments/assets/ed334714-33ce-467c-8031-ca67b7f9a921)
 
 
 
