@@ -464,6 +464,68 @@ https://dbeaver.io/
 - DBeaver, relational (ilişkisel) ve non-relational (ilişkisiz) birçok veritabanı sistemini destekler.
 - DBeaver’ın en büyük avantajlarından biri, çoklu veritabanı sistemlerini tek bir arabirimde desteklemesidir.
 
+## Identity Server
+
+**IdentityServer4, OpenId Connect (Authentication) ve OAuth 2.0 (Authorization) protokollerini implement eden , uygulayan bir frameworktür.** 
+
+- Identity Server, kimlik doğrulama (authentication) ve yetkilendirme (authorization) işlemlerini merkezi olarak yönetmek için kullanılan bir açık kaynaklı framework'tür.
+- .NET platformu üzerinde geliştirilmiştir ve genellikle OAuth 2.0 ve OpenID Connect protokollerini uygular.
+
+![image](https://github.com/user-attachments/assets/49197fa1-a2d1-4a53-a49f-5e8744fda0d5)
+
+![image](https://github.com/user-attachments/assets/e02243d8-e20a-4944-a2b4-11029cc9d0db)
+
+🎯 Ne Zaman Kullanmalısın?
+
+- Uygulamalar arasında SSO (Single Sign-On) ihtiyacı varsa
+- Birden fazla istemci türü varsa (web, mobil, api)
+- Mikroservis mimarisi kullanıyorsan ve merkezi authentication yönetimi gerekiyorsa
+- OAuth2 / OIDC standartlarına uyan bir yapı gerekiyorsa
+
+- **OAuth 2.0, “neye erişebilirim?” sorusunu çözer.**
+- **OpenID Connect, “kim bu kullanıcı?” sorusunu cevaplar.**
+
+OAuth 2.0, kullanıcıların kimlik bilgilerini paylaşmadan, bir uygulamanın başka bir kaynağa (API, servis vb.) sınırlı erişim yetkisi almasını sağlayan bir yetkilendirme protokolüdür.
+
+![image](https://github.com/user-attachments/assets/320bce1f-4f0e-40e1-bb47-1822f7ab4432)
+
+OpenID Connect (OIDC), OAuth 2.0 üzerine inşa edilmiş bir kimlik doğrulama (authentication) protokolüdür. Yani OAuth 2.0’ın yetkilendirme (authorization) mekanizmasını kullanarak kullanıcının kim olduğunu da doğrulamanı sağlar.
+
+![image](https://github.com/user-attachments/assets/8ade432e-c07b-44fb-a0c4-ca8cd55794ae)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
