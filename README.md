@@ -1,7 +1,7 @@
 ![image](https://github.com/user-attachments/assets/db402f27-e8fb-4157-a739-fb69c52e0420)
 
 <details>
-  <summary>🧱 Mimari ve Prensipler</summary>
+  <summary>🧱 Mikroservis Mimarisi ve Yazılım Prensipleri</summary>
 
 - [Mikroservis Mimarisi](#mikroservis-mimarisi)
 - [Mikroservisler](#mikroservisler)
@@ -12,7 +12,7 @@
 </details>
 
 <details>
-  <summary>⚙️ Uygulama Katmanları ve Yapılar</summary>
+  <summary>🧩 Yazılım Mimarileri ve Tasarım Desenleri</summary>
 
 - [Repository](#repository)
 - [Unit of Work (UoW)](#unit-of-work-uow)
@@ -21,10 +21,18 @@
 - [Fluent Validation](#fluent-validation)
 - [DTO (Data Transfer Object)](#dto-data-transfer-object)
 - [AutoMapper](#automapper)
+- [Singleton, Scoped ve Transient Kavramları](#singleton-scoped-ve-transient-kavramları)
 </details>
 
 <details>
-  <summary>🧵 Asenkron Yapılar ve Messaging</summary>
+  <summary>⚙️ HTTP İletişimi ve API Yönetimi</summary>
+
+- [HttpClient ve HttpClientFactory Kullanımı](#httpclient-ve-httpclientfactory-kullanımı)
+- [Api Gateway](#api-gateway)
+</details>
+
+<details>
+  <summary>🧵 Asenkron İletişim ve Mesajlaşma</summary>
 
 - [Asenkron Programlama](#asenkron-programlama)
 - [Saga](#saga)
@@ -33,28 +41,24 @@
 </details>
 
 <details>
-  <summary>📡 HTTP ve Gateway</summary>
-
-- [HttpClient ve HttpClientFactory Kullanımı](#httpclient-ve-httpclientfactory-kullanımı)
-- [Api Gateway](#api-gateway)
-</details>
-
-<details>
-  <summary>🔐 Kimlik Doğrulama</summary>
+  <summary>🔐 Kimlik Doğrulama ve Yetkilendirme</summary>
 
 - [Identity Server](#identity-server)
 - [JWT](#jwt)
 </details>
 
 <details>
-  <summary>🛠️ Diğer Teknolojiler</summary>
+  <summary>💾 Veritabanı Teknolojileri</summary>
 
 - [MongoDb](#mongodb)
 - [Dapper](#dapper)
-- [Docker](#docker)
-- [Singleton, Scoped ve Transient Kavramları](#singleton-scoped-ve-transient-kavramları)
 </details>
 
+<details>
+  <summary>🐳 Konteynerleşme ve Dağıtım</summary>
+
+- [Docker](#docker)
+</details>
 
 ## Mikroservis Mimarisi
 
