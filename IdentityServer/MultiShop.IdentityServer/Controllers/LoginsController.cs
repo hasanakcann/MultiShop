@@ -20,29 +20,34 @@ public class LoginsController : ControllerBase
         _userManager = userManager;
     }
 
-    /// <summary>
-    ///     PasswordSignInAsync metodu ile login parametreleri kontrol edilir. 
-    ///     PasswordSignInAsync(string userName, string password, bool isPersistent, bool lockoutOnFailure) parametrelerini alır.
-    ///     isPersistent -> Beni hatırla anlamındadır, false verildi. 
-    ///     lockoutOnFailure -> Yeni bir kullanıcının kaydı gerçekleştikten sonra kullanıcı, UserName veya Password yanlış girdiği durumda AccessFailedCount değeri 1 artar. 5 olduğu durumda sistemde kullanıcı 5dk kilitlenir(lock). Bu durum gerçekleşmesin diye false set edildi.
-    /// </summary>
     [HttpPost]
     public async Task<IActionResult> UserLogin(UserLoginDto userLoginDto)
     {
-        var result = await _signInManager.PasswordSignInAsync(userLoginDto.UserName, userLoginDto.Password, false, false);
-        var user = await _userManager.FindByNameAsync(userLoginDto.UserName);
+        var signInResult = await _signInManager.PasswordSignInAsync(
+            userLoginDto.UserName,
+            userLoginDto.Password,
+            isPersistent: false,
+            lockoutOnFailure: false
+        );
 
-        if (result.Succeeded)
+        if (signInResult.Succeeded)
         {
-            GetCheckAppUserViewModel model = new GetCheckAppUserViewModel();
-            model.UserName = userLoginDto.UserName;
-            model.Id = user.Id;//Giriş yapan kullanıcının id bilgisidir.
-            var token = JwtTokenGenerator.GenerateToken(model);
+            var user = await _userManager.FindByNameAsync(userLoginDto.UserName);
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
+
+            var userInfo = new GetCheckAppUserViewModel
+            {
+                UserName = user.UserName,
+                Id = user.Id
+            };
+
+            var token = JwtTokenGenerator.GenerateToken(userInfo);
             return Ok(token);
         }
-        else
-        {
-            return Ok("Kullanıcı Adı veya Şifre Hatalı.");
-        }
+
+        return BadRequest("Invalid username or password.");
     }
 }

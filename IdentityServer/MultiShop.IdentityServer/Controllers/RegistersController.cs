@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MultiShop.IdentityServer.Dtos;
 using MultiShop.IdentityServer.Models;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MultiShop.IdentityServer.Controllers;
@@ -22,21 +23,22 @@ public class RegistersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> UserRegister(UserRegisterDto userRegisterDto)
     {
-        var values = new ApplicationUser()
+        var newUser = new ApplicationUser()
         {
             UserName = userRegisterDto.UserName,
             Name = userRegisterDto.Name,
             Surname = userRegisterDto.Surname,
             Email = userRegisterDto.Email
         };
-        var result = await _userManager.CreateAsync(values, userRegisterDto.Password);
-        if (result.Succeeded)
+
+        var createResult = await _userManager.CreateAsync(newUser, userRegisterDto.Password);
+
+        if (createResult.Succeeded)
         {
-            return Ok("Kullanıcı başarıyla eklendi.");
+            return Ok("User was successfully added.");
         }
-        else
-        {
-            return Ok("Bir hata oluştu, tekrar deneyiniz.");
-        }
+
+        var errorMessages = createResult.Errors.Select(e => e.Description).ToList();
+        return BadRequest(new { Message = "User registration failed.", Errors = errorMessages });
     }
 }
