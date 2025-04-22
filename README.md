@@ -1,8 +1,8 @@
 ![image](https://github.com/user-attachments/assets/db402f27-e8fb-4157-a739-fb69c52e0420)
 
-- [Solid Prensibles](#solid-prensibles)
-- [Mikroservisler](#mikroservisler)
 - [Mikroservis Mimarisi](#mikroservis-mimarisi)
+- [Mikroservisler](#mikroservisler)
+- [Solid Prensibles](#solid-prensibles)
 - [HttpClient ve HttpClientFactory Kullanımı](#httpclient-ve-httpclientfactory-kullanımı)
 - [Api Gateway](#api-gateway)
 - [Asenkron Programlama](#asenkron-programlama)
@@ -25,6 +25,61 @@
 - [Docker](#docker)
 - [Identity Server](#identity-server)
 - [JWT](#jwt)
+
+## Mikroservis Mimarisi
+
+Mikro servis mimarisi, bir uygulamanın küçük, bağımsız çalışan servisler (hizmetler) olarak geliştirilmesini ve bu servislerin birbiriyle genellikle HTTP/REST, gRPC veya mesaj kuyrukları (RabbitMQ, Kafka) gibi hafif iletişim protokolleri üzerinden haberleşmesini sağlayan mimari yaklaşımdır. Her mikro servis belirli bir işlevi yerine getirir ve genellikle bağımsız olarak dağıtılabilir, test edilebilir ve geliştirilebilir.
+
+![image](https://github.com/user-attachments/assets/6111c5a0-e7e3-4173-9187-fdc46cc36691)
+
+![image](https://github.com/user-attachments/assets/cc34de45-756b-4aef-8c32-41ce3b367192)
+
+![image](https://github.com/user-attachments/assets/8776da6f-a77e-4cba-acb3-0dc22d13ceae)
+
+![image](https://github.com/user-attachments/assets/6bd2f7a4-6929-4390-9846-77f9a22fb418)
+
+## Mikroservisler
+
+### 1. Catalog Micro Service
+
+**.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.**
+
+### 2. Discount Micro Service
+
+**.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.**
+
+### 3. Order Micro Service
+
+**.NET 8.0 ile Onion Architecture, CQRS, Mediator uygulanmıştır.**
+
+- MultiShop.Order.Application
+- MultiShop.Order.Domain
+- MultiShop.Order.Persistance
+- MultiShop.Order.WebApi
+
+Docker üzerinden OrderDb ayağa kaldırıldı.
+
+Docker yönetimi Portainer arayüzü üzerinden sağlandı.
+
+**Docker Download:**
+
+https://www.docker.com/products/docker-desktop/
+
+**Portainer Download:**
+
+docker volume create portainer_data
+
+docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+
+### 4. Cargo Micro Service
+
+**.NET 8.0 ile N-Tier Architecture uygulanmıştır.**
+
+- MultiShop.Cargo.BusinessLayer
+- MultiShop.Cargo.DataAccessLayer
+- MultiShop.Cargo.DtoLayer
+- MultiShop.Cargo.EntityLayer
+- MultiShop.Cargo.WebApi
 
 ## Solid Prensibles
 
@@ -79,61 +134,6 @@ Bu prensip, yüksek seviyeli modüllerin düşük seviyeli modüllere değil, he
 - LSP ile farklı ürün tiplerini veya ödeme yöntemlerini kolayca ekleyebilirsiniz
 - ISP ile her modül sadece ihtiyaç duyduğu arayüzlere bağımlı olur
 - DIP ile farklı envanter servisleri veya veri kaynaklarını kolayca değiştirebilirsiniz
-
-## Mikroservisler
-
-### Catalog Micro Service
-
-**.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.**
-
-### Discount Micro Service
-
-**.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.**
-
-### Order Micro Service
-
-**.NET 8.0 ile Onion Architecture, CQRS, Mediator uygulanmıştır.**
-
-- MultiShop.Order.Application
-- MultiShop.Order.Domain
-- MultiShop.Order.Persistance
-- MultiShop.Order.WebApi
-
-Docker üzerinden OrderDb ayağa kaldırıldı.
-
-Docker yönetimi Portainer arayüzü üzerinden sağlandı.
-
-**Docker Download:**
-
-https://www.docker.com/products/docker-desktop/
-
-**Portainer Download:**
-
-docker volume create portainer_data
-
-docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
-
-### Cargo Micro Service
-
-**.NET 8.0 ile N-Tier Architecture uygulanmıştır.**
-
-- MultiShop.Cargo.BusinessLayer
-- MultiShop.Cargo.DataAccessLayer
-- MultiShop.Cargo.DtoLayer
-- MultiShop.Cargo.EntityLayer
-- MultiShop.Cargo.WebApi
-
-## Mikroservis Mimarisi
-
-Mikro servis mimarisi, bir uygulamanın küçük, bağımsız çalışan servisler (hizmetler) olarak geliştirilmesini ve bu servislerin birbiriyle genellikle HTTP/REST, gRPC veya mesaj kuyrukları (RabbitMQ, Kafka) gibi hafif iletişim protokolleri üzerinden haberleşmesini sağlayan mimari yaklaşımdır. Her mikro servis belirli bir işlevi yerine getirir ve genellikle bağımsız olarak dağıtılabilir, test edilebilir ve geliştirilebilir.
-
-![image](https://github.com/user-attachments/assets/6111c5a0-e7e3-4173-9187-fdc46cc36691)
-
-![image](https://github.com/user-attachments/assets/cc34de45-756b-4aef-8c32-41ce3b367192)
-
-![image](https://github.com/user-attachments/assets/8776da6f-a77e-4cba-acb3-0dc22d13ceae)
-
-![image](https://github.com/user-attachments/assets/6bd2f7a4-6929-4390-9846-77f9a22fb418)
 
 ## HttpClient ve HttpClientFactory Kullanımı
 
