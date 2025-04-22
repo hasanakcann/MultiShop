@@ -24,6 +24,7 @@
 - [Domain-Driven Design (DDD)](#domain-driven-design-ddd)
 - [Docker](#docker)
 - [Identity Server](#identity-server)
+- [JWT](#jwt)
 
 ## Solid Prensibles
 
@@ -494,7 +495,147 @@ OpenID Connect (OIDC), OAuth 2.0 üzerine inşa edilmiş bir kimlik doğrulama (
 
 ![image](https://github.com/user-attachments/assets/8ade432e-c07b-44fb-a0c4-ca8cd55794ae)
 
+## JWT 
 
+JWT (JSON Web Token), RFC 7519 standardına göre tanımlanmış, JSON formatında veri taşıyan, genelde kimlik doğrulama ve yetkilendirme amacıyla kullanılan dijital olarak imzalanmış bir token yapısıdır.
+
+**JWT şu üç parçadan oluşur ve bu üç parça nokta (.) ile birbirinden ayrılır:**
+
+xxxxx.yyyyy.zzzzz
+
+Header.Payload.Signature
+
+1️⃣ Header
+
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+
+alg: Kullanılan imzalama algoritmasıdır. Örneğin HS256 (HMAC-SHA256), RS256 (RSA + SHA256).
+
+typ: Token tipi. Her zaman JWT.
+
+Header base64url ile encode edilir.
+
+2️⃣ Payload (Veri)
+
+{
+  "sub": "1234567890",
+  "name": "Hasan",
+  "email": "hasan@example.com",
+  "role": "Admin",
+  "iat": 1714000000,
+  "exp": 1714032000
+}
+
+Payload, token'ın içerdiği verilerdir. Bunlara claim denir. Üç tür claim vardır:
+
+📦 Claim Türleri
+
+![image](https://github.com/user-attachments/assets/10c443a3-d85d-4d89-b151-49c69475a2e2)
+
+3️⃣ Signature
+
+HMACSHA256(
+  base64UrlEncode(header) + "." + base64UrlEncode(payload),
+  secret
+)
+
+- İmzanın amacı, token’ın değiştirilip değiştirilmediğini doğrulamaktır.
+- Eğer biri payload’ı değiştirirse, imza uyuşmaz ve token geçersiz olur.
+
+Signature doğrulaması yapılmadan, token'a asla güvenilmemelidir.
+
+### 🔐 JWT Nasıl Çalışır?
+
+1. Kullanıcı giriş yapar (username + password).
+2. Server, bilgileri doğrular → JWT oluşturur → kullanıcıya döner.
+3. Kullanıcı, bu token'ı sonraki tüm isteklerde HTTP header ile gönderir:
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR...
+4. Sunucu gelen token’ı doğrular (signature + exp süresi).
+5. Token içindeki claim’lere göre yetkilendirme yapılır.
+
+### ⚙️ JWT’nin Avantajları
+
+✅ Stateless: Server session tutmaz.
+
+✅ Hızlı: Her istek için DB sorgusu yapmadan kullanıcı bilgileri token’dan okunur.
+
+✅ Uygulamalar arası taşınabilir: Web, mobil, desktop hepsi kullanabilir.
+
+✅ Mikroservis uyumlu.
+
+### ⚠️ JWT Kullanırken Dikkat Edilecekler
+
+- Token içinde hassas veri (şifre, kredi kartı, vs.) taşıma!
+- Exp süresi kısa tutulmalı. Uzun süreli token yerine Refresh Token yapısı kullanılmalı.
+- Refresh Token kullanıyorsan, onları güvenli storage (örneğin cookie + HttpOnly) ile koru.
+- Eğer istemci ile veri taşıyorsan, HTTPS zorunlu.
+- Logout senaryosunda JWT hemen geçersiz kılınamaz. Bunun için blacklist ya da short-lived token + refresh token sistemi gerekir.
+
+### Access Token:
+
+Access Token, kullanıcının kimliğini doğruladıktan sonra, istemcinin (client) API’lere erişebilmesi için verilen kısa ömürlü bir tokendır.
+
+![image](https://github.com/user-attachments/assets/3878461f-6878-4412-8f9d-89b4417dcf80)
+
+### Refresh Token:
+
+Refresh Token, access token süresi dolduğunda, kullanıcıyı yeniden giriş yaptırmadan yeni bir access token almak için kullanılır.
+
+![image](https://github.com/user-attachments/assets/751f6985-2991-4f8e-8c7b-882feee66099)
+
+### 🆚 Access Token vs Refresh Token Farkları
+
+![image](https://github.com/user-attachments/assets/4b73ab99-c93f-4ce1-b3c3-38113a3a1afa)
+
+### 🔍 Neden Hem Access Hem Refresh Token Kullanılır?
+
+1. Güvenlik vs Kullanılabilirlik Dengesi
+   
+- Access token kısa süreli olmalı ki çalınırsa etkisi sınırlı olsun.
+- Ama kullanıcıya sürekli tekrar giriş yaptıramazsın.
+
+Bu yüzden:
+
+- Access token kısa ömürlü
+- Refresh token uzun ömürlü
+
+→ İkili yapı ile hem güvenlik hem kullanıcı deneyimi sağlanır.
+
+2. Logout / Blacklist Senaryosu
+
+- Refresh token authentication server’da saklanabilir.
+- Böylece istenirse token iptal edilebilir (revocation).
+
+JWT access token'lar stateless olduğundan doğrudan iptal edilemez.
+
+3. Token Yenileme Mekanizması
+
+Access token süresi dolduğunda kullanıcıya hiçbir şey hissettirmeden yeni token alınabilir.
+
+### 👨‍💻 .NET Web API'de Senaryo
+
+1. Kullanıcı giriş yapar → JWT Access Token + Refresh Token verilir.
+2. Access Token 15 dakika geçerli.
+3. Süresi dolarsa, istemci Refresh Token ile yeni Access Token alır.
+4. Refresh Token 7 gün geçerli, süre sonunda tekrar login gerekir.
+5. Refresh Token çalınırsa → server tarafında revoke edilir.
+
+### ⚠️ Güvenlik Uyarıları
+
+- Refresh Token'ı localStorage gibi açık alanlarda saklama!
+- Web uygulamalarında HttpOnly ve Secure Cookie önerilir.
+- Refresh Token kullanımında CSRF saldırılarına dikkat edilmelidir.
+- Token üretiminde exp, iat, jti (unique id) gibi claim'ler kullanılmalı.
+
+**.NET Core’da JWT ile kimlik doğrulama yapmak için genellikle:**
+
+- Microsoft.AspNetCore.Authentication.JwtBearer paketi kullanılır.
+- AddAuthentication().AddJwtBearer(...) ile konfigürasyon yapılır.
+- Authorize attribute'u ile token doğrulama istenir.
+- Token üretimi için JwtSecurityTokenHandler sınıfı kullanılır.
 
 
 
