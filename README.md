@@ -82,17 +82,17 @@ Bu prensip, yüksek seviyeli modüllerin düşük seviyeli modüllere değil, he
 
 ## Mikroservisler
 
-### Catalog
+### Catalog Micro Service
 
-- .NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.
+**.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.**
 
-### Discount
+### Discount Micro Service
 
-- .NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.
+**.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.**
 
-### Order
+### Order Micro Service
 
-.NET 8.0 ile Onion Architecture, CQRS, Mediator uygulanmıştır.
+**.NET 8.0 ile Onion Architecture, CQRS, Mediator uygulanmıştır.**
 
 - MultiShop.Order.Application
 - MultiShop.Order.Domain
@@ -112,6 +112,16 @@ https://www.docker.com/products/docker-desktop/
 docker volume create portainer_data
 
 docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+
+### Cargo Micro Service
+
+**.NET 8.0 ile N-Tier Architecture uygulanmıştır.**
+
+- MultiShop.Cargo.BusinessLayer
+- MultiShop.Cargo.DataAccessLayer
+- MultiShop.Cargo.DtoLayer
+- MultiShop.Cargo.EntityLayer
+- MultiShop.Cargo.WebApi
 
 ## Mikroservis Mimarisi
 
