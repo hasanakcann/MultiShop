@@ -1,30 +1,60 @@
 ![image](https://github.com/user-attachments/assets/db402f27-e8fb-4157-a739-fb69c52e0420)
 
+<details>
+  <summary>🧱 Mimari ve Prensipler</summary>
+
 - [Mikroservis Mimarisi](#mikroservis-mimarisi)
 - [Mikroservisler](#mikroservisler)
 - [Solid Prensibles](#solid-prensibles)
-- [HttpClient ve HttpClientFactory Kullanımı](#httpclient-ve-httpclientfactory-kullanımı)
-- [Api Gateway](#api-gateway)
-- [Asenkron Programlama](#asenkron-programlama)
-- [MongoDb](#mongodb)
-- [DTO (Data Transfer Object)](#dto-data-transfer-object)
-- [AutoMapper](#automapper)
-- [Singleton, Scoped ve Transient Kavramları](#singleton-scoped-ve-transient-kavramları)
-- [Dapper](#dapper)
-- [.Net Architectures](#net-architectures)
 - [Onion Architecture](#onion-architecture)
+- [.Net Architectures](#net-architectures)
+- [Domain-Driven Design (DDD)](#domain-driven-design-ddd)
+</details>
+
+<details>
+  <summary>⚙️ Uygulama Katmanları ve Yapılar</summary>
+
 - [Repository](#repository)
 - [Unit of Work (UoW)](#unit-of-work-uow)
 - [CQRS (Command Query Responsibility Segregation)](#cqrs-command-query-responsibility-segregation)
 - [Mediator](#mediator)
 - [Fluent Validation](#fluent-validation)
+- [DTO (Data Transfer Object)](#dto-data-transfer-object)
+- [AutoMapper](#automapper)
+</details>
+
+<details>
+  <summary>🧵 Asenkron Yapılar ve Messaging</summary>
+
+- [Asenkron Programlama](#asenkron-programlama)
 - [Saga](#saga)
 - [EventBus](#eventbus)
 - [Outbox Pattern](#outbox-pattern)
-- [Domain-Driven Design (DDD)](#domain-driven-design-ddd)
-- [Docker](#docker)
+</details>
+
+<details>
+  <summary>📡 HTTP ve Gateway</summary>
+
+- [HttpClient ve HttpClientFactory Kullanımı](#httpclient-ve-httpclientfactory-kullanımı)
+- [Api Gateway](#api-gateway)
+</details>
+
+<details>
+  <summary>🔐 Kimlik Doğrulama</summary>
+
 - [Identity Server](#identity-server)
 - [JWT](#jwt)
+</details>
+
+<details>
+  <summary>🛠️ Diğer Teknolojiler</summary>
+
+- [MongoDb](#mongodb)
+- [Dapper](#dapper)
+- [Docker](#docker)
+- [Singleton, Scoped ve Transient Kavramları](#singleton-scoped-ve-transient-kavramları)
+</details>
+
 
 ## Mikroservis Mimarisi
 
