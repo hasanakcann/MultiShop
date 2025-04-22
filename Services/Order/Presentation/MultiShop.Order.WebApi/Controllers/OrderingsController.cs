@@ -6,7 +6,7 @@ using MultiShop.Order.Application.Features.Mediator.Queries.OrderingQueries;
 
 namespace MultiShop.Order.WebApi.Controllers;
 
-//[Authorize]
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class OrderingsController : ControllerBase
