@@ -1,8 +1,5 @@
 ﻿using MultiShop.Cargo.EntityLayer.Concrete;
 
-namespace MultiShop.Cargo.BusinessLayer.Abstract
-{
-    public interface ICargoDetailService : IGenericService<CargoDetail>
-    {
-    }
-}
+namespace MultiShop.Cargo.BusinessLayer.Abstract;
+
+public interface ICargoDetailService : IGenericService<CargoDetail> { }

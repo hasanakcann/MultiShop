@@ -36,7 +36,8 @@ namespace MultiShop.Cargo.DataAccessLayer.Migrations
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     District = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserCustomerId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

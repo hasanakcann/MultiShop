@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using MultiShop.Catalog.Services.AboutServices;
 using MultiShop.Catalog.Services.BrandServices;
 using MultiShop.Catalog.Services.CategoryServices;
@@ -16,8 +17,6 @@ using MultiShop.Catalog.Settings;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 #region Service Registration
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -52,14 +51,40 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 #endregion
 
+#region Swagger Configuration
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter your token in the format: Bearer {your token}",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
+});
+#endregion
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

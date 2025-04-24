@@ -1,8 +1,7 @@
-﻿namespace MultiShop.Cargo.EntityLayer.Concrete
+﻿namespace MultiShop.Cargo.EntityLayer.Concrete;
+
+public class CargoCompany
 {
-    public class CargoCompany
-    {
-        public int CargoCompanyId { get; set; }
-        public string CargoCompanyName { get; set; }
-    }
+    public int CargoCompanyId { get; set; }
+    public string CargoCompanyName { get; set; }
 }

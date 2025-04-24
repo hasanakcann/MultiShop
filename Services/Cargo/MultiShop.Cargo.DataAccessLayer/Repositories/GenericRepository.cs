@@ -1,46 +1,104 @@
-﻿using MultiShop.Cargo.DataAccessLayer.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using MultiShop.Cargo.DataAccessLayer.Abstract;
 using MultiShop.Cargo.DataAccessLayer.Concrete;
 
-namespace MultiShop.Cargo.DataAccessLayer.Repositories
+namespace MultiShop.Cargo.DataAccessLayer.Repositories;
+
+public class GenericRepository<T> : IGenericDal<T> where T : class
 {
-    public class GenericRepository<T> : IGenericDal<T> where T : class
+    private readonly CargoContext _context;
+
+    public GenericRepository(CargoContext context)
     {
-        private readonly CargoContext _context;
+        _context = context;
+    }
 
-        public GenericRepository(CargoContext context)
+    public void Delete(int id)
+    {
+        try
         {
-            _context = context;
-        }
+            var existingEntity = _context.Set<T>().Find(id);
+            if (existingEntity == null)
+                throw new InvalidOperationException($"No entity found with ID {id}.");
 
-        public void Delete(int id)
-        {
-            var values = _context.Set<T>().Find(id);
-            _context.Set<T>().Remove(values);
+            _context.Set<T>().Remove(existingEntity);
             _context.SaveChanges();
         }
-
-        public List<T> GetAll()
+        catch (DbUpdateException ex)
         {
-            var values = _context.Set<T>().ToList();
-            return values;
+            throw new InvalidOperationException("A database update error occurred while deleting the entity.", ex);
         }
-
-        public T GetById(int id)
+        catch (Exception ex)
         {
-            var value = _context.Set<T>().Find(id);
-            return value;
+            throw new Exception("An unexpected error occurred while deleting the entity.", ex);
         }
+    }
 
-        public void Insert(T entity)
+    public List<T> GetAll()
+    {
+        try
         {
+            return _context.Set<T>().ToList();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An error occurred while retrieving all entities.", ex);
+        }
+    }
+
+    public T GetById(int id)
+    {
+        try
+        {
+            var entity = _context.Set<T>().Find(id);
+            if (entity == null)
+                throw new InvalidOperationException($"No entity found with ID {id}.");
+
+            return entity;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An error occurred while retrieving the entity by ID.", ex);
+        }
+    }
+
+    public void Insert(T entity)
+    {
+        try
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity), "The entity to insert cannot be null.");
+
             _context.Set<T>().Add(entity);
             _context.SaveChanges();
         }
-
-        public void Update(T entity)
+        catch (DbUpdateException ex)
         {
+            throw new InvalidOperationException("A database update error occurred while inserting the entity.", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An unexpected error occurred while inserting the entity.", ex);
+        }
+    }
+
+    public void Update(T entity)
+    {
+        try
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity), "The entity to update cannot be null.");
+
             _context.Set<T>().Update(entity);
             _context.SaveChanges();
+        }
+        catch (DbUpdateException ex)
+        {
+            throw new InvalidOperationException("A database update error occurred while updating the entity.", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An unexpected error occurred while updating the entity.", ex);
         }
     }
 }

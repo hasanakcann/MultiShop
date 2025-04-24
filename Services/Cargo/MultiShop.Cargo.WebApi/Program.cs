@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
 using MultiShop.Cargo.BusinessLayer.Abstract;
 using MultiShop.Cargo.BusinessLayer.Concrete;
 using MultiShop.Cargo.DataAccessLayer.Abstract;
@@ -6,8 +7,6 @@ using MultiShop.Cargo.DataAccessLayer.Concrete;
 using MultiShop.Cargo.DataAccessLayer.EntityFramework;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 #region Context Registration
 builder.Services.AddDbContext<CargoContext>();
@@ -26,25 +25,46 @@ builder.Services.AddScoped<ICargoOperationService, CargoOperationManager>();
 #endregion
 
 #region Authentication
-//JwtBearer token geçerliliğini kontrol eden pakettir.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
-    //Authority JwtBearer'ı kiminle kullanıcağını belirtir. IdentityServerUrl appsettings.json'dan gelir.
-    //Cargo mikro servisi ayağa kalkarken IdentityServer mikro servisi de ayağa kalkar.
     options.Authority = builder.Configuration["IdentityServerUrl"];
-    options.Audience = "ResourceCargo";//Config tarafında dinleyici olan key ResourceCargo ApiResource olarak setlenir.
-    options.RequireHttpsMetadata = false;//IdentityServerUrl http olduğu için false set edildi.
+    options.Audience = "ResourceCargo";
+    options.RequireHttpsMetadata = false;
+});
+#endregion
+
+#region Swagger Configuration
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter your token in the format: Bearer {your token}",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
 });
 #endregion
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -54,7 +74,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllers();

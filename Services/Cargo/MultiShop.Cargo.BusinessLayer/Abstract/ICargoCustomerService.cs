@@ -1,9 +1,8 @@
 ﻿using MultiShop.Cargo.EntityLayer.Concrete;
 
-namespace MultiShop.Cargo.BusinessLayer.Abstract
+namespace MultiShop.Cargo.BusinessLayer.Abstract;
+
+public interface ICargoCustomerService : IGenericService<CargoCustomer>
 {
-    public interface ICargoCustomerService : IGenericService<CargoCustomer>
-    {
-        CargoCustomer TGetCargoCustomerById(string id);
-    }
+    CargoCustomer TGetCargoCustomerById(string id);
 }

@@ -12,8 +12,8 @@ using MultiShop.Cargo.DataAccessLayer.Concrete;
 namespace MultiShop.Cargo.DataAccessLayer.Migrations
 {
     [DbContext(typeof(CargoContext))]
-    [Migration("20240924141452_mig2")]
-    partial class mig2
+    [Migration("20250424111224_mig1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

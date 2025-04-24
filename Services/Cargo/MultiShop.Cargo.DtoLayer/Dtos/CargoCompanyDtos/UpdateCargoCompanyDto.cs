@@ -1,8 +1,7 @@
-﻿namespace MultiShop.Cargo.DtoLayer.Dtos.CargoCompanyDtos
+﻿namespace MultiShop.Cargo.DtoLayer.Dtos.CargoCompanyDtos;
+
+public class UpdateCargoCompanyDto
 {
-    public class UpdateCargoCompanyDto
-    {
-        public int CargoCompanyId { get; set; }
-        public string CargoCompanyName { get; set; }
-    }
+    public int CargoCompanyId { get; set; }
+    public string CargoCompanyName { get; set; }
 }
