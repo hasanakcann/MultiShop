@@ -115,6 +115,14 @@ docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /va
 - MultiShop.Cargo.EntityLayer
 - MultiShop.Cargo.WebApi
 
+### 5. Basket Mikro Service
+
+**.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.**
+
+Kullanıcının login olma zorunluluğu proje seviyesinde yapıldı.
+
+Redis konfigürasyonu yapıldı.
+
 ## Solid Prensibles
 
 E-ticaret uygulamasında bu prensiplerin doğru uygulanması, sistemi daha esnek ve bakımı kolay hale getirir.
