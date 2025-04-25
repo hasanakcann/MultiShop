@@ -29,8 +29,7 @@ public static class ClientConfig
         {
             ClientId = "MultiShopManagerId",
             ClientName = "Multi Shop Manager User",
-            AllowedGrantTypes = GrantTypes.ClientCredentials,
-            //AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+            AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
             ClientSecrets = { DefaultSecret },
             AllowedScopes =
             {
@@ -55,8 +54,7 @@ public static class ClientConfig
         {
             ClientId = "MultiShopAdminId",
             ClientName = "Multi Shop Admin User",
-            AllowedGrantTypes = GrantTypes.ClientCredentials,
-            //AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+            AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
             ClientSecrets = { DefaultSecret },
             AllowedScopes =
             {

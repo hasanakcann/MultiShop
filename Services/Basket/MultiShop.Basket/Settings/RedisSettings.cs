@@ -1,8 +1,7 @@
-﻿namespace MultiShop.Basket.Settings
+﻿namespace MultiShop.Basket.Settings;
+
+public class RedisSettings
 {
-    public class RedisSettings
-    {
-        public string Host { get; set; }
-        public int Port { get; set; }
-    }
+    public string Host { get; set; }
+    public int Port { get; set; }
 }

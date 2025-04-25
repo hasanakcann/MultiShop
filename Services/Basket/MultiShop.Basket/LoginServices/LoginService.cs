@@ -1,17 +1,23 @@
-﻿namespace MultiShop.Basket.LoginServices
+﻿namespace MultiShop.Basket.LoginServices;
+
+public class LoginService : ILoginService
 {
-    public class LoginService : ILoginService
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public LoginService(IHttpContextAccessor httpContextAccessor)
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor), "HttpContextAccessor cannot be null.");
+    }
 
-        public LoginService(IHttpContextAccessor httpContextAccessor)
+    public string GetUserId
+    {
+        get
         {
-            _httpContextAccessor = httpContextAccessor;
-        }
+            var userClaim = _httpContextAccessor.HttpContext?.User.FindFirst("sub");
+            if (userClaim == null || string.IsNullOrWhiteSpace(userClaim.Value))
+                throw new InvalidOperationException("User ID is not found in the claims.");
 
-        /// <summary>
-        ///     sub key'i aracılığıyla token yakalanır, yakalanan token'ın içerisindeki Id ile sepet ilişkilendirilir.
-        /// </summary>
-        public string GetUserId => _httpContextAccessor.HttpContext.User.FindFirst("sub").Value;
+            return userClaim.Value;
+        }
     }
 }

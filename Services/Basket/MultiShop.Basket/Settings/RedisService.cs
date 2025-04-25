@@ -1,21 +1,33 @@
 ﻿using StackExchange.Redis;
 
-namespace MultiShop.Basket.Settings
+namespace MultiShop.Basket.Settings;
+
+public class RedisService
 {
-    public class RedisService
+    private readonly string _host;
+    private readonly int _port;
+    private ConnectionMultiplexer _connection;
+
+    public RedisService(string host, int port, ConnectionMultiplexer connection)
     {
-        public string _host { get; set; }
-        public int _port { get; set; }
+        _host = host;
+        _port = port;
+        _connection = connection;
+    }
 
-        private ConnectionMultiplexer _connectionMultiplexer;
-
-        public RedisService(string host, int port)
+    public void Connect()
+    {
+        if (_connection == null || !_connection.IsConnected)
         {
-            _host = host;
-            _port = port;
+            _connection = ConnectionMultiplexer.Connect($"{_host}:{_port}");
         }
+    }
 
-        public void Connect() => _connectionMultiplexer = ConnectionMultiplexer.Connect($"{_host}:{_port}");
-        public IDatabase GetDb(int db = 1) => _connectionMultiplexer.GetDatabase(0);
+    public IDatabase GetDatabase(int db = 1)
+    {
+        if (_connection == null || !_connection.IsConnected)
+            throw new InvalidOperationException("Redis connection has not been established. Call Connect() first.");
+
+        return _connection.GetDatabase(db);
     }
 }

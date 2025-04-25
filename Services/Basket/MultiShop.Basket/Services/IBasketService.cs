@@ -1,11 +1,10 @@
 ﻿using MultiShop.Basket.Dtos;
 
-namespace MultiShop.Basket.Services
+namespace MultiShop.Basket.Services;
+
+public interface IBasketService
 {
-    public interface IBasketService
-    {
-        Task<BasketTotalDto> GetBasket(string userId);
-        Task SaveBasket(BasketTotalDto basketTotalDto);
-        Task DeleteBasket(string userId);
-    }
+    Task<BasketTotalDto?> GetBasket(string userId);
+    Task<bool> SaveBasket(BasketTotalDto basketTotalDto);
+    Task DeleteBasket(string userId);
 }
