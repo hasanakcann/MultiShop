@@ -125,57 +125,153 @@ Redis konfigürasyonu yapıldı.
 
 ## Solid Prensibles
 
-E-ticaret uygulamasında bu prensiplerin doğru uygulanması, sistemi daha esnek ve bakımı kolay hale getirir.
+SOLID prensipleri, modern yazılım geliştirme süreçlerinde özellikle nesne yönelimli programlamada yazılımın kalitesini artırmak, sürdürülebilirliği sağlamak ve bakım maliyetlerini düşürmek amacıyla kullanılan beş temel ilkenin toplandığı bir akronimdir.
 
-- **1. Tek Sorumluluk Prensibi (Single Responsibility Principle — SRP)**
+Bu prensipler, karmaşıklığı azaltarak uygulamanın genişletilebilirliğini ve test edilebilirliğini destekler.
 
-Bu prensip, her sınıfın tek bir sorumluluğu olmasını belirtir. Örneğin, ürün yönetimi için:
+Mikro servis mimarisiyle kurgulanmış bir e-ticaret uygulamasında, SOLID prensiplerinin uygulanması sayesinde her bir servis kendi içinde bağımsız ve sağlam bir yapıya kavuşur, böylece sistem genelinde yüksek performans, ölçeklenebilirlik ve esneklik sağlanır.
 
-![image](https://github.com/user-attachments/assets/6fc59678-08f5-4ea3-8997-47ddee2354b1)
+### Mikro Servis Mimaride Solid
 
-![image](https://github.com/user-attachments/assets/6983e493-0555-4835-bb09-47c2381a834e)
+Bir e-ticaret uygulaması mikro servis mimarisiyle geliştirildiğinde, her servis belirli bir iş alanı için tek sorumluluk (SRP) taşır.
 
-Yukarıdaki diyagramda görüldüğü gibi, ProductManager sınıfı artık tek bir sorumluluğa sahip: ürünlerin sisteme eklenmesi. 
+Servis Ayrımı: Ürün kataloğu, sipariş yönetimi, kullanıcı yönetimi, ödeme sistemi gibi servislerin her biri bağımsız olarak geliştirilebilir ve ölçeklendirilebilir.
 
-Diğer sorumluluklar (fiyat hesaplama ve veritabanı işlemleri) ayrı arayüzler ve sınıflara taşınmış durumda. Ok işaretleri (-->) bağımlılık ilişkisini gösteriyor.
+Arayüz Tasarımı: Servisler arası iletişimde ISP ve DIP ilkeleri ile, her servisin ihtiyaç duyduğu veriler ve işlemler için özel tanımlanmış arayüzler kullanılır.
 
-- **2. Açık/Kapalı Prensibi (Open/Closed Principle — OCP)**
+Genişletilebilirlik: Yeni özellikler veya farklı iş mantıkları eklenmek istendiğinde, mevcut kodu bozmadan OCP ve LSP prensipleri sayesinde genişletmeler yapılabilir.
 
-Bu prensip, yeni özellikler eklerken mevcut kodu değiştirmeden sistemi genişletmeyi hedefler. Örneğin, indirim stratejileri için:
+Bu yapı, sistemin karmaşıklığını azaltırken, farklı ekiplerin aynı kod tabanı üzerinde çalışmasını kolaylaştırır. Ayrıca, mikro servisler arası iletişimde standardize edilmiş arayüzler ve bağımlılıkların soyutlanması, sistemin genel esnekliğini artırır.
 
-![image](https://github.com/user-attachments/assets/408d682f-fdf9-47b4-a049-acb6de3bc329)
+### 1. Single Responsibility Principle (SRP) – Tek Sorumluluk İlkesi
 
-![image](https://github.com/user-attachments/assets/eebca543-4cb5-4d86-a801-d25533e12856)
+**Nedir?** 
 
-- **3. Liskov’un Yerine Geçme Prensibi (Liskov Substitution Principle — LSP)**
+Her sınıfın ya da modülün yalnızca tek bir sorumluluğu olması gerektiğini belirtir. Yani her bileşenin sadece tek bir nedenden ötürü değişmesi gerekmelidir.
 
-Bu prensip, alt sınıfların üst sınıflarının yerine geçebilmesi gerektiğini belirtir. E-ticaret uygulamasında farklı ürün tipleri için:
+**Ne Amaçla Kullanılır?**
 
-![image](https://github.com/user-attachments/assets/696c77cc-ec10-41ae-98a0-8baf2d5dda86)
+Bakım Kolaylığı: Her modül/sınıf tek bir iş yaptığı için, bu işte yapılacak değişiklikler diğer bileşenleri etkilemez.
 
-![image](https://github.com/user-attachments/assets/f4b81ea4-1e68-46e0-b5eb-06bca682e461)
+Test Edilebilirlik: Küçük ve tek amaçlı bileşenler, birim testleri yazmayı kolaylaştırır.
 
-- **4. Arayüz Ayrımı Prensibi (Interface Segregation Principle — ISP)**
+Anlaşılabilirlik: Kod okunabilirliği artar; geliştiriciler hangi bileşenin hangi işi yaptığını rahatlıkla saptayabilir.
 
-Bu prensip, istemcilerin kullanmadıkları metotları içeren geniş arayüzlere bağımlı olmamaları gerektiğini belirtir. E-ticaret uygulamasında farklı ödeme yöntemleri için:
+**Nasıl Uygulanır?**
 
-![image](https://github.com/user-attachments/assets/67d711e6-e51e-45a9-94a2-4d0f66185d78)
+- Bir e-ticaret sisteminde, örneğin ayrı bir mikro servis ürün kataloğundan, diğeri sipariş yönetiminden sorumlu olabilir. 
+- Her servis kendi iş mantığına göre sınıflara bölünür; örneğin sipariş doğrulama, sipariş oluşturma ve ödeme işlemleri farklı sınıflarda ele alınır.
+- Böylece bir servis içerisinde herhangi bir işlevde yapılacak değişiklik, servisin diğer işlevlerini etkilemez.
 
-![image](https://github.com/user-attachments/assets/54d8ad49-b2c4-4d20-88e2-79155e6b1898)
+**Örnek:** Bir ürün kataloğu servisinde yukarıda üç farklı sorumluluğu ele alalım:
 
-- **5. Bağımlılığın Ters Çevrilmesi Prensibi (Dependency Inversion Principle — DIP)**
+- Entity: Sadece ürün verilerini temsil etmek.
+- Repository: Ürün verilerinin veritabanı işlemlerini yönetmek.
+- Service: İş mantığını (örneğin, ürün ekleme veya güncelleme) uygulamak.
 
-Bu prensip, yüksek seviyeli modüllerin düşük seviyeli modüllere değil, her ikisinin soyutlamalara bağımlı olması gerektiğini belirtir. E-ticaret uygulamasında envanter yönetimi için:
+![image](https://github.com/user-attachments/assets/d1c43d11-a360-4ddb-823a-37f4108ae8c2)
 
-![image](https://github.com/user-attachments/assets/30164787-35a4-44b5-865d-4105870c3b81)
+- **Açıklama:** Her bir sınıfın belirgin tek bir sorumluluğu var. Eğer örneğin veri saklama yönteminiz değiştirilirse, sadece ProductRepository’de güncelleme yapmanız yeterli olacak; diğer sınıflar etkilenmeyecektir.
 
-![image](https://github.com/user-attachments/assets/ea3cba53-d1fb-4c47-b1a8-011066c1cc82)
+### 2. Open/Closed Principle (OCP) – Açık/Kapalı İlkesi
+   
+**Nedir?**
 
-- SRP ile her sınıfın net sorumlulukları olur
-- OCP ile yeni özellikler eklerken mevcut kodu bozmadan geliştirme yapabilirsiniz
-- LSP ile farklı ürün tiplerini veya ödeme yöntemlerini kolayca ekleyebilirsiniz
-- ISP ile her modül sadece ihtiyaç duyduğu arayüzlere bağımlı olur
-- DIP ile farklı envanter servisleri veya veri kaynaklarını kolayca değiştirebilirsiniz
+Bir yazılım bileşeni, genişletilmeye açık ancak değiştirmeye kapalı olmalıdır. Yeni özellikler eklemek için mevcut kodu değiştirmek yerine, kodu genişleterek eklemeler yapılmalıdır.
+
+**Ne Amaçla Kullanılır?**
+
+Stabilite: Mevcut uygulamanın davranışını bozmadan yeni özellikler eklemek.
+
+Genişletilebilirlik: Uygulama büyüdükçe, var olan bileşenlere müdahale etmeden yeni gereksinimlere uyum sağlanabilir.
+
+**Nasıl Uygulanır?**
+
+Örneğin, e-ticaret uygulamanıza yeni bir ödeme yöntemi eklemek istediğinizde, mevcut ödeme iş mantığını bozmadan, tüm ödeme yöntemlerini ortak bir interface (örneğin IPaymentService) etrafında tasarlarsınız. 
+
+Yeni ödeme yöntemi, bu interface’i implemente ederek sisteme eklenir. Böylece sistem davranışı, mevcut kodu değiştirmeden genişletilmiş olur.
+
+**Örnek:** E-ticaret uygulamasında siparişler üzerinden farklı indirim stratejileri uygulamak isteyebilirsiniz. Bunun için ortak bir indirim arayüzü tanımlar, farklı stratejileri bu arayüzü implemente ederek oluşturursunuz.
+
+![image](https://github.com/user-attachments/assets/777727b7-c9ef-4396-8b77-fbcb6deb28cc)
+
+- **Açıklama:** Yeni bir indirim kuralı eklemek istediğinizde, mevcut OrderService kodunu değiştirmek yerine sadece IDiscountStrategy arayüzünü implemente eden yeni bir sınıf yazarsınız. Böylece sistem davranışı değiştirilmeden genişletilmiş olur.
+
+### 3. Liskov Substitution Principle (LSP) – Liskov Yerine Geçme İlkesi
+
+**Nedir?**
+
+Türetilmiş sınıfların, temel sınıfların yerine kullanılabilmesi gerektiğini savunur. Yani, herhangi bir yerde temel sınıfın nesnesi bekleniyorsa, türetilmiş sınıflardan herhangi biri de sorunsuzca kullanılabilmelidir.
+
+**Ne Amaçla Kullanılır?**
+
+Güvenilirlik: Üst seviye modüllerin, alt sınıflar tarafından sağlanan fonksiyonellik sayesinde doğru şekilde çalışması.
+
+Yeniden Kullanılabilirlik: Farklı implementasyonlar arası geçişin sorunsuz olması, sistemde tutarlılığı artırır.
+
+**Nasıl Uygulanır?** 
+
+E-ticaret sisteminizde, tüm ödeme yöntemleri ortak bir arayüz (örneğin IPaymentGateway) vasıtasıyla yönetilirse, herhangi bir yeni ödeme yöntemi eklediğinizde ya da mevcut ödeme yöntemlerinden birini değiştirdiğinizde, sistemin geri kalanında herhangi bir aksaklık yaşanmaz. 
+
+Böylece, ödeme iş akışı alt sınıfların temel sınıf yerine geçmesiyle bozulmaz.
+
+**Örnek:** Ödeme sisteminde genel bir Payment soyutlaması tanımlayalım ve bunu farklı ödeme yöntemleriyle implemente edelim.
+
+![image](https://github.com/user-attachments/assets/e0f7f634-ecbc-477e-ac21-bc77e4a49b02)
+
+- **Açıklama:** OrderProcessor sınıfı, herhangi bir Payment tipini sorunsuzca kabul eder. Yeni bir ödeme yöntemi eklediğinizde (örneğin, kripto para ödemesi) sadece Payment’i temel alan yeni bir sınıf oluşturmanız yeterli olur. Böylece mevcut sipariş işleyişinde değişikliğe gerek kalmaz.
+
+### 4. Interface Segregation Principle (ISP) – Arayüz Ayrım İlkesi
+
+**Nedir?** 
+
+Bir sınıf, kullanmadığı metodların bulunduğu geniş kapsamlı bir arayüze bağlı kalmamalıdır. Bunun yerine, her işlev için mümkün olduğunca küçük, hedefe yönelik arayüzler tanımlanmalıdır.
+
+**Ne Amaçla Kullanılır?**
+
+Kapsamın Azaltılması: Gereksiz metodların uygulanmasını engelleyerek, sınıfların yalnızca gerçekten ihtiyaç duydukları fonksiyonları içermesi sağlanır.
+
+Basitlik: Özelleşmiş ve ince arayüzler, geliştirme sürecini ve bakım işlerini basitleştirir.
+
+**Nasıl Uygulanır?** 
+
+Örneğin, müşteri yönetimi servisinizde müşteriye ait çok sayıda işlem olabilir (adres güncelleme, sipariş takibi, üyelik gibi). 
+
+Bunları tek bir büyük arayüz yerine, ihtiyaç duyulan işlemleri kullanan daha küçük, spesifik arayüzlere bölerek, her mikro servis bu arayüzleri kendi ihtiyaçlarına göre implemente eder. 
+
+Böylece, müşteri servisi sadece kendisi için gerekli olan metotları doldurur, gereksiz bağımlılıklardan kaçınılır.
+
+**Örnek:** Bir kullanıcı servisinde farklı kullanıcı türlerinin farklı işlevlere ihtiyacı olduğunu düşünelim. Tüm metodları tek bir arayüzde toplamak yerine, temel işlem ve ek işlev arayüzlerini ayırabiliriz.
+
+![image](https://github.com/user-attachments/assets/0dbb37e2-2103-4d4b-9da7-2c008f2ba93c)
+
+- **Açıklama:** Normal kullanıcılar gereksiz metodları (örneğin, denetim işlemleri) uygulamak zorunda kalmazken, yönetici kullanıcılar ihtiyaçlarına yönelik daha fazla işlevselliğe sahip olur. Bu sayede gereksiz bağımlılıklar ve uygulama karmaşıklığı azalır.
+
+### 5. Dependency Inversion Principle (DIP) – Bağımlılıkların Tersine Çevrilmesi İlkesi
+   
+**Nedir?** 
+
+Üst düzey modüllerin, alt düzey modüllerin detaylarına bağımlı olmaması, her iki katmanın da soyutlamalara (arayüzlere) bağımlı olması gerektiğini belirtir.
+
+**Ne Amaçla Kullanılır?**
+
+Bağımlılıkların Azaltılması: Modüller arası sıkı bağlılıkların (tight coupling) önlenmesi, böylece sistemde yapılacak değişikliklerin sınırlı bir alanda kalması sağlanır.
+
+Test Edilebilirlik: Soyutlamalar aracılığıyla, bileşenlerin kolaylıkla mock'lanması ve bağımsız test edilmesi mümkün hale gelir.
+
+**Nasıl Uygulanır?** 
+
+Bir e-ticaret uygulamasında, örneğin sipariş işleme modülünüzde ödeme işlemleri için doğrudan bir ödeme servisine bağlanmak yerine, IPaymentService gibi bir arayüz kullanırsınız. 
+
+Bu arayüzü implemente eden farklı ödeme servislerini Dependency Injection (Bağımlılık Enjeksiyonu) ile sisteme dahil edersiniz. 
+
+Böylece, ödeme sağlayıcısında yapılacak herhangi bir değişiklik veya yeni bir sağlayıcının eklenmesi durumunda, sipariş işleme modülünüzde bir değişiklik yapmanıza gerek kalmaz.
+
+**Örnek:** Bir sipariş işleme modülünde ödeme işlemlerini soyut bir yapı üzerinden yöneten bir mimari düşünelim.
+
+![image](https://github.com/user-attachments/assets/71112fe6-f369-4b44-97ab-8ebf08c09d00)
+
+- **Açıklama:** OrderProcessor doğrudan belirli bir ödeme servisine (örneğin, Stripe) bağlı değildir. Bunun yerine, ödeme işleminin uygulanması için IPaymentProcessor soyutlamasına bağlıdır. Böylece ileride farklı bir ödeme sağlayıcısına geçiş yapmak istediğinizde yalnızca yeni bir implementasyon yazarak mevcut sipariş işleme mantığınızı değiştirmeden entegrasyonu sağlayabilirsiniz.
 
 ## HttpClient ve HttpClientFactory Kullanımı
 
