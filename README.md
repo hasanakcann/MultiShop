@@ -681,20 +681,232 @@ Access token süresi dolduğunda kullanıcıya hiçbir şey hissettirmeden yeni 
 - Authorize attribute'u ile token doğrulama istenir.
 - Token üretimi için JwtSecurityTokenHandler sınıfı kullanılır.
 
+## Redis
 
+🔹 Redis (Remote DIctionary Server) Nedir?
 
+Redis, verileri doğrudan RAM üzerinde tutarak, klasik disk tabanlı veritabanlarına kıyasla çok daha hızlı veri erişimi sağlar. Basit bir key-value store gibi görünse de Redis’in desteklediği veri yapıları bu tanımı çok aşar.
 
+### 🔍 Redis Neden Tercih Edilmeli?
 
+1. 🔥 Yüksek Performans (In-Memory Mimari)
+   
+Redis, verileri RAM’de sakladığı için okuma ve yazma işlemleri milisaniyelerin çok altında sürede tamamlanır. Bu, Redis'i disk tabanlı veritabanlarına kıyasla kat kat daha hızlı hale getirir.
 
+Kullanım Senaryosu: Örneğin, bir e-ticaret sitesinde ürün detay sayfası saniyede 10.000 kez görüntüleniyor. Eğer bu veri her defasında veritabanından çekilirse, veritabanı ciddi yük altına girer. Redis bu verileri cache’leyerek veritabanına olan yükü azaltır ve sistemi ölçeklenebilir hale getirir.
 
+2. 🧠 Zengin Veri Yapıları ve Fonksiyonellik
 
+Redis sadece key-value store değildir. Aşağıdaki gelişmiş veri yapılarını destekler ve bu sayede birçok farklı problemi doğrudan çözer:
 
+![image](https://github.com/user-attachments/assets/60b3cdcb-0268-4efd-bf51-b44bbd356a88)
 
+3. 🏗️ Mikroservis Mimarisinde Kolay Entegrasyon
 
+Redis, mikroservis mimarisinde çeşitli görevlerde hızlı, güvenilir ve hafif bir çözüm sunar:
 
+- Distributed Locking (dağıtık kilit): Aynı kaynağa birden fazla servisin erişmesini engellemek.
+- Event Messaging (Pub/Sub): Servisler arası olay tetikleme/iletişim.
+- Session State: Oturum bilgilerinin servisler arasında paylaşılması.
+- Rate Limiting: Kullanıcı veya IP bazlı istek sınırlamaları.
 
+📌 Örnek:
 
+Bir kullanıcı aynı anda iki sipariş vermeye çalışırsa, Redis ile ürün stoğuna yazılacak distributed lock sayesinde aynı anda çift çekim engellenebilir.
 
+4. 🧩 Kolay Entegrasyon ve Kolay Kullanım
+
+- Redis, .NET, Java, Python, Node.js, Go gibi birçok popüler dil için hazır istemci kütüphaneleri sunar.
+- Komutları basittir: GET, SET, INCR, HSET, ZADD vs.
+- Docker veya cloud üzerinden hızlıca ayağa kaldırılabilir.
+
+5. 💾 Veri Kalıcılığı (Persistence)
+
+Her ne kadar RAM tabanlı çalışsa da Redis’in veriyi diske yazma opsiyonları vardır:
+
+- RDB (Snapshot): Belirli aralıklarla tüm belleğin disk yedeğini alır.
+- AOF (Append Only File): Her yazma işlemini loglar. Daha güvenlidir.
+- Hybrid: RDB + AOF birlikte kullanılabilir.
+
+👉 Bu sayede Redis, klasik cache’lerden farklı olarak kalıcı veri saklayabilir, yani "volatil cache" değil "kalıcı veritabanı" gibi de çalışabilir.
+
+6. ⚙️ Cluster, Replication ve Yüksek Erişilebilirlik
+
+Redis aşağıdaki yapıları destekler:
+
+- Master-Slave Replication: Verilerin yedeklenmesini sağlar.
+- Redis Sentinel: Failover ve otomatik yönlendirme.
+- Redis Cluster: Yatay ölçeklenebilirlik (sharding) ile milyonlarca key barındırabilir.
+
+7. 📉 Maliyet ve Kaynak Yönetimi
+
+Redis’in RAM tabanlı olması başta pahalı gibi görünse de aslında:
+
+- CPU ve diskten tasarruf sağlar
+- Veritabanı sorgularını azaltır → daha küçük DB sunucusu ihtiyacı.
+- Trafik ani arttığında sistemin çökmesini önler (yük dengeleme).
+
+🔍 Gerçek hayatta Redis sayesinde %90’a kadar DB hit azaltımı sağlanabilir.
+
+### 🚀 Popüler Redis Kullanımı
+
+1. Önbellekleme (Caching) – En Yaygın Kullanım
+
+📌 Neden?
+
+Veri tabanına yapılan tekrar eden sorguları azaltır ve sistemin tepki süresini büyük ölçüde düşürür.
+
+🛠️ Örnek Uygulamalar:
+
+- Amazon: Ürün detayları, kullanıcı sepeti
+- Netflix: Kullanıcı geçmişi, içerik önerileri cache’lenir
+- GitHub: Repository bilgileri ve API yanıtları cache’lenir
+
+Redis Kullanımı:
+
+- GET, SET, EXPIRE komutları
+- TTL (Time-to-Live) ile otomatik silinen önbellekler
+
+2. Oturum Yönetimi (Session Store)
+
+📌 Neden?
+
+Web uygulamalarında kullanıcı oturumlarını merkezi ve hızlı bir şekilde saklamak gerekir, özellikle yatay ölçeklenen sistemlerde.
+
+🛠️ Örnek Uygulamalar:
+
+- Twitter: Kullanıcı giriş oturumları
+- Shopify: Mağaza yöneticilerinin login oturumu Redis’te tutulur
+
+Redis Kullanımı:
+
+- Kullanıcı ID, oturum token'ı hash olarak saklanır
+- Oturum süresi TTL ile kontrol edilir
+
+3. Rate Limiting (API Trafiği Kontrolü)
+
+📌 Neden?
+
+- Kötüye kullanımı engellemek ve adil API kullanımı sağlamak için.
+
+🛠️ Örnek Uygulamalar:
+
+- Stripe: Kullanıcı başına API istek limiti uygular
+- GitHub: API çağrılarını dakika başı sınırlar
+
+Redis Kullanımı:
+
+- INCR, EXPIRE, SETNX ile atomik sayaç
+- IP veya token bazlı sınırlama
+
+4. Mesajlaşma – Pub/Sub
+
+📌 Neden?
+
+Gerçek zamanlı sistemlerde olayların farklı servisler tarafından anında dinlenmesini sağlar.
+
+🛠️ Örnek Uygulamalar:
+
+- Slack / Discord: Gerçek zamanlı mesajlaşma
+- Medium: Yazı yayınlandığında takipçilere bildirim
+- Uber: Sürücü ve yolcu eşleşme güncellemeleri
+
+Redis Kullanımı:
+
+- PUBLISH, SUBSCRIBE komutları ile haberleşme
+- Mikroservisler arasında olay paylaşımı
+
+5. İş Kuyrukları (Task Queues / Background Jobs)
+
+📌 Neden?
+
+Ağır işlemler (mail gönderme, PDF üretme, bildirim yollama) arka planda kuyruk sistemine verilir.
+
+🛠️ Örnek Uygulamalar:
+
+- Airbnb: Rezervasyon sonrası e-posta işlemleri
+- LinkedIn: Arama endeksleme işlemleri
+
+Redis Kullanımı:
+
+- LIST: RPUSH (ekle), BLPOP (çek)
+- Ya da Redis Streams (gelişmiş senaryo)
+
+6. Skor Tabloları (Leaderboard) – Oyun Sektörü
+
+📌 Neden?
+
+Oyuncuların skorlarını gerçek zamanlı olarak tutmak ve sıralamak gerekir.
+
+🛠️ Örnek Uygulamalar:
+
+- Fortnite, Clash of Clans
+- Eğitim platformlarında başarı sıralamaları
+
+Redis Kullanımı:
+
+- ZADD, ZRANGE, ZREVRANGE ile sıralama ve sorgulama
+- Kullanıcı adı + skor
+
+7. Geolocation (Konum Bazlı Sorgular)
+
+📌 Neden?
+
+Kullanıcılara coğrafi yakınlığa göre sonuç sunmak.
+
+🛠️ Örnek Uygulamalar:
+
+- Uber / Lyft: En yakın sürücüyü bulmak
+- YemekSepeti / Getir: En yakın restoran veya market
+
+Redis Kullanımı:
+
+GEOADD, GEORADIUS, GEODIST
+
+8. Gerçek Zamanlı Sayaçlar ve Analytics
+
+📌 Neden?
+
+Web sitesinde ya da uygulamada anlık veri sayacı (görüntüleme, tıklama vs.) tutulması gerekir.
+
+🛠️ Örnek Uygulamalar:
+
+- YouTube: Video görüntüleme sayısı
+- Medium: Okunma istatistikleri
+
+Redis Kullanımı:
+
+INCR, HINCRBY, PFADD (HyperLogLog ile unique count)
+
+9. Tam Sayfa/HTML Cache (Full Page Caching)
+   
+📌 Neden?
+
+Yoğun trafik alan içerik sayfaları, örneğin haber sitelerinde, HTML çıktısı direkt Redis'ten çekilir.
+
+🛠️ Örnek Uygulamalar:
+
+- BBC, New York Times
+- Blog siteleri, landing page sistemleri
+
+Redis Kullanımı:
+
+HTML string’leri SET ile saklanır, TTL ile güncellenir
+
+10. Doğrulama Kodları & Geçici Anahtarlar
+
+📌 Neden?
+
+Kısa ömürlü ve hızlı erişilmesi gereken bilgiler için (örn. SMS doğrulama).
+
+🛠️ Örnek Uygulamalar:
+
+- Instagram: Şifre sıfırlama kodları
+- TikTok: SMS ile gelen kodlar
+
+Redis Kullanımı:
+
+SET key value EX 300 (örneğin 5 dakikalık geçerlilik)
 
 
 
