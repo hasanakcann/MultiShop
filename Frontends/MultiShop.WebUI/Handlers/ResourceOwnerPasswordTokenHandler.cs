@@ -19,13 +19,12 @@ public class ResourceOwnerPasswordTokenHandler : DelegatingHandler
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        //Giriş yapan kullanıcının token bilgisi alınır.
         var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
-        //Token geçerliliği kontrol edilir.
+        
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         var response = await base.SendAsync(request, cancellationToken);
 
-        if (response.StatusCode == HttpStatusCode.Unauthorized)//401
+        if (response.StatusCode == HttpStatusCode.Unauthorized)
         {
             var tokenResponse = await _identityService.GetRefreshToken();
 

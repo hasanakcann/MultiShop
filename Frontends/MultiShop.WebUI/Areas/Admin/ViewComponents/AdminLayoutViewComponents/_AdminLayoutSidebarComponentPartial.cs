@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MultiShop.WebUI.Areas.Admin.ViewComponents.AdminLayoutViewComponents
+namespace MultiShop.WebUI.Areas.Admin.ViewComponents.AdminLayoutViewComponents;
+
+public class _AdminLayoutSidebarComponentPartial : ViewComponent
 {
-    public class _AdminLayoutSidebarComponentPartial : ViewComponent
+    public IViewComponentResult Invoke()
     {
-        public IViewComponentResult Invoke()
-        {
-            return View();
-        }
+        return View();
     }
 }

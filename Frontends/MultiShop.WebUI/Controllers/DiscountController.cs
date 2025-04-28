@@ -25,8 +25,8 @@ public class DiscountController : Controller
     {
         var discountRate = await _discountService.GetDiscountCouponRate(code);
         var basketValues = await _basketService.GetBasket();
-        var totalPriceWithTax = basketValues.TotalPrice / 100 * 20 + basketValues.TotalPrice;//%20 kdv hesaplaması
-        var totalNewPriceWithDiscount = totalPriceWithTax - (totalPriceWithTax / 100 * discountRate);//indirim oranının uygulanması
+        var totalPriceWithTax = basketValues.TotalPrice / 100 * 20 + basketValues.TotalPrice;
+        var totalNewPriceWithDiscount = totalPriceWithTax - (totalPriceWithTax / 100 * discountRate);
 
         return RedirectToAction("Index", "ShoppingCart", new
         {

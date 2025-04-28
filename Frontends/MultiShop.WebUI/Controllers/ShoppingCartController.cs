@@ -24,8 +24,8 @@ public class ShoppingCartController : Controller
         ViewBag.directory2 = "Ürünler";
         ViewBag.directory3 = "Sepetim";
         var values = await _basketService.GetBasket();
-        ViewBag.total = values.TotalPrice; //Toplam ürün fiyatı
-        var totalPriceWithTax = values.TotalPrice / 100 * 20 + values.TotalPrice;//%20 kdv hesaplaması
+        ViewBag.total = values.TotalPrice; 
+        var totalPriceWithTax = values.TotalPrice / 100 * 20 + values.TotalPrice;
         ViewBag.totalPriceWithTax = totalPriceWithTax;
         var tax = values.TotalPrice / 100 * 20;
         ViewBag.tax = tax;

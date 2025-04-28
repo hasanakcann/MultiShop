@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MultiShop.WebUI.ViewComponents.ProductListViewComponents
+namespace MultiShop.WebUI.ViewComponents.ProductListViewComponents;
+
+public class _ProductListGetProductCountComponentPartial : ViewComponent
 {
-    public class _ProductListGetProductCountComponentPartial : ViewComponent
+    public IViewComponentResult Invoke()
     {
-        public IViewComponentResult Invoke()
-        {
-            return View();
-        }
+        return View();
     }
 }

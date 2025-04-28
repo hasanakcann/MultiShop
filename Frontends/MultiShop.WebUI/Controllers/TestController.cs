@@ -20,7 +20,6 @@ public class TestController : Controller
 
     public async Task<IActionResult> Index()
     {
-        //Token değerinin UI'da gösterilmesi testi yapılmıştır. Bu yöntem güvenli bir yöntem değildir.
         string token = "";
         using (var httpClient = new HttpClient())
         {
