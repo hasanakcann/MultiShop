@@ -33,16 +33,14 @@ public class ProductController : Controller
     {
         ProductViewBagList();
 
-        //Kategroiler getirilir.
         var values = await _categoryService.GetAllCategoryAsync();
-        //İçerisinden öğe seçilebilir bir liste. Öğelerimiz kategorilerdir.
         List<SelectListItem> categoryValues = (from x in values
                                                select new SelectListItem
                                                {
-                                                   Text = x.CategoryName, //Dropdown'da görüntülenecektir.
+                                                   Text = x.CategoryName,
                                                    Value = x.CategoryId
                                                }).ToList();
-        ViewBag.CategoryValues = categoryValues; //View'a taşınır.
+        ViewBag.CategoryValues = categoryValues;
 
         return View();
     }
@@ -68,16 +66,14 @@ public class ProductController : Controller
     {
         ProductViewBagList();
 
-        //Kategroiler getirilir.
         var values = await _categoryService.GetAllCategoryAsync();
-        //İçerisinden öğe seçilebilir bir liste. Öğelerimiz kategorilerdir.
         List<SelectListItem> categoryValues = (from x in values
                                                select new SelectListItem
                                                {
-                                                   Text = x.CategoryName, //Dropdown'da görüntülenecektir.
+                                                   Text = x.CategoryName,
                                                    Value = x.CategoryId
                                                }).ToList();
-        ViewBag.CategoryValues = categoryValues; //View'a taşınır.
+        ViewBag.CategoryValues = categoryValues;
 
         var productValues = await _productService.GetByIdProductAsync(id);
         return View(productValues);
@@ -96,7 +92,8 @@ public class ProductController : Controller
     {
         ProductViewBagList();
 
-        return View();
+        var productsWithCategory = await _productService.GetProductsWithCategoryAsync();
+        return View(productsWithCategory);
     }
 
     void ProductViewBagList()

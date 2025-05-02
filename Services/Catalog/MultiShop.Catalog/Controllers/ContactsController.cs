@@ -5,50 +5,50 @@ using MultiShop.Catalog.Services.ContactServices;
 
 namespace MultiShop.Catalog.Controllers;
 
-[Authorize]//Login olma zorunluluğu.
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class ContactsController : ControllerBase
 {
     private readonly IContactService _contactService;
 
-    public ContactsController(IContactService ContactService)
+    public ContactsController(IContactService contactService)
     {
-        _contactService = ContactService;
+        _contactService = contactService;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAllContactList()
     {
-        var values = await _contactService.GetAllContactAsync();
-        return Ok(values);
+        var contactList = await _contactService.GetAllContactAsync();
+        return Ok(contactList);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetContactById(string id)
     {
-        var values = await _contactService.GetByIdContactAsync(id);
-        return Ok(values);
+        var contact = await _contactService.GetByIdContactAsync(id);
+        return Ok(contact);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateContact(CreateContactDto createContactDto)
     {
         await _contactService.CreateContactAsync(createContactDto);
-        return Ok("Mesaj başarıyla eklendi.");
+        return Ok("Message was successfully added.");
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteContact(string id)
     {
         await _contactService.DeleteContactAsync(id);
-        return Ok("Mesaj başarıyla silindi.");
+        return Ok("Message was successfully deleted.");
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateContact(UpdateContactDto updateContactDto)
     {
         await _contactService.UpdateContactAsync(updateContactDto);
-        return Ok("Mesaj başarıyla güncellendi.");
+        return Ok("Message was successfully updated.");
     }
 }

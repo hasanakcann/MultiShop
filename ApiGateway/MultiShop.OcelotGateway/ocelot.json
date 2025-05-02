@@ -2,17 +2,16 @@
   "Routes": [
     //Catalog Micro Service
     {
-      "DownstreamPathTemplate": "/api/{everything}", //Client tarafından gelen isteğe verilen yanıt. Ocelot'un kendi özel komutu everything ile gelen her isteği karşılarız.
-      //"DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7070 //Catalog mikro servisinin port numarası tanımlanır.
+          "Port": 7070
         }
       ],
-      "UpstreamPathTemplate": "/services/catalog/{everything}", //Client tarafından gelen istektir. Catalog mikro servisinden gelen her istek setlenir.
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ], //İzin verilen http metotları setlenir.
+      "UpstreamPathTemplate": "/services/catalog/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotAuthenticationScheme",
@@ -21,17 +20,16 @@
     },
     //Discount Micro Service
     {
-      "DownstreamPathTemplate": "/api/{everything}", //Client tarafından gelen isteğe verilen yanıt. Ocelot'un kendi özel komutu everything ile gelen her isteği karşılarız.
-      //"DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7071 //Discount mikro servisinin port numarası tanımlanır.
+          "Port": 7071
         }
       ],
-      "UpstreamPathTemplate": "/services/discount/{everything}", //Client tarafından gelen istektir. Discount mikro servisinden gelen her istek setlenir.
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ], //İzin verilen http metotları setlenir.
+      "UpstreamPathTemplate": "/services/discount/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotAuthenticationScheme",
@@ -40,17 +38,16 @@
     },
     //Order Micro Service
     {
-      "DownstreamPathTemplate": "/api/{everything}", //Client tarafından gelen isteğe verilen yanıt. Ocelot'un kendi özel komutu everything ile gelen her isteği karşılarız.
-      //"DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7072 //Order mikro servisinin port numarası tanımlanır.
+          "Port": 7072
         }
       ],
-      "UpstreamPathTemplate": "/services/order/{everything}", //Client tarafından gelen istektir. Order mikro servisinden gelen her istek setlenir.
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ], //İzin verilen http metotları setlenir.
+      "UpstreamPathTemplate": "/services/order/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotAuthenticationScheme",
@@ -59,17 +56,16 @@
     },
     //Cargo Micro Service
     {
-      "DownstreamPathTemplate": "/api/{everything}", //Client tarafından gelen isteğe verilen yanıt. Ocelot'un kendi özel komutu everything ile gelen her isteği karşılarız.
-      //"DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7073 //Cargo mikro servisinin port numarası tanımlanır.
+          "Port": 7073
         }
       ],
-      "UpstreamPathTemplate": "/services/cargo/{everything}", //Client tarafından gelen istektir. Cargo mikro servisinden gelen her istek setlenir.
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ], //İzin verilen http metotları setlenir.
+      "UpstreamPathTemplate": "/services/cargo/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotAuthenticationScheme",
@@ -78,55 +74,35 @@
     },
     //Basket Micro Service
     {
-      "DownstreamPathTemplate": "/api/{everything}", //Client tarafından gelen isteğe verilen yanıt. Ocelot'un kendi özel komutu everything ile gelen her isteği karşılarız.
-      //"DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7074 //Basket mikro servisinin port numarası tanımlanır.
+          "Port": 7074
         }
       ],
-      "UpstreamPathTemplate": "/services/basket/{everything}", //Client tarafından gelen istektir. Basket mikro servisinden gelen her istek setlenir.
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ], //İzin verilen http metotları setlenir.
+      "UpstreamPathTemplate": "/services/basket/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotAuthenticationScheme",
         "AllowedScopes": [ "BasketFullPermission" ]
       }
     },
-    //Message Micro Service
-    {
-      "DownstreamPathTemplate": "/api/{everything}", //Client tarafından gelen isteğe verilen yanıt. Ocelot'un kendi özel komutu everything ile gelen her isteği karşılarız.
-      //"DownstreamScheme": "https",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7078 //Message mikro servisinin port numarası tanımlanır.
-        }
-      ],
-      "UpstreamPathTemplate": "/services/message/{everything}", //Client tarafından gelen istektir. Message mikro servisinden gelen her istek setlenir.
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ], //İzin verilen http metotları setlenir.
-      "UpstreamScheme": "http",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "OcelotAuthenticationScheme",
-        "AllowedScopes": [ "MessageFullPermission" ]
-      }
-    },
+
     //Comment Micro Service
     {
-      "DownstreamPathTemplate": "/api/{everything}", //Client tarafından gelen isteğe verilen yanıt. Ocelot'un kendi özel komutu everything ile gelen her isteği karşılarız.
-      //"DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7075 //Comment mikro servisinin port numarası tanımlanır.
+          "Port": 7075
         }
       ],
-      "UpstreamPathTemplate": "/services/comment/{everything}", //Client tarafından gelen istektir. Comment mikro servisinden gelen her istek setlenir.
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ], //İzin verilen http metotları setlenir.
+      "UpstreamPathTemplate": "/services/comment/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotAuthenticationScheme",
@@ -135,17 +111,16 @@
     },
     //Payment Micro Service
     {
-      "DownstreamPathTemplate": "/api/{everything}", //Client tarafından gelen isteğe verilen yanıt. Ocelot'un kendi özel komutu everything ile gelen her isteği karşılarız.
-      //"DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7076 //Payment mikro servisinin port numarası tanımlanır.
+          "Port": 7076
         }
       ],
-      "UpstreamPathTemplate": "/services/payment/{everything}", //Client tarafından gelen istektir. Payment mikro servisinden gelen her istek setlenir.
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ], //İzin verilen http metotları setlenir.
+      "UpstreamPathTemplate": "/services/payment/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotAuthenticationScheme",
@@ -154,21 +129,38 @@
     },
     //Images Micro Service
     {
-      "DownstreamPathTemplate": "/api/{everything}", //Client tarafından gelen isteğe verilen yanıt. Ocelot'un kendi özel komutu everything ile gelen her isteği karşılarız.
-      //"DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7077 //Images mikro servisinin port numarası tanımlanır.
+          "Port": 7077
         }
       ],
-      "UpstreamPathTemplate": "/services/images/{everything}", //Client tarafından gelen istektir. Images mikro servisinden gelen her istek setlenir.
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ], //İzin verilen http metotları setlenir.
+      "UpstreamPathTemplate": "/services/images/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "OcelotAuthenticationScheme",
         "AllowedScopes": [ "ImageFullPermission" ]
+      }
+    },
+    //Message Micro Service
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7078
+        }
+      ],
+      "UpstreamPathTemplate": "/services/message/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamScheme": "http",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OcelotAuthenticationScheme",
+        "AllowedScopes": [ "MessageFullPermission" ]
       }
     }
   ],

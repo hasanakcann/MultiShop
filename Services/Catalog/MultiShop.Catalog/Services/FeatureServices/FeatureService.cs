@@ -13,9 +13,9 @@ public class FeatureService : IFeatureService
 
     public FeatureService(IMapper mapper, IDatabaseSettings _databaseSettings)
     {
-        var client = new MongoClient(_databaseSettings.ConnectionString); //Connection
-        var database = client.GetDatabase(_databaseSettings.DatabaseName); //Database
-        _featureCollection = database.GetCollection<Feature>(_databaseSettings.FeatureCollectionName); //Table
+        var client = new MongoClient(_databaseSettings.ConnectionString); 
+        var database = client.GetDatabase(_databaseSettings.DatabaseName); 
+        _featureCollection = database.GetCollection<Feature>(_databaseSettings.FeatureCollectionName); 
         _mapper = mapper;
     }
 

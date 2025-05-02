@@ -18,7 +18,6 @@ public class CategoryController : Controller
     public async Task<IActionResult> Index()
     {
         CategoryWiewBagList();
-
         var values = await _categoryService.GetAllCategoryAsync();
         return View(values);
     }

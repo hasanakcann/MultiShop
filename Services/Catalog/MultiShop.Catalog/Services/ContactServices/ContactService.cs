@@ -13,9 +13,9 @@ public class ContactService : IContactService
 
     public ContactService(IMapper mapper, IDatabaseSettings _databaseSettings)
     {
-        var client = new MongoClient(_databaseSettings.ConnectionString); //Connection
-        var database = client.GetDatabase(_databaseSettings.DatabaseName); //Database
-        _contactCollection = database.GetCollection<Contact>(_databaseSettings.ContactCollectionName); //Table
+        var client = new MongoClient(_databaseSettings.ConnectionString); 
+        var database = client.GetDatabase(_databaseSettings.DatabaseName); 
+        _contactCollection = database.GetCollection<Contact>(_databaseSettings.ContactCollectionName); 
         _mapper = mapper;
     }
 

@@ -5,7 +5,7 @@ using MultiShop.Catalog.Services.FeatureServices;
 
 namespace MultiShop.Catalog.Controllers;
 
-[Authorize]//Login olma zorunluluğu.
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class FeaturesController : ControllerBase
@@ -20,35 +20,35 @@ public class FeaturesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllFeatureList()
     {
-        var values = await _featureService.GetAllFeatureAsync();
-        return Ok(values);
+        var features = await _featureService.GetAllFeatureAsync();
+        return Ok(features);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetFeatureById(string id)
     {
-        var values = await _featureService.GetByIdFeatureAsync(id);
-        return Ok(values);
+        var feature = await _featureService.GetByIdFeatureAsync(id);
+        return Ok(feature);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateFeature(CreateFeatureDto createFeatureDto)
     {
         await _featureService.CreateFeatureAsync(createFeatureDto);
-        return Ok("Öne çıkan alan başarıyla eklendi.");
+        return Ok("Highlighted feature was successfully added.");
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteFeature(string id)
     {
         await _featureService.DeleteFeatureAsync(id);
-        return Ok("Öne çıkan alan başarıyla silindi.");
+        return Ok("Highlighted feature was successfully deleted.");
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateFeature(UpdateFeatureDto updateFeatureDto)
     {
         await _featureService.UpdateFeatureAsync(updateFeatureDto);
-        return Ok("Öne çıkan alan başarıyla güncellendi.");
+        return Ok("Highlighted feature was successfully updated.");
     }
 }

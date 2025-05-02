@@ -1,9 +1,8 @@
-﻿namespace MultiShop.DtoLayer.CatalogDtos.FeatureDtos
+﻿namespace MultiShop.DtoLayer.CatalogDtos.FeatureDtos;
+
+public class GetByIdFeatureDto
 {
-    public class GetByIdFeatureDto
-    {
-        public string FeatureId { get; set; }
-        public string Title { get; set; }
-        public string Icon { get; set; }
-    }
+    public string FeatureId { get; set; }
+    public string Title { get; set; }
+    public string Icon { get; set; }
 }

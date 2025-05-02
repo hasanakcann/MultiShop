@@ -20,8 +20,8 @@ public class FeatureSliderController : Controller
     {
         FeatureSliderViewBagList();
 
-        var values = await _featureSliderService.GetAllFeatureSliderAsync();
-        return View(values);
+        var featureSliders = await _featureSliderService.GetAllFeatureSliderAsync();
+        return View(featureSliders);
     }
 
     [HttpGet]
@@ -53,8 +53,8 @@ public class FeatureSliderController : Controller
     {
         FeatureSliderViewBagList();
 
-        var values = await _featureSliderService.GetByIdFeatureSliderAsync(id);
-        return View(values);
+        var featureSliders = await _featureSliderService.GetByIdFeatureSliderAsync(id);
+        return View(featureSliders);
     }
 
     [HttpPost]

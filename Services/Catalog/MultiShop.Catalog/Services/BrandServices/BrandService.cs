@@ -13,9 +13,9 @@ public class BrandService : IBrandService
 
     public BrandService(IMapper mapper, IDatabaseSettings _databaseSettings)
     {
-        var client = new MongoClient(_databaseSettings.ConnectionString); //Connection
-        var database = client.GetDatabase(_databaseSettings.DatabaseName); //Database
-        _brandCollection = database.GetCollection<Brand>(_databaseSettings.BrandCollectionName); //Table
+        var client = new MongoClient(_databaseSettings.ConnectionString); 
+        var database = client.GetDatabase(_databaseSettings.DatabaseName); 
+        _brandCollection = database.GetCollection<Brand>(_databaseSettings.BrandCollectionName); 
         _mapper = mapper;
     }
 

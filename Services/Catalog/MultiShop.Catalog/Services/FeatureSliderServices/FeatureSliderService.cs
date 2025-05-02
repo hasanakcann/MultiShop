@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MongoDB.Driver;
-using MultiShop.Catalog.Dtos.CategoryDtos;
 using MultiShop.Catalog.Dtos.FeatureSliderDtos;
 using MultiShop.Catalog.Entities;
 using MultiShop.Catalog.Settings;
@@ -14,16 +13,16 @@ public class FeatureSliderService : IFeatureSliderService
 
     public FeatureSliderService(IMapper mapper, IDatabaseSettings _databaseSettings)
     {
-        var client = new MongoClient(_databaseSettings.ConnectionString); //Connection
-        var database = client.GetDatabase(_databaseSettings.DatabaseName); //Database
-        _featureSliderCollection = database.GetCollection<FeatureSlider>(_databaseSettings.FeatureSliderCollectionName); //Table
+        var client = new MongoClient(_databaseSettings.ConnectionString); 
+        var database = client.GetDatabase(_databaseSettings.DatabaseName); 
+        _featureSliderCollection = database.GetCollection<FeatureSlider>(_databaseSettings.FeatureSliderCollectionName); 
         _mapper = mapper;
     }
 
     public async Task CreateFeatureSliderAsync(CreateFeatureSliderDto createFeatureSliderDto)
     {
-        var values = _mapper.Map<FeatureSlider>(createFeatureSliderDto);
-        await _featureSliderCollection.InsertOneAsync(values);
+        var featureSlider = _mapper.Map<FeatureSlider>(createFeatureSliderDto);
+        await _featureSliderCollection.InsertOneAsync(featureSlider);
     }
 
     public async Task DeleteFeatureSliderAsync(string id)
@@ -43,19 +42,19 @@ public class FeatureSliderService : IFeatureSliderService
 
     public async Task<List<ResultFeatureSliderDto>> GetAllFeatureSliderAsync()
     {
-        var values = await _featureSliderCollection.Find(x => true).ToListAsync();
-        return _mapper.Map<List<ResultFeatureSliderDto>>(values);
+        var featureSlider = await _featureSliderCollection.Find(x => true).ToListAsync();
+        return _mapper.Map<List<ResultFeatureSliderDto>>(featureSlider);
     }
 
     public async Task<GetByIdFeatureSliderDto> GetByIdFeatureSliderAsync(string id)
     {
-        var values = await _featureSliderCollection.Find(x => x.FeatureSliderId == id).FirstOrDefaultAsync();
-        return _mapper.Map<GetByIdFeatureSliderDto>(values);
+        var featureSlider = await _featureSliderCollection.Find(x => x.FeatureSliderId == id).FirstOrDefaultAsync();
+        return _mapper.Map<GetByIdFeatureSliderDto>(featureSlider);
     }
 
     public async Task UpdateFeatureSliderAsync(UpdateFeatureSliderDto updateFeatureSliderDto)
     {
-        var values = _mapper.Map<FeatureSlider>(updateFeatureSliderDto);
-        await _featureSliderCollection.FindOneAndReplaceAsync(x => x.FeatureSliderId == updateFeatureSliderDto.FeatureSliderId, values);
+        var featureSlider = _mapper.Map<FeatureSlider>(updateFeatureSliderDto);
+        await _featureSliderCollection.FindOneAndReplaceAsync(x => x.FeatureSliderId == updateFeatureSliderDto.FeatureSliderId, featureSlider);
     }
 }

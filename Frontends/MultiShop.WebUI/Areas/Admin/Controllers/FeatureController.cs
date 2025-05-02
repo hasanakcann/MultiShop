@@ -18,9 +18,8 @@ public class FeatureController : Controller
     public async Task<IActionResult> Index()
     {
         FeatureViewBagList();
-
-        var values = await _featureService.GetAllFeatureAsync();
-        return View(values);
+        var features = await _featureService.GetAllFeatureAsync();
+        return View(features);
     }
 
     [HttpGet]
@@ -51,9 +50,8 @@ public class FeatureController : Controller
     public async Task<IActionResult> UpdateFeature(string id)
     {
         FeatureViewBagList();
-
-        var values = await _featureService.GetByIdFeatureAsync(id);
-        return View(values);
+        var feature = await _featureService.GetByIdFeatureAsync(id);
+        return View(feature);
     }
 
     [HttpPost]

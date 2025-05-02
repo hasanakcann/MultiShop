@@ -13,9 +13,9 @@ public class AboutService : IAboutService
 
     public AboutService(IMapper mapper, IDatabaseSettings _databaseSettings)
     {
-        var client = new MongoClient(_databaseSettings.ConnectionString); //Connection
-        var database = client.GetDatabase(_databaseSettings.DatabaseName); //Database
-        _aboutCollection = database.GetCollection<About>(_databaseSettings.AboutCollectionName); //Table
+        var client = new MongoClient(_databaseSettings.ConnectionString); 
+        var database = client.GetDatabase(_databaseSettings.DatabaseName); 
+        _aboutCollection = database.GetCollection<About>(_databaseSettings.AboutCollectionName); 
         _mapper = mapper;
     }
 

@@ -5,50 +5,50 @@ using MultiShop.Catalog.Services.FeatureSliderServices;
 
 namespace MultiShop.Catalog.Controllers;
 
-[Authorize]//Login olma zorunluluğu.
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class FeatureSlidersController : ControllerBase
 {
-    private readonly IFeatureSliderService _FeatureSliderService;
+    private readonly IFeatureSliderService _featureSliderService;
 
-    public FeatureSlidersController(IFeatureSliderService FeatureSliderService)
+    public FeatureSlidersController(IFeatureSliderService featureSliderService)
     {
-        _FeatureSliderService = FeatureSliderService;
+        _featureSliderService = featureSliderService;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAllFeatureSliderList()
     {
-        var values = await _FeatureSliderService.GetAllFeatureSliderAsync();
-        return Ok(values);
+        var featureSliders = await _featureSliderService.GetAllFeatureSliderAsync();
+        return Ok(featureSliders);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetFeatureSliderById(string id)
     {
-        var values = await _FeatureSliderService.GetByIdFeatureSliderAsync(id);
-        return Ok(values);
+        var featureSlider = await _featureSliderService.GetByIdFeatureSliderAsync(id);
+        return Ok(featureSlider);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateFeatureSlider(CreateFeatureSliderDto createFeatureSliderDto)
     {
-        await _FeatureSliderService.CreateFeatureSliderAsync(createFeatureSliderDto);
-        return Ok("Öne çıkan görsel başarıyla eklendi.");
+        await _featureSliderService.CreateFeatureSliderAsync(createFeatureSliderDto);
+        return Ok("Feature slider successfully added.");
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteFeatureSlider(string id)
     {
-        await _FeatureSliderService.DeleteFeatureSliderAsync(id);
-        return Ok("Öne çıkan görsel başarıyla silindi.");
+        await _featureSliderService.DeleteFeatureSliderAsync(id);
+        return Ok("Feature slider successfully deleted.");
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateFeatureSlider(UpdateFeatureSliderDto updateFeatureSliderDto)
     {
-        await _FeatureSliderService.UpdateFeatureSliderAsync(updateFeatureSliderDto);
-        return Ok("Öne çıkan görsel başarıyla güncellendi.");
+        await _featureSliderService.UpdateFeatureSliderAsync(updateFeatureSliderDto);
+        return Ok("Feature slider successfully updated.");
     }
 }

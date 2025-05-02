@@ -13,16 +13,16 @@ public class SpecialOfferService : ISpecialOfferService
 
     public SpecialOfferService(IMapper mapper, IDatabaseSettings _databaseSettings)
     {
-        var client = new MongoClient(_databaseSettings.ConnectionString); //Connection
-        var database = client.GetDatabase(_databaseSettings.DatabaseName); //Database
-        _specialOfferCollection = database.GetCollection<SpecialOffer>(_databaseSettings.SpecialOfferCollectionName); //Table
+        var client = new MongoClient(_databaseSettings.ConnectionString);
+        var database = client.GetDatabase(_databaseSettings.DatabaseName);
+        _specialOfferCollection = database.GetCollection<SpecialOffer>(_databaseSettings.SpecialOfferCollectionName);
         _mapper = mapper;
     }
 
     public async Task CreateSpecialOfferAsync(CreateSpecialOfferDto createSpecialOfferDto)
     {
-        var values = _mapper.Map<SpecialOffer>(createSpecialOfferDto);
-        await _specialOfferCollection.InsertOneAsync(values);
+        var specialOffer = _mapper.Map<SpecialOffer>(createSpecialOfferDto);
+        await _specialOfferCollection.InsertOneAsync(specialOffer);
     }
 
     public async Task DeleteSpecialOfferAsync(string id)
@@ -32,19 +32,19 @@ public class SpecialOfferService : ISpecialOfferService
 
     public async Task<List<ResultSpecialOfferDto>> GetAllSpecialOfferAsync()
     {
-        var values = await _specialOfferCollection.Find(x => true).ToListAsync();
-        return _mapper.Map<List<ResultSpecialOfferDto>>(values);
+        var specialOffer = await _specialOfferCollection.Find(x => true).ToListAsync();
+        return _mapper.Map<List<ResultSpecialOfferDto>>(specialOffer);
     }
 
     public async Task<GetByIdSpecialOfferDto> GetByIdSpecialOfferAsync(string id)
     {
-        var values = await _specialOfferCollection.Find(x => x.SpecialOfferId == id).FirstOrDefaultAsync();
-        return _mapper.Map<GetByIdSpecialOfferDto>(values);
+        var specialOffer = await _specialOfferCollection.Find(x => x.SpecialOfferId == id).FirstOrDefaultAsync();
+        return _mapper.Map<GetByIdSpecialOfferDto>(specialOffer);
     }
 
     public async Task UpdateSpecialOfferAsync(UpdateSpecialOfferDto updateSpecialOfferDto)
     {
-        var values = _mapper.Map<SpecialOffer>(updateSpecialOfferDto);
-        await _specialOfferCollection.FindOneAndReplaceAsync(x => x.SpecialOfferId == updateSpecialOfferDto.SpecialOfferId, values);
+        var specialOffer = _mapper.Map<SpecialOffer>(updateSpecialOfferDto);
+        await _specialOfferCollection.FindOneAndReplaceAsync(x => x.SpecialOfferId == updateSpecialOfferDto.SpecialOfferId, specialOffer);
     }
 }

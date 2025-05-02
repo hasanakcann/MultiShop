@@ -13,16 +13,16 @@ public class OfferDiscountService : IOfferDiscountService
 
     public OfferDiscountService(IMapper mapper, IDatabaseSettings _databaseSettings)
     {
-        var client = new MongoClient(_databaseSettings.ConnectionString); //Connection
-        var database = client.GetDatabase(_databaseSettings.DatabaseName); //Database
-        _offerDiscountCollection = database.GetCollection<OfferDiscount>(_databaseSettings.OfferDiscountCollectionName); //Table
+        var client = new MongoClient(_databaseSettings.ConnectionString); 
+        var database = client.GetDatabase(_databaseSettings.DatabaseName); 
+        _offerDiscountCollection = database.GetCollection<OfferDiscount>(_databaseSettings.OfferDiscountCollectionName); 
         _mapper = mapper;
     }
 
     public async Task CreateOfferDiscountAsync(CreateOfferDiscountDto createOfferDiscountDto)
     {
-        var values = _mapper.Map<OfferDiscount>(createOfferDiscountDto);
-        await _offerDiscountCollection.InsertOneAsync(values);
+        var offerDiscount = _mapper.Map<OfferDiscount>(createOfferDiscountDto);
+        await _offerDiscountCollection.InsertOneAsync(offerDiscount);
     }
 
     public async Task DeleteOfferDiscountAsync(string id)
@@ -32,14 +32,14 @@ public class OfferDiscountService : IOfferDiscountService
 
     public async Task<List<ResultOfferDiscountDto>> GetAllOfferDiscountAsync()
     {
-        var values = await _offerDiscountCollection.Find(x => true).ToListAsync();
-        return _mapper.Map<List<ResultOfferDiscountDto>>(values);
+        var offerDiscounts = await _offerDiscountCollection.Find(x => true).ToListAsync();
+        return _mapper.Map<List<ResultOfferDiscountDto>>(offerDiscounts);
     }
 
     public async Task<GetByIdOfferDiscountDto> GetByIdOfferDiscountAsync(string id)
     {
-        var values = await _offerDiscountCollection.Find(x => x.OfferDiscountId == id).FirstOrDefaultAsync();
-        return _mapper.Map<GetByIdOfferDiscountDto>(values);
+        var offerDiscount = await _offerDiscountCollection.Find(x => x.OfferDiscountId == id).FirstOrDefaultAsync();
+        return _mapper.Map<GetByIdOfferDiscountDto>(offerDiscount);
     }
 
     public async Task UpdateOfferDiscountAsync(UpdateOfferDiscountDto updateOfferDiscountDto)

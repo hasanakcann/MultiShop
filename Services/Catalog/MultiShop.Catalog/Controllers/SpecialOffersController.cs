@@ -5,50 +5,50 @@ using MultiShop.Catalog.Services.SpecialOfferServices;
 
 namespace MultiShop.Catalog.Controllers;
 
-[Authorize]//Login olma zorunluluğu.
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class SpecialOffersController : ControllerBase
 {
     private readonly ISpecialOfferService _specialOfferService;
 
-    public SpecialOffersController(ISpecialOfferService SpecialOfferService)
+    public SpecialOffersController(ISpecialOfferService specialOfferService)
     {
-        _specialOfferService = SpecialOfferService;
+        _specialOfferService = specialOfferService;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAllSpecialOfferList()
     {
-        var values = await _specialOfferService.GetAllSpecialOfferAsync();
-        return Ok(values);
+        var specialOffers = await _specialOfferService.GetAllSpecialOfferAsync();
+        return Ok(specialOffers);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetSpecialOfferById(string id)
     {
-        var values = await _specialOfferService.GetByIdSpecialOfferAsync(id);
-        return Ok(values);
+        var specialOffer = await _specialOfferService.GetByIdSpecialOfferAsync(id);
+        return Ok(specialOffer);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateSpecialOffer(CreateSpecialOfferDto createSpecialOfferDto)
     {
         await _specialOfferService.CreateSpecialOfferAsync(createSpecialOfferDto);
-        return Ok("Özel teklif başarıyla eklendi.");
+        return Ok("Special offer was successfully added.");
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteSpecialOffer(string id)
     {
         await _specialOfferService.DeleteSpecialOfferAsync(id);
-        return Ok("Özel teklif başarıyla silindi.");
+        return Ok("Special offer was successfully deleted.");
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateSpecialOffer(UpdateSpecialOfferDto updateSpecialOfferDto)
     {
         await _specialOfferService.UpdateSpecialOfferAsync(updateSpecialOfferDto);
-        return Ok("Özel teklif başarıyla güncellendi.");
+        return Ok("Special offer was successfully updated.");
     }
 }
