@@ -16,42 +16,84 @@ public class StatisticsController : ControllerBase
     [HttpGet("GetBrandCount")]
     public async Task<IActionResult> GetBrandCount()
     {
-        var value = await _statisticService.GetBrandCount();
-        return Ok(value);
+        try
+        {
+            var value = await _statisticService.GetBrandCount();
+            return Ok(value);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error fetching brand count: {ex.Message}");
+        }
     }
 
     [HttpGet("GetCategoryCount")]
     public async Task<IActionResult> GetCategoryCount()
     {
-        var value = await _statisticService.GetCategoryCount();
-        return Ok(value);
+        try
+        {
+            var value = await _statisticService.GetCategoryCount();
+            return Ok(value);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error fetching category count: {ex.Message}");
+        }
     }
 
     [HttpGet("GetProductCount")]
     public async Task<IActionResult> GetProductCount()
     {
-        var value = await _statisticService.GetProductCount();
-        return Ok(value);
+        try
+        {
+            var value = await _statisticService.GetProductCount();
+            return Ok(value);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error fetching product count: {ex.Message}");
+        }
     }
 
     [HttpGet("GetProductAveragePrice")]
     public async Task<IActionResult> GetProductAveragePrice()
     {
-        var value = await _statisticService.GetProductAveragePrice();
-        return Ok(value);
+        try
+        {
+            var value = await _statisticService.GetProductAveragePrice();
+            return Ok(value);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error fetching average product price: {ex.Message}");
+        }
     }
 
     [HttpGet("GetMaxPriceProductName")]
     public async Task<IActionResult> GetMaxPriceProductName()
     {
-        var value = await _statisticService.GetMaxPriceProductName();
-        return Ok(value);
+        try
+        {
+            var value = await _statisticService.GetMaxPriceProductName();
+            return Ok(value);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error fetching max price product name: {ex.Message}");
+        }
     }
 
     [HttpGet("GetMinPriceProductName")]
     public async Task<IActionResult> GetMinPriceProductName()
     {
-        var value = await _statisticService.GetMinPriceProductName();
-        return Ok(value);
+        try
+        {
+            var value = await _statisticService.GetMinPriceProductName();
+            return Ok(value);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error fetching min price product name: {ex.Message}");
+        }
     }
 }

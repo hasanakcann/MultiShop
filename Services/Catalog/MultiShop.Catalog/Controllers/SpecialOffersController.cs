@@ -20,35 +20,81 @@ public class SpecialOffersController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllSpecialOfferList()
     {
-        var specialOffers = await _specialOfferService.GetAllSpecialOfferAsync();
-        return Ok(specialOffers);
+        try
+        {
+            var specialOffers = await _specialOfferService.GetAllSpecialOfferAsync();
+            return Ok(specialOffers);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while fetching special offers: {ex.Message}");
+        }
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetSpecialOfferById(string id)
     {
-        var specialOffer = await _specialOfferService.GetByIdSpecialOfferAsync(id);
-        return Ok(specialOffer);
+        try
+        {
+            var specialOffer = await _specialOfferService.GetByIdSpecialOfferAsync(id);
+            if (specialOffer == null)
+                return NotFound($"Special offer with ID '{id}' was not found.");
+
+            return Ok(specialOffer);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while fetching the special offer: {ex.Message}");
+        }
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateSpecialOffer(CreateSpecialOfferDto createSpecialOfferDto)
     {
-        await _specialOfferService.CreateSpecialOfferAsync(createSpecialOfferDto);
-        return Ok("Special offer was successfully added.");
+        try
+        {
+            await _specialOfferService.CreateSpecialOfferAsync(createSpecialOfferDto);
+            return Ok("Special offer was successfully added.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while creating the special offer: {ex.Message}");
+        }
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteSpecialOffer(string id)
     {
-        await _specialOfferService.DeleteSpecialOfferAsync(id);
-        return Ok("Special offer was successfully deleted.");
+        try
+        {
+            var existing = await _specialOfferService.GetByIdSpecialOfferAsync(id);
+            if (existing == null)
+                return NotFound($"Special offer with ID '{id}' was not found.");
+
+            await _specialOfferService.DeleteSpecialOfferAsync(id);
+            return Ok("Special offer was successfully deleted.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while deleting the special offer: {ex.Message}");
+        }
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateSpecialOffer(UpdateSpecialOfferDto updateSpecialOfferDto)
     {
-        await _specialOfferService.UpdateSpecialOfferAsync(updateSpecialOfferDto);
-        return Ok("Special offer was successfully updated.");
+        try
+        {
+            var existing = await _specialOfferService.GetByIdSpecialOfferAsync(updateSpecialOfferDto.SpecialOfferId);
+            if (existing == null)
+                return NotFound($"Special offer with ID '{updateSpecialOfferDto.SpecialOfferId}' was not found.");
+
+            await _specialOfferService.UpdateSpecialOfferAsync(updateSpecialOfferDto);
+            return Ok("Special offer was successfully updated.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while updating the special offer: {ex.Message}");
+        }
     }
 }

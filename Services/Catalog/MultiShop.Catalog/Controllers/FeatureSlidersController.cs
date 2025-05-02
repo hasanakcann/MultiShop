@@ -20,35 +20,81 @@ public class FeatureSlidersController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllFeatureSliderList()
     {
-        var featureSliders = await _featureSliderService.GetAllFeatureSliderAsync();
-        return Ok(featureSliders);
+        try
+        {
+            var featureSliders = await _featureSliderService.GetAllFeatureSliderAsync();
+            return Ok(featureSliders);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while fetching feature sliders: {ex.Message}");
+        }
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetFeatureSliderById(string id)
     {
-        var featureSlider = await _featureSliderService.GetByIdFeatureSliderAsync(id);
-        return Ok(featureSlider);
+        try
+        {
+            var featureSlider = await _featureSliderService.GetByIdFeatureSliderAsync(id);
+            if (featureSlider == null)
+                return NotFound($"Feature slider with ID '{id}' was not found.");
+
+            return Ok(featureSlider);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while fetching feature slider: {ex.Message}");
+        }
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateFeatureSlider(CreateFeatureSliderDto createFeatureSliderDto)
     {
-        await _featureSliderService.CreateFeatureSliderAsync(createFeatureSliderDto);
-        return Ok("Feature slider successfully added.");
+        try
+        {
+            await _featureSliderService.CreateFeatureSliderAsync(createFeatureSliderDto);
+            return Ok("Feature slider successfully added.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while creating feature slider: {ex.Message}");
+        }
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteFeatureSlider(string id)
     {
-        await _featureSliderService.DeleteFeatureSliderAsync(id);
-        return Ok("Feature slider successfully deleted.");
+        try
+        {
+            var existing = await _featureSliderService.GetByIdFeatureSliderAsync(id);
+            if (existing == null)
+                return NotFound($"Feature slider with ID '{id}' was not found.");
+
+            await _featureSliderService.DeleteFeatureSliderAsync(id);
+            return Ok("Feature slider successfully deleted.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while deleting feature slider: {ex.Message}");
+        }
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateFeatureSlider(UpdateFeatureSliderDto updateFeatureSliderDto)
     {
-        await _featureSliderService.UpdateFeatureSliderAsync(updateFeatureSliderDto);
-        return Ok("Feature slider successfully updated.");
+        try
+        {
+            var existing = await _featureSliderService.GetByIdFeatureSliderAsync(updateFeatureSliderDto.FeatureSliderId);
+            if (existing == null)
+                return NotFound($"Feature slider with ID '{updateFeatureSliderDto.FeatureSliderId}' was not found.");
+
+            await _featureSliderService.UpdateFeatureSliderAsync(updateFeatureSliderDto);
+            return Ok("Feature slider successfully updated.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while updating feature slider: {ex.Message}");
+        }
     }
 }

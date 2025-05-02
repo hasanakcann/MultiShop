@@ -20,35 +20,81 @@ public class AboutsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllAboutList()
     {
-        var aboutList = await _aboutService.GetAllAboutAsync();
-        return Ok(aboutList);
+        try
+        {
+            var aboutList = await _aboutService.GetAllAboutAsync();
+            return Ok(aboutList);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while fetching about list: {ex.Message}");
+        }
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAboutById(string id)
     {
-        var about = await _aboutService.GetByIdAboutAsync(id);
-        return Ok(about);
+        try
+        {
+            var about = await _aboutService.GetByIdAboutAsync(id);
+            if (about == null)
+                return NotFound($"About section with ID '{id}' was not found.");
+
+            return Ok(about);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while fetching about section: {ex.Message}");
+        }
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateAbout(CreateAboutDto createAboutDto)
     {
-        await _aboutService.CreateAboutAsync(createAboutDto);
-        return Ok("About section was successfully added.");
+        try
+        {
+            await _aboutService.CreateAboutAsync(createAboutDto);
+            return Ok("About section was successfully added.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while creating about section: {ex.Message}");
+        }
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteAbout(string id)
     {
-        await _aboutService.DeleteAboutAsync(id);
-        return Ok("About section was successfully deleted.");
+        try
+        {
+            var existing = await _aboutService.GetByIdAboutAsync(id);
+            if (existing == null)
+                return NotFound($"About section with ID '{id}' was not found.");
+
+            await _aboutService.DeleteAboutAsync(id);
+            return Ok("About section was successfully deleted.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while deleting about section: {ex.Message}");
+        }
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateAbout(UpdateAboutDto updateAboutDto)
     {
-        await _aboutService.UpdateAboutAsync(updateAboutDto);
-        return Ok("About section was successfully updated.");
+        try
+        {
+            var existing = await _aboutService.GetByIdAboutAsync(updateAboutDto.AboutId);
+            if (existing == null)
+                return NotFound($"About section with ID '{updateAboutDto.AboutId}' was not found.");
+
+            await _aboutService.UpdateAboutAsync(updateAboutDto);
+            return Ok("About section was successfully updated.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while updating about section: {ex.Message}");
+        }
     }
 }

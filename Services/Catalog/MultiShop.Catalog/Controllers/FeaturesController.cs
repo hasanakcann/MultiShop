@@ -20,35 +20,81 @@ public class FeaturesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllFeatureList()
     {
-        var features = await _featureService.GetAllFeatureAsync();
-        return Ok(features);
+        try
+        {
+            var features = await _featureService.GetAllFeatureAsync();
+            return Ok(features);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while fetching feature list: {ex.Message}");
+        }
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetFeatureById(string id)
     {
-        var feature = await _featureService.GetByIdFeatureAsync(id);
-        return Ok(feature);
+        try
+        {
+            var feature = await _featureService.GetByIdFeatureAsync(id);
+            if (feature == null)
+                return NotFound($"Highlighted feature with ID '{id}' was not found.");
+
+            return Ok(feature);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while fetching feature: {ex.Message}");
+        }
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateFeature(CreateFeatureDto createFeatureDto)
     {
-        await _featureService.CreateFeatureAsync(createFeatureDto);
-        return Ok("Highlighted feature was successfully added.");
+        try
+        {
+            await _featureService.CreateFeatureAsync(createFeatureDto);
+            return Ok("Highlighted feature was successfully added.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while creating feature: {ex.Message}");
+        }
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteFeature(string id)
     {
-        await _featureService.DeleteFeatureAsync(id);
-        return Ok("Highlighted feature was successfully deleted.");
+        try
+        {
+            var existing = await _featureService.GetByIdFeatureAsync(id);
+            if (existing == null)
+                return NotFound($"Highlighted feature with ID '{id}' was not found.");
+
+            await _featureService.DeleteFeatureAsync(id);
+            return Ok("Highlighted feature was successfully deleted.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while deleting feature: {ex.Message}");
+        }
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateFeature(UpdateFeatureDto updateFeatureDto)
     {
-        await _featureService.UpdateFeatureAsync(updateFeatureDto);
-        return Ok("Highlighted feature was successfully updated.");
+        try
+        {
+            var existing = await _featureService.GetByIdFeatureAsync(updateFeatureDto.FeatureId);
+            if (existing == null)
+                return NotFound($"Highlighted feature with ID '{updateFeatureDto.FeatureId}' was not found.");
+
+            await _featureService.UpdateFeatureAsync(updateFeatureDto);
+            return Ok("Highlighted feature was successfully updated.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while updating feature: {ex.Message}");
+        }
     }
 }
