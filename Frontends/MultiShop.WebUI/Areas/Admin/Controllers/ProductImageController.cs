@@ -16,6 +16,7 @@ public class ProductImageController : Controller
     {
         _httpClientFactory = httpClientFactory;
     }
+
     [Route("ProductImageDetail/{id}")]
     [HttpGet]
     public async Task<IActionResult> ProductImageDetail(string id)

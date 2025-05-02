@@ -45,7 +45,7 @@ public class ProductListController : Controller
         createCommentDto.Rating = 1;
         createCommentDto.CreatedDate = DateTime.Parse(DateTime.Now.ToShortDateString());
         createCommentDto.Status = false;
-        createCommentDto.ProductId = "66cf82fe0b01f67388253322";
+        createCommentDto.ProductId = "67f90501e20eb550d5abc6d2";
 
         var client = _httpClientFactory.CreateClient();
         var jsonData = JsonConvert.SerializeObject(createCommentDto);
