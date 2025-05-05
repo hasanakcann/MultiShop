@@ -83,7 +83,6 @@ MultiShop, mikroservis mimarisi kullanılarak inşa edilmiş, esnek, ölçeklene
   <summary>🧵 Asenkron Programlama ve Mesajlaşma Sistemleri</summary>
 
 - [Asenkron Programlama](#asenkron-programlama)
-- [EventBus](#eventbus) <!-- Ayrıca Mikroservis grubunda da geçiyor ama burada da mantıklı -->
 </details>
 
 <details>
