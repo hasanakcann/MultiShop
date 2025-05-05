@@ -128,6 +128,7 @@ MultiShop, mikroservis mimarisi kullanılarak inşa edilmiş, esnek, ölçeklene
   <summary>⚙️ HTTP ve API İletişimi</summary>
 
 - [HttpClient ve HttpClientFactory Kullanımı](#httpclient-ve-httpclientfactory-kullanımı)
+- [Serialization ve Deserialization Kavramları](#serialization-ve-deserialization-kavramları)
 </details>
 
 <details>
@@ -230,6 +231,12 @@ Redis konfigürasyonu yapıldı.
 **.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.**
 
 Docker üzerinden CommentDb ayağa kaldırıldı.
+
+### WebUI
+
+**.NET 8.0 ile ASP.NET Core Web App (Model-View-Controller) projesi oluşturuldu.**
+
+UI tasarımları ve api consume işlemleri yapıldı.
 
 ## Api Gateway
 
@@ -642,6 +649,23 @@ IHttpClientFactory, .NET Core 2.1+ ile gelen bir yapıdır ve HttpClient'in doğ
 - Küçük ve tek seferlik bir uygulama yazıyorsan HttpClient kullanılabilir.
 - Ancak gerçek bir uygulama, çoklu servis çağrıları ya da yük altında çalışan bir servis geliştiriyorsan, IHttpClientFactory kesinlikle tercih edilmelidir.
 
+## Serialization ve Deserialization Kavramları
+
+### Serialization
+
+Bir nesnenin (object) bellekteki hâlini JSON, XML veya binary gibi düz ve taşınabilir bir formata dönüştürme işlemidir. Bu işlem, verinin dış sistemlerle paylaşılması, bir dosyaya kaydedilmesi, veritabanına yazılması veya ağ üzerinden iletilmesi gibi senaryolarda kullanılır.
+  
+### Deserialization
+
+Düz formatta gelen (örneğin bir JSON dosyası veya API cevabı) verinin tekrar program içinde kullanılabilir bir nesneye dönüştürülmesini sağlar.
+  
+**Genellikle aşağıdaki senaryolarda kullanılır:**
+
+- Serialize: POST/PUT/DELETE isteklerinde nesneleri JSON formatına çevirip istemciden sunucuya gönderme, cache'e veya dosyaya yazma işlemleri sırasında.
+- Deserialize: GET istekleri sonucunda gelen JSON verisini nesneye dönüştürüp uygulama içinde işlemek amacıyla.
+ 
+Bu işlemler sayesinde veri taşınabilir hale gelir, sistemler arası iletişim kolaylaşır ve platformdan bağımsız veri işleme mümkün olur.
+
 ## Asenkron Programlama
 
 Asenkron programlama, özellikle uzun süren işlemler sırasında (veritabanı sorgusu, dosya okuma, HTTP isteği vs.) uygulamanın bloklanmasını önlemek için kullanılır. Temel amaç, işlemin tamamlanmasını beklerken uygulamanın yanıt vermeye devam etmesini sağlamaktır.
@@ -895,7 +919,7 @@ https://dbeaver.io/
 
 ## Redis
 
-🔹 Redis (Remote DIctionary Server) Nedir?
+🔹 Redis (Remote Dictionary Server) Nedir?
 
 Redis, verileri doğrudan RAM üzerinde tutarak, klasik disk tabanlı veritabanlarına kıyasla çok daha hızlı veri erişimi sağlar. Basit bir key-value store gibi görünse de Redis’in desteklediği veri yapıları bu tanımı çok aşar.
 
@@ -1119,6 +1143,8 @@ Kısa ömürlü ve hızlı erişilmesi gereken bilgiler için (örn. SMS doğrul
 Redis Kullanımı:
 
 SET key value EX 300 (örneğin 5 dakikalık geçerlilik)
+
+
 
 
 
