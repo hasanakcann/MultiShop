@@ -1,5 +1,50 @@
 ![image](https://github.com/user-attachments/assets/db402f27-e8fb-4157-a739-fb69c52e0420)
 
+## 🛒 MultiShop - Modern E-Ticaretin Yeni Yüzü
+
+Günümüzde e-ticaret sadece ürün satışıyla sınırlı bir deneyim olmaktan çıkmış durumda. Kullanıcılar artık alışveriş yaparken sadece ihtiyaçlarını karşılamak değil, aynı zamanda güvenli, hızlı, kişiselleştirilmiş ve interaktif bir deneyim yaşamak istiyor. İşte bu beklentileri en iyi şekilde karşılamak üzere tasarlanan **MultiShop**, modern yazılım mimarisiyle fark yaratan yeni nesil bir e-ticaret platformudur.
+
+MultiShop, mikroservis mimarisi kullanılarak inşa edilmiş, esnek, ölçeklenebilir ve yüksek performanslı bir altyapıya sahiptir. Bu sayede, sistemin her bir bileşeni bağımsız olarak geliştirilebilir, güncellenebilir ve yönetilebilir. Bu mimari tercih, yalnızca teknik üstünlük sağlamaz; aynı zamanda kullanıcıların sorunsuz ve kesintisiz bir alışveriş deneyimi yaşamasını da garanti altına alır.
+
+---
+
+### 🎯 Temel Özellikler
+
+- **Kullanıcı İşlevleri**
+  - Hesap oluşturma ve güvenli oturum açma
+  - Ürün kataloğunu inceleme
+  - Yorum yapma ve puanlama
+  - Sepet oluşturma ve ödeme işlemleri
+  - Sipariş ve kargo takibi
+
+- **Yönetici Paneli**
+  - Yeni ürün ve kategori ekleme
+  - Kampanyalar ve öne çıkan ürünleri düzenleme
+  - Gerçek zamanlı istatistik ve analizler
+  - Yönetimsel kararlar için görsel veri desteği
+
+---
+
+### 🚀 Neden MultiShop?
+
+Kısacası, **MultiShop** yalnızca bir e-ticaret sitesi değil;  
+- Kullanıcılar için keyifli, güvenli ve katılımcı bir alışveriş deneyimi,  
+- Yöneticiler için ise güçlü ve sezgisel bir yönetim platformudur.
+
+Teknoloji ve kullanıcı odaklı tasarımın buluştuğu bu sistem, **geleceğin dijital alışveriş anlayışına bugünden yön veriyor.**
+
+
+## Kullanılan Teknolojiler
+
+- **Backend:** C#, .Net Core 8, Web Api
+- **Mimari Tasarım:** N-Tier Architecture, Onion Architecture
+- **Tasarım Desenleri:** Mediator Design Pattern, CQRS Design Pattern, Repository Design Pattern
+- **Veri Tabanları:** MSSQL Server, MongoDb, PostgreSql, Redis
+- **ORM:** Entity Framework Core (CodeFirst), Dapper
+- **Arayüz Tasarımı:** HTML, CSS, JavaScript, jQuery, Ajax, Bootstrap
+- **Diğer:** Identity, JWT, RabbitMQ, Ocelot Gateway, SignalR, Postman, Swagger
+- **Altyapı ve Dağıtım Araçları:** Docker, Portainer, Google Cloud
+
 <details>
   <summary>🧱 Mikroservis Mimarisi ve Yazılım Prensipleri</summary>
 
@@ -7,7 +52,7 @@
 - [Mikroservisler](#mikroservisler)
 - [Solid Prensibles](#solid-prensibles)
 - [Onion Architecture](#onion-architecture)
-- [.Net Architectures](#net-architectures)
+- [.NET Architectures](#net-architectures)
 - [Domain-Driven Design (DDD)](#domain-driven-design-ddd)
 </details>
 
@@ -50,7 +95,7 @@
 <details>
   <summary>💾 Veritabanı Teknolojileri</summary>
 
-- [MongoDb](#mongodb)
+- [MongoDB](#mongodb)
 - [Dapper](#dapper)
 </details>
 
@@ -115,13 +160,19 @@ docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /va
 - MultiShop.Cargo.EntityLayer
 - MultiShop.Cargo.WebApi
 
-### 5. Basket Mikro Service
+### 5. Basket Micro Service
 
 **.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.**
 
 Kullanıcının login olma zorunluluğu proje seviyesinde yapıldı.
 
 Redis konfigürasyonu yapıldı.
+
+### 6. Comment Mikro Service
+
+**.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.**
+
+Docker üzerinden CommentDb ayağa kaldırıldı.
 
 ## Solid Prensibles
 
