@@ -12,8 +12,8 @@ using MultiShop.Comment.Context;
 namespace MultiShop.Comment.Migrations
 {
     [DbContext(typeof(CommentContext))]
-    [Migration("20240903192144_mig2")]
-    partial class mig2
+    [Migration("20250505090326_mig1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

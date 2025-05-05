@@ -17,10 +17,6 @@ public class CommentController : Controller
         _httpClientFactory = httpClientFactory;
     }
 
-    /// <summary>
-    ///     Serialize: Metin'den Json'a ve Ekle - Sil - Güncelle işlemlerinde yapılır.
-    ///     Deserialize: Json'dan Metin'e ve Listele - Id'ye göre veri getirme işlemlerinde yapılır.
-    /// </summary>
     [Route("Index")]
     public async Task<IActionResult> Index()
     {
@@ -29,12 +25,12 @@ public class CommentController : Controller
         ViewBag.v2 = "Yorumlar";
         ViewBag.v3 = "Yorum Listesi";
 
-        var client = _httpClientFactory.CreateClient();//Api çağrımı yapılır.
-        var responseMessage = await client.GetAsync("http://localhost:7075/api/Comments");//Yapılacak olan işlemin türü belirtilir. Comment mikro servisinde bulunan Comments controller'ına Get isteğinde bulunulur.
+        var client = _httpClientFactory.CreateClient();
+        var responseMessage = await client.GetAsync("http://localhost:7075/api/Comments");
 
-        if (responseMessage.IsSuccessStatusCode)//200 OK
+        if (responseMessage.IsSuccessStatusCode)
         {
-            var jsonData = await responseMessage.Content.ReadAsStringAsync();//Gelen veri string formatta okunur.
+            var jsonData = await responseMessage.Content.ReadAsStringAsync();
             var values = JsonConvert.DeserializeObject<List<ResultCommentDto>>(jsonData);
             return View(values);
         }
@@ -62,6 +58,7 @@ public class CommentController : Controller
         ViewBag.v1 = "Ana Sayfa";
         ViewBag.v2 = "Yorumlar";
         ViewBag.v3 = "Yorum Güncelleme Sayfası";
+
         var client = _httpClientFactory.CreateClient();
         var responseMessage = await client.GetAsync("http://localhost:7075/api/Comments/" + id);
         if (responseMessage.IsSuccessStatusCode)

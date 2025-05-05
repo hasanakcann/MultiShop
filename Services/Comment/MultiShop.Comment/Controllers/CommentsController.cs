@@ -5,7 +5,7 @@ using MultiShop.Comment.Entities;
 
 namespace MultiShop.Comment.Controllers;
 
-[Authorize] //Login olma zorunluluğu eklenir.
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class CommentsController : ControllerBase
@@ -20,67 +20,148 @@ public class CommentsController : ControllerBase
     [HttpGet]
     public IActionResult GetAllCommentList()
     {
-        var values = _context.UserComments.ToList();
-        return Ok(values);
+        try
+        {
+            var values = _context.UserComments.ToList();
+            return Ok(values);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving comments: {ex.Message}");
+        }
     }
 
     [HttpGet("{id}")]
     public IActionResult GetCommentById(int id)
     {
-        var value = _context.UserComments.Find(id);
-        return Ok(value);
+        try
+        {
+            var value = _context.UserComments.Find(id);
+            if (value == null)
+                return NotFound($"Comment with ID {id} not found.");
+
+            return Ok(value);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving the comment: {ex.Message}");
+        }
     }
 
     [HttpPost]
     public IActionResult CreateComment(UserComment userComment)
     {
-        _context.UserComments.Add(userComment);
-        _context.SaveChanges();
-        return Ok("Yorum başarıyla eklendi.");
+        try
+        {
+            if (userComment == null)
+                return BadRequest("Comment data cannot be null.");
+
+            _context.UserComments.Add(userComment);
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(GetCommentById), new { id = userComment.UserCommentId }, userComment);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while creating the comment: {ex.Message}");
+        }
     }
 
     [HttpPut]
     public IActionResult UpdateComment(UserComment userComment)
     {
-        _context.UserComments.Update(userComment);
-        _context.SaveChanges();
-        return Ok("Yorum başarıyla güncellendi.");
+        try
+        {
+            if (userComment == null)
+                return BadRequest("Comment data cannot be null.");
+
+            if (!_context.UserComments.Any(x => x.UserCommentId == userComment.UserCommentId))
+                return NotFound($"Comment with ID {userComment.UserCommentId} not found.");
+
+            _context.UserComments.Update(userComment);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while updating the comment: {ex.Message}");
+        }
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public IActionResult DeleteComment(int id)
     {
-        var value = _context.UserComments.Find(id);
-        _context.UserComments.Remove(value);
-        _context.SaveChanges();
-        return Ok("Yorum başarıyla silindi.");
+        try
+        {
+            var value = _context.UserComments.Find(id);
+            if (value == null)
+                return NotFound($"Comment with ID {id} not found.");
+
+            _context.UserComments.Remove(value);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while deleting the comment: {ex.Message}");
+        }
     }
 
     [HttpGet("CommentListByProductId/{id}")]
     public IActionResult CommentListByProductId(string id)
     {
-        var value = _context.UserComments.Where(x => x.ProductId == id).ToList();
-        return Ok(value);
+        try
+        {
+            var value = _context.UserComments.Where(x => x.ProductId == id).ToList();
+            return Ok(value);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while retrieving comments by product ID: {ex.Message}");
+        }
     }
 
     [HttpGet("GetActiveCommentCount")]
     public IActionResult GetActiveCommentCount()
     {
-        int value = _context.UserComments.Where(x => x.Status == true).Count();
-        return Ok(value);
+        try
+        {
+            int count = _context.UserComments.Count(x => x.Status == true);
+            return Ok(count);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while counting active comments: {ex.Message}");
+        }
     }
 
     [HttpGet("GetPassiveCommentCount")]
     public IActionResult GetPassiveCommentCount()
     {
-        int value = _context.UserComments.Where(x => x.Status == false).Count();
-        return Ok(value);
+        try
+        {
+            int count = _context.UserComments.Count(x => x.Status == false);
+            return Ok(count);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while counting passive comments: {ex.Message}");
+        }
     }
 
     [HttpGet("GetTotalCommentCount")]
     public IActionResult GetTotalCommentCount()
     {
-        int value = _context.UserComments.Count();
-        return Ok(value);
+        try
+        {
+            int count = _context.UserComments.Count();
+            return Ok(count);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while counting total comments: {ex.Message}");
+        }
     }
 }
