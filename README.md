@@ -177,17 +177,17 @@ Mikro servis mimarisi, bir uygulamanın küçük, bağımsız çalışan servisl
 
 ## Mikroservisler
 
-### 1. Catalog Micro Service
+### 📦 Catalog Micro Service
 
-**.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.**
+.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.
 
-### 2. Discount Micro Service
+### 🎯 Discount Micro Service
 
-**.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.**
+.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.
 
-### 3. Order Micro Service
+### 🧾 Order Micro Service
 
-**.NET 8.0 ile Onion Architecture, CQRS, Mediator uygulanmıştır.**
+.NET 8.0 ile Onion Architecture, CQRS, Mediator uygulanmıştır.
 
 - MultiShop.Order.Application
 - MultiShop.Order.Domain
@@ -198,19 +198,19 @@ Docker üzerinden OrderDb ayağa kaldırıldı.
 
 Docker yönetimi Portainer arayüzü üzerinden sağlandı.
 
-**Docker Download:**
+Docker Download:
 
 https://www.docker.com/products/docker-desktop/
 
-**Portainer Download:**
+Portainer Download:
 
 docker volume create portainer_data
 
 docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 
-### 4. Cargo Micro Service
+### 🚚 Cargo Micro Service
 
-**.NET 8.0 ile N-Tier Architecture uygulanmıştır.**
+.NET 8.0 ile N-Tier Architecture uygulanmıştır.
 
 - MultiShop.Cargo.BusinessLayer
 - MultiShop.Cargo.DataAccessLayer
@@ -218,25 +218,39 @@ docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /va
 - MultiShop.Cargo.EntityLayer
 - MultiShop.Cargo.WebApi
 
-### 5. Basket Micro Service
+Docker üzerinden CargoDb ayağa kaldırıldı.
 
-**.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.**
+### 🛒 Basket Micro Service
+
+.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.
 
 Kullanıcının login olma zorunluluğu proje seviyesinde yapıldı.
 
 Redis konfigürasyonu yapıldı.
 
-### 6. Comment Mikro Service
+Docker üzerinden BasketDb ayağa kaldırıldı.
 
-**.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.**
+### 💬 Comment Micro Service
+
+.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.
 
 Docker üzerinden CommentDb ayağa kaldırıldı.
 
-### WebUI
+### 🌐 WebUI
 
-**.NET 8.0 ile ASP.NET Core Web App (Model-View-Controller) projesi oluşturuldu.**
+.NET 8.0 ile ASP.NET Core Web App (Model-View-Controller) projesi oluşturuldu.
 
 UI tasarımları ve api consume işlemleri yapıldı.
+
+### 🔐 Identity Micro Service
+
+IdentityServer4 Framework'ü kuruldu
+
+Kurulum komutları:
+
+- dotnet new -i identityserver4.templates
+- cd C:\Users\akcan\source\repos\MultiShop\IdentityServer
+- dotnet new is4aspid --name MultiShop.IdentityServer
 
 ## Api Gateway
 
