@@ -8,7 +8,7 @@ MultiShop, mikroservis mimarisi kullanılarak inşa edilmiş, esnek, ölçeklene
 
 ---
 
-### 🎯 Temel Özellikler
+## 🎯 Temel Özellikler
 
 - **Kullanıcı İşlevleri**
   - Hesap oluşturma ve güvenli oturum açma
@@ -25,16 +25,67 @@ MultiShop, mikroservis mimarisi kullanılarak inşa edilmiş, esnek, ölçeklene
 
 ---
 
-## Kullanılan Teknolojiler
+## 🚀 Kullanılan Teknolojiler
 
-- **Backend:** C#, .Net Core 8, Web Api
-- **Mimari Tasarım:** N-Tier Architecture, Onion Architecture
-- **Tasarım Desenleri:** Mediator Design Pattern, CQRS Design Pattern, Repository Design Pattern
-- **Veri Tabanları:** MSSQL Server, MongoDb, PostgreSql, Redis
-- **ORM:** Entity Framework Core (CodeFirst), Dapper
-- **Arayüz Tasarımı:** HTML, CSS, JavaScript, jQuery, Ajax, Bootstrap
-- **Diğer:** Identity, JWT, RabbitMQ, Ocelot Gateway, SignalR, Postman, Swagger
-- **Altyapı ve Dağıtım Araçları:** Docker, Portainer, Google Cloud
+### 🔙 Backend Teknolojileri
+
+- C#
+- .NET Core 8
+- Web API
+
+### 🏗️ Mimari ve Katmanlı Yapılar
+
+- N-Tier Architecture
+- Onion Architecture
+
+### 🎨 Tasarım Desenleri
+
+- Mediator Design Pattern
+- CQRS Design Pattern
+- Repository Design Pattern
+
+### 🗄️ Veritabanları
+
+- MSSQL Server
+- MongoDB
+- PostgreSQL
+- Redis
+
+### 🔌 ORM ve Veri Erişim Katmanı
+
+- Entity Framework Core (Code-First)
+- Dapper
+
+### 🖥️ Arayüz ve UI Teknolojileri
+
+- HTML
+- CSS
+- JavaScript
+- jQuery
+- Ajax
+- Bootstrap
+
+### 🔐 Kimlik Doğrulama ve Güvenlik
+
+- Identity Server
+- JWT (JSON Web Token)
+
+### 🧵 Mesajlaşma ve API Gateway
+
+- RabbitMQ
+- Ocelot API Gateway
+- SignalR
+
+### 🧪 Test ve API Dokümantasyonu
+
+- Postman
+- Swagger
+
+### 🐳 Altyapı, Konteynerleşme ve Bulut
+
+- Docker
+- Portainer
+- Google Cloud
 
 ---
 
