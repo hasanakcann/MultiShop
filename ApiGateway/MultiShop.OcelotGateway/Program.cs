@@ -4,7 +4,6 @@ using Ocelot.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 #region Authentication
-//JwtBearer token geçerliliğini kontrol eden pakettir.
 builder.Services.AddAuthentication().AddJwtBearer("OcelotAuthenticationScheme", options =>
 {
     options.Authority = builder.Configuration["IdentityServerUrl"];

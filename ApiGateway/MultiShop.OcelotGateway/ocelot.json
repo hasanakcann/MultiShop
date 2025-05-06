@@ -1,6 +1,5 @@
 {
   "Routes": [
-    //Catalog Micro Service
     {
       "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
@@ -18,7 +17,6 @@
         "AllowedScopes": [ "CatalogFullPermission" ]
       }
     },
-    //Discount Micro Service
     {
       "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
@@ -36,7 +34,6 @@
         "AllowedScopes": [ "DiscountFullPermission" ]
       }
     },
-    //Order Micro Service
     {
       "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
@@ -54,7 +51,6 @@
         "AllowedScopes": [ "OrderFullPermission" ]
       }
     },
-    //Cargo Micro Service
     {
       "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
@@ -72,7 +68,6 @@
         "AllowedScopes": [ "CargoFullPermission" ]
       }
     },
-    //Basket Micro Service
     {
       "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
@@ -91,7 +86,6 @@
       }
     },
 
-    //Comment Micro Service
     {
       "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
@@ -109,7 +103,6 @@
         "AllowedScopes": [ "CommentFullPermission" ]
       }
     },
-    //Payment Micro Service
     {
       "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
@@ -127,7 +120,6 @@
         "AllowedScopes": [ "PaymentFullPermission" ]
       }
     },
-    //Images Micro Service
     {
       "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
@@ -145,7 +137,6 @@
         "AllowedScopes": [ "ImageFullPermission" ]
       }
     },
-    //Message Micro Service
     {
       "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
