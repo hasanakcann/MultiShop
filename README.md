@@ -177,6 +177,24 @@ Mikro servis mimarisi, bir uygulamanın küçük, bağımsız çalışan servisl
 
 ## Mikroservisler
 
+### 🔐 Identity Micro Service
+
+IdentityServer4 Framework'ü kuruldu.
+
+Kurulum komutları:
+
+- dotnet new -i identityserver4.templates
+- cd C:\Users\akcan\source\repos\MultiShop\IdentityServer
+- dotnet new is4aspid --name MultiShop.IdentityServer
+
+### 🌐 API Gateway
+
+.NET 8.0 ile ASP.NET Core Empty projesi oluşturuldu.
+
+OcelotGateway konfigürasyonu yapıldı.
+
+https://ocelot.readthedocs.io/en/latest/introduction/gettingstarted.html
+
 ### 📦 Catalog Micro Service
 
 .NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.
@@ -236,21 +254,23 @@ Docker üzerinden BasketDb ayağa kaldırıldı.
 
 Docker üzerinden CommentDb ayağa kaldırıldı.
 
+### 💳 Payment Micro Service
+
+.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.
+
+### 🖼️ Images Micro Service
+
+.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.
+
+### ✉️ Message Micro Service
+
+.NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.
+
 ### 🌐 WebUI
 
 .NET 8.0 ile ASP.NET Core Web App (Model-View-Controller) projesi oluşturuldu.
 
 UI tasarımları ve api consume işlemleri yapıldı.
-
-### 🔐 Identity Micro Service
-
-IdentityServer4 Framework'ü kuruldu
-
-Kurulum komutları:
-
-- dotnet new -i identityserver4.templates
-- cd C:\Users\akcan\source\repos\MultiShop\IdentityServer
-- dotnet new is4aspid --name MultiShop.IdentityServer
 
 ## Api Gateway
 
