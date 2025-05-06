@@ -5,13 +5,23 @@ namespace MultiShop.WebUI.Services.Concrete;
 
 public class LoginService : ILoginService
 {
-    private readonly IHttpContextAccessor _contextAccessor;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public LoginService(IHttpContextAccessor contextAccessor)
+    public LoginService(IHttpContextAccessor httpContextAccessor)
     {
-        _contextAccessor = contextAccessor;
+        _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
     }
 
-    //NameIdentifier üzerinden kullanıcının bilgilerine erişim sağlanır.
-    public string GetUserId => _contextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+    public string? GetUserId
+    {
+        get
+        {
+            var user = _httpContextAccessor.HttpContext?.User;
+            if (user?.Identity is { IsAuthenticated: true })
+            {
+                return user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            }
+            return null;
+        }
+    }
 }

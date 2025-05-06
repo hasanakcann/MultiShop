@@ -32,48 +32,53 @@ using MultiShop.WebUI.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region Service Registiration
+#region Authentication Configuration
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddCookie(JwtBearerDefaults.AuthenticationScheme, options =>
+    {
+        options.LoginPath = "/Login/Index/";
+        options.LogoutPath = "/Login/LogOut/";
+        options.AccessDeniedPath = "/Pages/AccessDenied/";
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SameSite = SameSiteMode.Strict;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        options.Cookie.Name = "MultiShopJwt";
+    });
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+    {
+        options.LoginPath = "/Login/Index/";
+        options.ExpireTimeSpan = TimeSpan.FromDays(30);
+        options.Cookie.Name = "MultiShopCookie";
+        options.SlidingExpiration = true;
+    });
+
+#endregion
+
+#region General Service Registrations
 
 builder.Services.AddHttpClient();
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(JwtBearerDefaults.AuthenticationScheme, options =>
-{
-    options.LoginPath = "/Login/Index/";
-    options.LogoutPath = "/Login/LogOut/";
-    options.AccessDeniedPath = "/Pages/AccessDenied/";
-    options.Cookie.HttpOnly = true;
-    options.Cookie.SameSite = SameSiteMode.Strict;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-    options.Cookie.Name = "MultiShopJwt";
-});
-
 builder.Services.AddAccessTokenManagement();
-
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-{
-    options.LoginPath = "/Login/Index/";
-    options.ExpireTimeSpan = TimeSpan.FromDays(5);
-    options.Cookie.Name = "MultiShopCookie";
-    options.SlidingExpiration = true;
-});
-
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddScoped<ILoginService, LoginService>();
-
-builder.Services.AddHttpClient<IIdentityService, IdentityService>();
-
 builder.Services.Configure<ClientSettings>(builder.Configuration.GetSection("ClientSettings"));
-
 builder.Services.Configure<ServiceApiSettings>(builder.Configuration.GetSection("ServiceApiSettings"));
 
+builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<ResourceOwnerPasswordTokenHandler>();
-
 builder.Services.AddScoped<ClientCredentialTokenHandler>();
-
+builder.Services.AddHttpClient<IIdentityService, IdentityService>();
 builder.Services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
 
+#endregion
+
+#region Service Clients
+
 var values = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
+
+#region Identity Services
 
 builder.Services.AddHttpClient<IUserService, UserService>(options =>
 {
@@ -89,6 +94,10 @@ builder.Services.AddHttpClient<IUserIdentityService, UserIdentityService>(option
 {
     options.BaseAddress = new Uri(values.IdentityServerUrl);
 }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+#endregion
+
+#region User-Based Authenticated Services (ResourceOwnerPasswordTokenHandler)
 
 builder.Services.AddHttpClient<IBasketService, BasketService>(options =>
 {
@@ -144,6 +153,10 @@ builder.Services.AddHttpClient<IMessageStatisticService, MessageStatisticService
 {
     options.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Message.Path}");
 }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+#endregion
+
+#region Application Services (ClientCredentialTokenHandler)
 
 builder.Services.AddHttpClient<ICategoryService, CategoryService>(options =>
 {
@@ -207,26 +220,24 @@ builder.Services.AddHttpClient<IContactService, ContactService>(options =>
 
 #endregion
 
+#endregion
+
 builder.Services.AddControllersWithViews();
+
+#region Middleware Pipeline
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -236,9 +247,10 @@ app.MapControllerRoute(
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
-      name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
+        name: "areas",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 });
 
 app.Run();
+
+#endregion

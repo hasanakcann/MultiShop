@@ -1,38 +1,50 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System;
 
 namespace MultiShop.IdentityServer.Tools;
 
-public class JwtTokenGenerator
+public static class JwtTokenGenerator
 {
-    /// <summary>
-    ///     Token üretilir.
-    /// </summary>
     public static TokenResponseViewModel GenerateToken(GetCheckAppUserViewModel model)
     {
-        var claims = new List<Claim>();
+        if (model == null)
+            throw new ArgumentNullException(nameof(model), "User model cannot be null.");
+
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, model.Id)
+        };
+
         if (!string.IsNullOrWhiteSpace(model.Role))
             claims.Add(new Claim(ClaimTypes.Role, model.Role));
-
-        claims.Add(new Claim(ClaimTypes.NameIdentifier, model.Id));
 
         if (!string.IsNullOrWhiteSpace(model.UserName))
             claims.Add(new Claim("UserName", model.UserName));
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtTokenDefaults.Key));
+        var keyBytes = Encoding.UTF8.GetBytes(JwtTokenDefaults.Key);
+        if (keyBytes.Length < 32)
+            throw new SecurityTokenException("The signing key must be at least 256 bits (32 bytes) long.");
 
+        var key = new SymmetricSecurityKey(keyBytes);
         var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var expireDate = DateTime.UtcNow.AddDays(JwtTokenDefaults.Expire);
 
-        JwtSecurityToken token = new JwtSecurityToken(issuer: JwtTokenDefaults.ValidIssuer, audience: JwtTokenDefaults.ValidAudience, claims: claims, notBefore: DateTime.UtcNow, expires: expireDate, signingCredentials: signingCredentials);
+        var token = new JwtSecurityToken(
+            issuer: JwtTokenDefaults.ValidIssuer,
+            audience: JwtTokenDefaults.ValidAudience,
+            claims: claims,
+            notBefore: DateTime.UtcNow,
+            expires: expireDate,
+            signingCredentials: signingCredentials);
 
-        JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var jwt = tokenHandler.WriteToken(token);
 
-        return new TokenResponseViewModel(tokenHandler.WriteToken(token), expireDate);
+        return new TokenResponseViewModel(jwt, expireDate);
     }
 }

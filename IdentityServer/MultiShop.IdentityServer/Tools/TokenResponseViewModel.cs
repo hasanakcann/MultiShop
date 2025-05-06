@@ -4,13 +4,15 @@ namespace MultiShop.IdentityServer.Tools;
 
 public class TokenResponseViewModel
 {
-    //Constructor
     public TokenResponseViewModel(string token, DateTime expireDate)
     {
-        Token = token;
+        Token = string.IsNullOrWhiteSpace(token)
+            ? throw new ArgumentException("Token cannot be null or empty.", nameof(token))
+            : token;
+
         ExpireDate = expireDate;
     }
 
-    public string Token { get; set; }
-    public DateTime ExpireDate { get; set; }
+    public string Token { get; }
+    public DateTime ExpireDate { get; }
 }
