@@ -27,67 +27,95 @@ MultiShop, mikroservis mimarisi kullanılarak inşa edilmiş, esnek, ölçeklene
 
 ## 🚀 Kullanılan Teknolojiler
 
-### 🔙 Backend Teknolojileri
+<details>
+<summary>🔙 Backend Teknolojileri</summary>
 
-- C#
-- .NET Core 8
-- Web API
+- C#  
+- .NET Core 8  
+- Web API  
 
-### 🏗️ Mimari ve Katmanlı Yapılar
+</details>
 
-- N-Tier Architecture
-- Onion Architecture
+<details>
+<summary>🏗️ Mimari ve Katmanlı Yapılar</summary>
 
-### 🎨 Tasarım Desenleri
+- N-Tier Architecture  
+- Onion Architecture  
 
-- Mediator Design Pattern
-- CQRS Design Pattern
-- Repository Design Pattern
+</details>
 
-### 🗄️ Veritabanları
+<details>
+<summary>🎨 Tasarım Desenleri</summary>
 
-- MSSQL Server
-- MongoDB
-- PostgreSQL
-- Redis
+- Mediator Design Pattern  
+- CQRS Design Pattern  
+- Repository Design Pattern  
 
-### 🔌 ORM ve Veri Erişim Katmanı
+</details>
 
-- Entity Framework Core (Code-First)
-- Dapper
+<details>
+<summary>🗄️ Veritabanları</summary>
 
-### 🖥️ Arayüz ve UI Teknolojileri
+- MSSQL Server  
+- MongoDB  
+- PostgreSQL  
+- Redis  
 
-- HTML
-- CSS
-- JavaScript
-- jQuery
-- Ajax
-- Bootstrap
+</details>
 
-### 🔐 Kimlik Doğrulama ve Güvenlik
+<details>
+<summary>🔌 ORM ve Veri Erişim Katmanı</summary>
 
-- Identity Server
-- JWT (JSON Web Token)
+- Entity Framework Core (Code-First)  
+- Dapper  
 
-### 🧵 Mesajlaşma ve API Gateway
+</details>
 
-- RabbitMQ
-- Ocelot API Gateway
-- SignalR
+<details>
+<summary>🖥️ Arayüz ve UI Teknolojileri</summary>
 
-### 🧪 Test ve API Dokümantasyonu
+- HTML  
+- CSS  
+- JavaScript  
+- jQuery  
+- Ajax  
+- Bootstrap  
 
-- Postman
-- Swagger
+</details>
 
-### 🐳 Altyapı, Konteynerleşme ve Bulut
+<details>
+<summary>🔐 Kimlik Doğrulama ve Güvenlik</summary>
 
-- Docker
-- Portainer
-- Google Cloud
+- Identity Server  
+- JWT (JSON Web Token)  
 
----
+</details>
+
+<details>
+<summary>🧵 Mesajlaşma ve API Gateway</summary>
+
+- RabbitMQ  
+- Ocelot API Gateway  
+- SignalR  
+
+</details>
+
+<details>
+<summary>🧪 Test ve API Dokümantasyonu</summary>
+
+- Postman  
+- Swagger  
+
+</details>
+
+<details>
+<summary>🐳 Altyapı, Konteynerleşme ve Bulut</summary>
+
+- Docker  
+- Portainer  
+- Google Cloud  
+
+</details>
 
 ## Teknik İçerikler
 
