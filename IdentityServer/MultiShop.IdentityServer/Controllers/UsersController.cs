@@ -25,17 +25,27 @@ public class UsersController : ControllerBase
     [HttpGet("GetUser")]
     public async Task<IActionResult> GetUser()
     {
-        //Json Web Token üzerindeki token'ın içerisinde bulunan id değerine erişim sağlanır.
         var userClaim = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);
+
+        if (userClaim == null)
+        {
+            return BadRequest(new { message = "User claim not found in the token." });
+        }
+
         var user = await _userManager.FindByIdAsync(userClaim.Value);
-        //UserDetailViewModel'de bulunan alanlar setlenir.
+
+        if (user == null)
+        {
+            return NotFound(new { message = "User not found." });
+        }
+
         return Ok(new
         {
-            Id = user.Id,
-            Name = user.Name,
-            Surname = user.Surname,
-            Email = user.Email,
-            UserName = user.UserName
+            user.Id,
+            user.Name,
+            user.Surname,
+            user.Email,
+            user.UserName
         });
     }
 
@@ -43,6 +53,12 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> GetAllUserList()
     {
         var users = await _userManager.Users.ToListAsync();
-        return Ok(users);
+
+        if (users == null || !users.Any())
+        {
+            return Ok(new { message = "No users found.", data = new object[] { } });
+        }
+
+        return Ok(new { data = users });
     }
 }

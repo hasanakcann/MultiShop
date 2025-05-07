@@ -22,14 +22,23 @@ public class IdentityService : IIdentityService
     {
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
-        _clientSettings = clientSettings.Value ?? throw new ArgumentNullException(nameof(clientSettings));
-        _serviceApiSettings = serviceApiSettings.Value ?? throw new ArgumentNullException(nameof(serviceApiSettings));
+        _clientSettings = clientSettings?.Value ?? throw new ArgumentNullException(nameof(clientSettings));
+        _serviceApiSettings = serviceApiSettings?.Value ?? throw new ArgumentNullException(nameof(serviceApiSettings));
     }
 
     public async Task<bool> SignIn(SignInDto signInDto)
     {
         try
         {
+            if (signInDto is null)
+                throw new ArgumentNullException(nameof(signInDto), "SignInDto cannot be null.");
+
+            if (string.IsNullOrWhiteSpace(signInDto.UserName))
+                throw new ArgumentException("Username cannot be null or empty.", nameof(signInDto.UserName));
+
+            if (string.IsNullOrWhiteSpace(signInDto.Password))
+                throw new ArgumentException("Password cannot be null or empty.", nameof(signInDto.Password));
+
             var discovery = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {
                 Address = _serviceApiSettings.IdentityServerUrl,
@@ -76,7 +85,11 @@ public class IdentityService : IIdentityService
                 new AuthenticationToken { Name = OpenIdConnectParameterNames.ExpiresIn, Value = DateTime.UtcNow.AddSeconds(tokenResponse.ExpiresIn).ToString("o") }
             });
 
-            await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, authProperties);
+            var httpContext = _httpContextAccessor.HttpContext;
+            if (httpContext is null)
+                throw new ApplicationException("HttpContext is null during sign-in.");
+
+            await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, authProperties);
 
             return true;
         }
@@ -99,7 +112,11 @@ public class IdentityService : IIdentityService
             if (discovery.IsError)
                 throw new ApplicationException($"Discovery endpoint error: {discovery.Error}");
 
-            var refreshToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
+            var httpContext = _httpContextAccessor.HttpContext;
+            if (httpContext is null)
+                throw new ApplicationException("HttpContext is null during refresh token.");
+
+            var refreshToken = await httpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
             if (string.IsNullOrWhiteSpace(refreshToken))
                 throw new ApplicationException("Refresh token not found.");
 
@@ -114,17 +131,18 @@ public class IdentityService : IIdentityService
             if (tokenResponse.IsError)
                 throw new ApplicationException($"Token refresh failed: {tokenResponse.Error}");
 
-            var result = await _httpContextAccessor.HttpContext.AuthenticateAsync();
-            var properties = result.Properties;
+            var result = await httpContext.AuthenticateAsync();
+            if (result?.Principal == null || result.Properties == null)
+                throw new ApplicationException("Authentication result is invalid.");
 
-            properties.StoreTokens(new List<AuthenticationToken>
+            result.Properties.StoreTokens(new List<AuthenticationToken>
             {
                 new AuthenticationToken { Name = OpenIdConnectParameterNames.AccessToken, Value = tokenResponse.AccessToken },
                 new AuthenticationToken { Name = OpenIdConnectParameterNames.RefreshToken, Value = tokenResponse.RefreshToken },
                 new AuthenticationToken { Name = OpenIdConnectParameterNames.ExpiresIn, Value = DateTime.UtcNow.AddSeconds(tokenResponse.ExpiresIn).ToString("o") }
             });
 
-            await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, result.Principal, properties);
+            await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, result.Principal, result.Properties);
 
             return true;
         }

@@ -13,11 +13,7 @@ public class ClientCredentialTokenService : IClientCredentialTokenService
     private readonly IClientAccessTokenCache _clientAccessTokenCache;
     private readonly ClientSettings _clientSettings;
 
-    public ClientCredentialTokenService(
-        IOptions<ServiceApiSettings> serviceApiSettings,
-        HttpClient httpClient,
-        IClientAccessTokenCache clientAccessTokenCache,
-        IOptions<ClientSettings> clientSettings)
+    public ClientCredentialTokenService(IOptions<ServiceApiSettings> serviceApiSettings, HttpClient httpClient, IClientAccessTokenCache clientAccessTokenCache, IOptions<ClientSettings> clientSettings)
     {
         _serviceApiSettings = serviceApiSettings?.Value ?? throw new ArgumentNullException(nameof(serviceApiSettings));
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));

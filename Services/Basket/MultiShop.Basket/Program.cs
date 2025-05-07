@@ -11,6 +11,8 @@ using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region Authentication & Authorization
+
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
 
 var requireAuthorizePolicy = new AuthorizationPolicyBuilder()
@@ -26,27 +28,45 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.RequireHttpsMetadata = false;
     });
 
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
+});
+
+#endregion
+
+#region Dependency Injection
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IBasketService, BasketService>();
+
 builder.Services.Configure<RedisSettings>(builder.Configuration.GetSection("RedisSettings"));
 
 builder.Services.AddSingleton<RedisService>(serviceProvider =>
 {
     var redisSettings = serviceProvider.GetRequiredService<IOptions<RedisSettings>>().Value;
     var connectionMultiplexer = ConnectionMultiplexer.Connect($"{redisSettings.Host}:{redisSettings.Port}");
-    var redisService = new RedisService(redisSettings.Host, redisSettings.Port, connectionMultiplexer);
-    return redisService;
+    return new RedisService(redisSettings.Host, redisSettings.Port, connectionMultiplexer);
 });
+
+#endregion
+
+#region Swagger
+
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
 {
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Basket API", Version = "v1" });
+
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
-        Description = "Please enter your token in the format: Bearer {your token}",
+        Description = "Enter your JWT token like this: Bearer {your token}",
         Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -60,19 +80,16 @@ builder.Services.AddSwaggerGen(c =>
                     Id = "Bearer"
                 }
             },
-            new string[] { }
+            Array.Empty<string>()
         }
     });
 });
 
-builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddControllers(options =>
-{
-    options.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
-});
+#endregion
 
 var app = builder.Build();
+
+#region Middleware
 
 if (app.Environment.IsDevelopment())
 {
@@ -84,4 +101,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+#endregion
+
 app.Run();
