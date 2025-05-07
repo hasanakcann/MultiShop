@@ -103,7 +103,7 @@ public class ProductImageService : IProductImageService
 
         try
         {
-            var responseMessage = await _httpClient.GetAsync($"productimages/ProductImagesByProductId/{id}");
+            var responseMessage = await _httpClient.GetAsync($"productimages/productimagesbyproductid/{id}");
             if (!responseMessage.IsSuccessStatusCode)
                 throw new ApplicationException($"Failed to get product images for product ID {id}.");
 

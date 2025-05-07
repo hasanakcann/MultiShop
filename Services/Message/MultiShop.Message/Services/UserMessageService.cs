@@ -18,52 +18,52 @@ public class UserMessageService : IUserMessageService
 
     public async Task CreateMessageAsync(CreateMessageDto createMessageDto)
     {
-        var values = _mapper.Map<UserMessage>(createMessageDto);
-        await _messageContext.UserMessages.AddAsync(values);
+        var message = _mapper.Map<UserMessage>(createMessageDto);
+        await _messageContext.UserMessages.AddAsync(message);
         await _messageContext.SaveChangesAsync();
     }
 
     public async Task DeleteMessageAsync(int id)
     {
-        var values = await _messageContext.UserMessages.FindAsync(id);
-        _messageContext.UserMessages.Remove(values);
+        var message = await _messageContext.UserMessages.FindAsync(id);
+        _messageContext.UserMessages.Remove(message);
         await _messageContext.SaveChangesAsync();
     }
 
     public async Task<List<ResultMessageDto>> GetAllMessageAsync()
     {
-        var values = await _messageContext.UserMessages.ToListAsync();
-        return _mapper.Map<List<ResultMessageDto>>(values);
+        var messages = await _messageContext.UserMessages.ToListAsync();
+        return _mapper.Map<List<ResultMessageDto>>(messages);
     }
 
     public async Task<GetByIdMessageDto> GetByIdMessageAsync(int id)
     {
-        var values = await _messageContext.UserMessages.FindAsync(id);
-        return _mapper.Map<GetByIdMessageDto>(values);
+        var message = await _messageContext.UserMessages.FindAsync(id);
+        return _mapper.Map<GetByIdMessageDto>(message);
     }
 
     public async Task<List<ResultInboxMessageDto>> GetInboxMessageAsync(string id)
     {
-        var values = await _messageContext.UserMessages.Where(x => x.ReceiverId == id).ToListAsync();
-        return _mapper.Map<List<ResultInboxMessageDto>>(values);
+        var inboxMessages = await _messageContext.UserMessages.Where(x => x.ReceiverId == id).ToListAsync();
+        return _mapper.Map<List<ResultInboxMessageDto>>(inboxMessages);
     }
 
     public async Task<List<ResultSendboxMessageDto>> GetSendboxMessageAsync(string id)
     {
-        var values = await _messageContext.UserMessages.Where(x => x.SenderId == id).ToListAsync();
-        return _mapper.Map<List<ResultSendboxMessageDto>>(values);
+        var sendboxMessages = await _messageContext.UserMessages.Where(x => x.SenderId == id).ToListAsync();
+        return _mapper.Map<List<ResultSendboxMessageDto>>(sendboxMessages);
     }
 
     public async Task UpdateMessageAsync(UpdateMessageDto updateMessageDto)
     {
-        var values = _mapper.Map<UserMessage>(updateMessageDto);
-        _messageContext.UserMessages.Update(values);
+        var message = _mapper.Map<UserMessage>(updateMessageDto);
+        _messageContext.UserMessages.Update(message);
         await _messageContext.SaveChangesAsync();
     }
 
     public async Task<int> GetTotalMessageCount()
     {
-        int values = await _messageContext.UserMessages.CountAsync();
-        return values;
+        int totalMessageCount = await _messageContext.UserMessages.CountAsync();
+        return totalMessageCount;
     }
 }

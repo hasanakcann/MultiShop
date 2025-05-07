@@ -21,8 +21,8 @@ public class BrandService : IBrandService
 
     public async Task CreateBrandAsync(CreateBrandDto createBrandDto)
     {
-        var values = _mapper.Map<Brand>(createBrandDto);
-        await _brandCollection.InsertOneAsync(values);
+        var brand = _mapper.Map<Brand>(createBrandDto);
+        await _brandCollection.InsertOneAsync(brand);
     }
 
     public async Task DeleteBrandAsync(string id)
@@ -32,19 +32,19 @@ public class BrandService : IBrandService
 
     public async Task<List<ResultBrandDto>> GetAllBrandAsync()
     {
-        var values = await _brandCollection.Find(x => true).ToListAsync();
-        return _mapper.Map<List<ResultBrandDto>>(values);
+        var brands = await _brandCollection.Find(x => true).ToListAsync();
+        return _mapper.Map<List<ResultBrandDto>>(brands);
     }
 
     public async Task<GetByIdBrandDto> GetByIdBrandAsync(string id)
     {
-        var values = await _brandCollection.Find(x => x.BrandId == id).FirstOrDefaultAsync();
-        return _mapper.Map<GetByIdBrandDto>(values);
+        var brand = await _brandCollection.Find(x => x.BrandId == id).FirstOrDefaultAsync();
+        return _mapper.Map<GetByIdBrandDto>(brand);
     }
 
     public async Task UpdateBrandAsync(UpdateBrandDto updateBrandDto)
     {
-        var values = _mapper.Map<Brand>(updateBrandDto);
-        await _brandCollection.FindOneAndReplaceAsync(x => x.BrandId == updateBrandDto.BrandId, values);
+        var brand = _mapper.Map<Brand>(updateBrandDto);
+        await _brandCollection.FindOneAndReplaceAsync(x => x.BrandId == updateBrandDto.BrandId, brand);
     }
 }

@@ -164,14 +164,14 @@ public static class HttpClientServiceExtensions
             options.BaseAddress = new Uri($"{serviceApiSettings.OcelotUrl}/{serviceApiSettings.Catalog.Path}");
         }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
-        services.AddHttpClient<ICommentService, CommentService>(options =>
-        {
-            options.BaseAddress = new Uri($"{serviceApiSettings.OcelotUrl}/{serviceApiSettings.Comment.Path}");
-        }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
-
         services.AddHttpClient<IContactService, ContactService>(options =>
         {
             options.BaseAddress = new Uri($"{serviceApiSettings.OcelotUrl}/{serviceApiSettings.Catalog.Path}");
+        }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+
+        services.AddHttpClient<ICommentService, CommentService>(options =>
+        {
+            options.BaseAddress = new Uri($"{serviceApiSettings.OcelotUrl}/{serviceApiSettings.Comment.Path}");
         }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
         return services;

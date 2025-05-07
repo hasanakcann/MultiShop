@@ -32,8 +32,8 @@ public class SpecialOfferService : ISpecialOfferService
 
     public async Task<List<ResultSpecialOfferDto>> GetAllSpecialOfferAsync()
     {
-        var specialOffer = await _specialOfferCollection.Find(x => true).ToListAsync();
-        return _mapper.Map<List<ResultSpecialOfferDto>>(specialOffer);
+        var specialOffers = await _specialOfferCollection.Find(x => true).ToListAsync();
+        return _mapper.Map<List<ResultSpecialOfferDto>>(specialOffers);
     }
 
     public async Task<GetByIdSpecialOfferDto> GetByIdSpecialOfferAsync(string id)

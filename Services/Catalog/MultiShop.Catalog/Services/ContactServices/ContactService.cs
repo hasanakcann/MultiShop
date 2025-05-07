@@ -21,8 +21,8 @@ public class ContactService : IContactService
 
     public async Task CreateContactAsync(CreateContactDto createContactDto)
     {
-        var values = _mapper.Map<Contact>(createContactDto);
-        await _contactCollection.InsertOneAsync(values);
+        var contact = _mapper.Map<Contact>(createContactDto);
+        await _contactCollection.InsertOneAsync(contact);
     }
 
     public async Task DeleteContactAsync(string id)
@@ -32,19 +32,19 @@ public class ContactService : IContactService
 
     public async Task<List<ResultContactDto>> GetAllContactAsync()
     {
-        var values = await _contactCollection.Find(x => true).ToListAsync();
-        return _mapper.Map<List<ResultContactDto>>(values);
+        var contacts = await _contactCollection.Find(x => true).ToListAsync();
+        return _mapper.Map<List<ResultContactDto>>(contacts);
     }
 
     public async Task<GetByIdContactDto> GetByIdContactAsync(string id)
     {
-        var values = await _contactCollection.Find(x => x.ContactId == id).FirstOrDefaultAsync();
-        return _mapper.Map<GetByIdContactDto>(values);
+        var contact = await _contactCollection.Find(x => x.ContactId == id).FirstOrDefaultAsync();
+        return _mapper.Map<GetByIdContactDto>(contact);
     }
 
     public async Task UpdateContactAsync(UpdateContactDto updateContactDto)
     {
-        var values = _mapper.Map<Contact>(updateContactDto);
-        await _contactCollection.FindOneAndReplaceAsync(x => x.ContactId == updateContactDto.ContactId, values);
+        var contact = _mapper.Map<Contact>(updateContactDto);
+        await _contactCollection.FindOneAndReplaceAsync(x => x.ContactId == updateContactDto.ContactId, contact);
     }
 }

@@ -30,20 +30,10 @@ public class FeatureSliderService : IFeatureSliderService
         await _featureSliderCollection.DeleteOneAsync(x => x.FeatureSliderId == id);
     }
 
-    public Task FeatureSliderChangeStatusToFalse(string id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task FeatureSliderChangeStatusToTrue(string id)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<List<ResultFeatureSliderDto>> GetAllFeatureSliderAsync()
     {
-        var featureSlider = await _featureSliderCollection.Find(x => true).ToListAsync();
-        return _mapper.Map<List<ResultFeatureSliderDto>>(featureSlider);
+        var featureSliders = await _featureSliderCollection.Find(x => true).ToListAsync();
+        return _mapper.Map<List<ResultFeatureSliderDto>>(featureSliders);
     }
 
     public async Task<GetByIdFeatureSliderDto> GetByIdFeatureSliderAsync(string id)
@@ -56,5 +46,15 @@ public class FeatureSliderService : IFeatureSliderService
     {
         var featureSlider = _mapper.Map<FeatureSlider>(updateFeatureSliderDto);
         await _featureSliderCollection.FindOneAndReplaceAsync(x => x.FeatureSliderId == updateFeatureSliderDto.FeatureSliderId, featureSlider);
+    }
+
+    public Task FeatureSliderChangeStatusToFalse(string id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task FeatureSliderChangeStatusToTrue(string id)
+    {
+        throw new NotImplementedException();
     }
 }

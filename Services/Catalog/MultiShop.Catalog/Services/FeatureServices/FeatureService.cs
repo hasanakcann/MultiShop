@@ -21,8 +21,8 @@ public class FeatureService : IFeatureService
 
     public async Task CreateFeatureAsync(CreateFeatureDto createFeatureDto)
     {
-        var values = _mapper.Map<Feature>(createFeatureDto);
-        await _featureCollection.InsertOneAsync(values);
+        var feature = _mapper.Map<Feature>(createFeatureDto);
+        await _featureCollection.InsertOneAsync(feature);
     }
 
     public async Task DeleteFeatureAsync(string id)
@@ -32,19 +32,19 @@ public class FeatureService : IFeatureService
 
     public async Task<List<ResultFeatureDto>> GetAllFeatureAsync()
     {
-        var values = await _featureCollection.Find(x => true).ToListAsync();
-        return _mapper.Map<List<ResultFeatureDto>>(values);
+        var features = await _featureCollection.Find(x => true).ToListAsync();
+        return _mapper.Map<List<ResultFeatureDto>>(features);
     }
 
     public async Task<GetByIdFeatureDto> GetByIdFeatureAsync(string id)
     {
-        var values = await _featureCollection.Find(x => x.FeatureId == id).FirstOrDefaultAsync();
-        return _mapper.Map<GetByIdFeatureDto>(values);
+        var feature = await _featureCollection.Find(x => x.FeatureId == id).FirstOrDefaultAsync();
+        return _mapper.Map<GetByIdFeatureDto>(feature);
     }
 
     public async Task UpdateFeatureAsync(UpdateFeatureDto updateFeatureDto)
     {
-        var values = _mapper.Map<Feature>(updateFeatureDto);
-        await _featureCollection.FindOneAndReplaceAsync(x => x.FeatureId == updateFeatureDto.FeatureId, values);
+        var feature = _mapper.Map<Feature>(updateFeatureDto);
+        await _featureCollection.FindOneAndReplaceAsync(x => x.FeatureId == updateFeatureDto.FeatureId, feature);
     }
 }

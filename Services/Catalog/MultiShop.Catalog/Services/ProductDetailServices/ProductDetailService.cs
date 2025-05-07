@@ -23,8 +23,8 @@ public class ProductDetailService : IProductDetailService
     {
         try
         {
-            var detail = _mapper.Map<ProductDetail>(createProductDetailDto);
-            await _productDetailCollection.InsertOneAsync(detail);
+            var productdetail = _mapper.Map<ProductDetail>(createProductDetailDto);
+            await _productDetailCollection.InsertOneAsync(productdetail);
         }
         catch (Exception ex)
         {
@@ -50,8 +50,8 @@ public class ProductDetailService : IProductDetailService
     {
         try
         {
-            var details = await _productDetailCollection.Find(x => true).ToListAsync();
-            return _mapper.Map<List<ResultProductDetailDto>>(details);
+            var productdetails = await _productDetailCollection.Find(x => true).ToListAsync();
+            return _mapper.Map<List<ResultProductDetailDto>>(productdetails);
         }
         catch (Exception ex)
         {
@@ -63,11 +63,11 @@ public class ProductDetailService : IProductDetailService
     {
         try
         {
-            var detail = await _productDetailCollection.Find(x => x.ProductDetailId == id).FirstOrDefaultAsync();
-            if (detail == null)
+            var productdetail = await _productDetailCollection.Find(x => x.ProductDetailId == id).FirstOrDefaultAsync();
+            if (productdetail == null)
                 throw new KeyNotFoundException("Product detail not found.");
 
-            return _mapper.Map<GetByIdProductDetailDto>(detail);
+            return _mapper.Map<GetByIdProductDetailDto>(productdetail);
         }
         catch (Exception ex)
         {
@@ -79,8 +79,8 @@ public class ProductDetailService : IProductDetailService
     {
         try
         {
-            var detail = _mapper.Map<ProductDetail>(updateProductDetailDto);
-            var result = await _productDetailCollection.FindOneAndReplaceAsync(x => x.ProductDetailId == updateProductDetailDto.ProductDetailId, detail);
+            var productdetail = _mapper.Map<ProductDetail>(updateProductDetailDto);
+            var result = await _productDetailCollection.FindOneAndReplaceAsync(x => x.ProductDetailId == updateProductDetailDto.ProductDetailId, productdetail);
 
             if (result == null)
                 throw new KeyNotFoundException("Product detail to update not found.");
@@ -95,11 +95,11 @@ public class ProductDetailService : IProductDetailService
     {
         try
         {
-            var detail = await _productDetailCollection.Find(x => x.ProductId == id).FirstOrDefaultAsync();
-            if (detail == null)
+            var productdetail = await _productDetailCollection.Find(x => x.ProductId == id).FirstOrDefaultAsync();
+            if (productdetail == null)
                 throw new KeyNotFoundException("Product detail not found for the given product ID.");
 
-            return _mapper.Map<GetByIdProductDetailDto>(detail);
+            return _mapper.Map<GetByIdProductDetailDto>(productdetail);
         }
         catch (Exception ex)
         {

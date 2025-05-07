@@ -44,7 +44,7 @@ public class OfferDiscountService : IOfferDiscountService
 
     public async Task UpdateOfferDiscountAsync(UpdateOfferDiscountDto updateOfferDiscountDto)
     {
-        var values = _mapper.Map<OfferDiscount>(updateOfferDiscountDto);
-        await _offerDiscountCollection.FindOneAndReplaceAsync(x => x.OfferDiscountId == updateOfferDiscountDto.OfferDiscountId, values);
+        var offerDiscount = _mapper.Map<OfferDiscount>(updateOfferDiscountDto);
+        await _offerDiscountCollection.FindOneAndReplaceAsync(x => x.OfferDiscountId == updateOfferDiscountDto.OfferDiscountId, offerDiscount);
     }
 }

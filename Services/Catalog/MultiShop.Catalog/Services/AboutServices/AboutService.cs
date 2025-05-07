@@ -21,8 +21,8 @@ public class AboutService : IAboutService
 
     public async Task CreateAboutAsync(CreateAboutDto createAboutDto)
     {
-        var values = _mapper.Map<About>(createAboutDto);
-        await _aboutCollection.InsertOneAsync(values);
+        var about = _mapper.Map<About>(createAboutDto);
+        await _aboutCollection.InsertOneAsync(about);
     }
 
     public async Task DeleteAboutAsync(string id)
@@ -32,19 +32,19 @@ public class AboutService : IAboutService
 
     public async Task<List<ResultAboutDto>> GetAllAboutAsync()
     {
-        var values = await _aboutCollection.Find(x => true).ToListAsync();
-        return _mapper.Map<List<ResultAboutDto>>(values);
+        var abouts = await _aboutCollection.Find(x => true).ToListAsync();
+        return _mapper.Map<List<ResultAboutDto>>(abouts);
     }
 
     public async Task<GetByIdAboutDto> GetByIdAboutAsync(string id)
     {
-        var values = await _aboutCollection.Find(x => x.AboutId == id).FirstOrDefaultAsync();
-        return _mapper.Map<GetByIdAboutDto>(values);
+        var about = await _aboutCollection.Find(x => x.AboutId == id).FirstOrDefaultAsync();
+        return _mapper.Map<GetByIdAboutDto>(about);
     }
 
     public async Task UpdateAboutAsync(UpdateAboutDto updateAboutDto)
     {
-        var values = _mapper.Map<About>(updateAboutDto);
-        await _aboutCollection.FindOneAndReplaceAsync(x => x.AboutId == updateAboutDto.AboutId, values);
+        var about = _mapper.Map<About>(updateAboutDto);
+        await _aboutCollection.FindOneAndReplaceAsync(x => x.AboutId == updateAboutDto.AboutId, about);
     }
 }

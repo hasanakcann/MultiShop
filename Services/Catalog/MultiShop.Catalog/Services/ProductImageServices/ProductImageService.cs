@@ -23,8 +23,8 @@ public class ProductImageService : IProductImageService
     {
         try
         {
-            var image = _mapper.Map<ProductImage>(createProductImageDto);
-            await _productImageCollection.InsertOneAsync(image);
+            var productImage = _mapper.Map<ProductImage>(createProductImageDto);
+            await _productImageCollection.InsertOneAsync(productImage);
         }
         catch (Exception ex)
         {
@@ -50,8 +50,8 @@ public class ProductImageService : IProductImageService
     {
         try
         {
-            var images = await _productImageCollection.Find(x => true).ToListAsync();
-            return _mapper.Map<List<ResultProductImageDto>>(images);
+            var productImages = await _productImageCollection.Find(x => true).ToListAsync();
+            return _mapper.Map<List<ResultProductImageDto>>(productImages);
         }
         catch (Exception ex)
         {
@@ -63,11 +63,11 @@ public class ProductImageService : IProductImageService
     {
         try
         {
-            var image = await _productImageCollection.Find(x => x.ProductImageId == id).FirstOrDefaultAsync();
-            if (image == null)
+            var productImage = await _productImageCollection.Find(x => x.ProductImageId == id).FirstOrDefaultAsync();
+            if (productImage == null)
                 throw new KeyNotFoundException("Product image not found.");
 
-            return _mapper.Map<GetByIdProductImageDto>(image);
+            return _mapper.Map<GetByIdProductImageDto>(productImage);
         }
         catch (Exception ex)
         {
@@ -79,8 +79,8 @@ public class ProductImageService : IProductImageService
     {
         try
         {
-            var image = _mapper.Map<ProductImage>(updateProductImageDto);
-            var result = await _productImageCollection.FindOneAndReplaceAsync(x => x.ProductImageId == updateProductImageDto.ProductImageId, image);
+            var productImage = _mapper.Map<ProductImage>(updateProductImageDto);
+            var result = await _productImageCollection.FindOneAndReplaceAsync(x => x.ProductImageId == updateProductImageDto.ProductImageId, productImage);
 
             if (result == null)
                 throw new KeyNotFoundException("Product image to update not found.");
@@ -95,11 +95,11 @@ public class ProductImageService : IProductImageService
     {
         try
         {
-            var image = await _productImageCollection.Find(x => x.ProductId == id).FirstOrDefaultAsync();
-            if (image == null)
+            var productImage = await _productImageCollection.Find(x => x.ProductId == id).FirstOrDefaultAsync();
+            if (productImage == null)
                 throw new KeyNotFoundException("Product image not found for the given product ID.");
 
-            return _mapper.Map<GetByIdProductImageDto>(image);
+            return _mapper.Map<GetByIdProductImageDto>(productImage);
         }
         catch (Exception ex)
         {
