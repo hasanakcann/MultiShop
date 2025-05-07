@@ -14,7 +14,7 @@ public class _SpecialOfferDefaultComponentPartial : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var values = await _specialOfferService.GetAllSpecialOfferAsync();
-        return View(values);
+        var specialOffers = await _specialOfferService.GetAllSpecialOfferAsync();
+        return View(specialOffers);
     }
 }

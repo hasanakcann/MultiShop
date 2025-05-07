@@ -53,8 +53,8 @@ public class FeatureSliderController : Controller
     {
         FeatureSliderViewBagList();
 
-        var featureSliders = await _featureSliderService.GetByIdFeatureSliderAsync(id);
-        return View(featureSliders);
+        var featureSlider = await _featureSliderService.GetByIdFeatureSliderAsync(id);
+        return View(featureSlider);
     }
 
     [HttpPost]

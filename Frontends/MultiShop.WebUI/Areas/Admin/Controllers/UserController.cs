@@ -17,13 +17,13 @@ public class UserController : Controller
 
     public async Task<IActionResult> UserList()
     {
-        var values = await _userIdentityService.GetAllUserListAsync();
-        return View(values);
+        var users = await _userIdentityService.GetAllUserListAsync();
+        return View(users);
     }
 
     public async Task<IActionResult> UserAddressInfo(string id)
     {
-        var values = await _cargoCustomerService.GetByIdCargoCustomerInfoAsync(id);
-        return View(values);
+        var cargoCustomer = await _cargoCustomerService.GetByIdCargoCustomerInfoAsync(id);
+        return View(cargoCustomer);
     }
 }

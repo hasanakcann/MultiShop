@@ -18,8 +18,8 @@ public class CategoryController : Controller
     public async Task<IActionResult> Index()
     {
         CategoryWiewBagList();
-        var values = await _categoryService.GetAllCategoryAsync();
-        return View(values);
+        var categories = await _categoryService.GetAllCategoryAsync();
+        return View(categories);
     }
 
     [HttpGet]
@@ -50,8 +50,8 @@ public class CategoryController : Controller
     public async Task<IActionResult> UpdateCategory(string id)
     {
         CategoryWiewBagList();
-        var values = await _categoryService.GetByIdCategoryAsync(id);
-        return View(values);
+        var category = await _categoryService.GetByIdCategoryAsync(id);
+        return View(category);
     }
 
     [HttpPost]

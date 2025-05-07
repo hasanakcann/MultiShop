@@ -19,8 +19,8 @@ public class BrandController : Controller
     {
         BrandViewBagList();
 
-        var values = await _brandService.GetAllBrandAsync();
-        return View(values);
+        var brands = await _brandService.GetAllBrandAsync();
+        return View(brands);
     }
 
     [HttpGet]
@@ -51,8 +51,8 @@ public class BrandController : Controller
     public async Task<IActionResult> UpdateBrand(string id)
     {
         BrandViewBagList();
-        var values = await _brandService.GetByIdBrandAsync(id);
-        return View(values);
+        var brand = await _brandService.GetByIdBrandAsync(id);
+        return View(brand);
     }
 
     [HttpPost]

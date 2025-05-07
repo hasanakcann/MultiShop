@@ -13,7 +13,7 @@ public class _CategoriesDefaultComponentPartial : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var values = await _categoryService.GetAllCategoryAsync();
-        return View(values);
+        var categories = await _categoryService.GetAllCategoryAsync();
+        return View(categories);
     }
 }

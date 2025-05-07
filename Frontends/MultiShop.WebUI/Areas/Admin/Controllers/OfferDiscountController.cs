@@ -20,8 +20,8 @@ public class OfferDiscountController : Controller
     {
         OfferDiscountViewBagList();
 
-        var values = await _offerDiscountService.GetAllOfferDiscountAsync();
-        return View(values);
+        var offerDiscounts = await _offerDiscountService.GetAllOfferDiscountAsync();
+        return View(offerDiscounts);
     }
 
     [HttpGet]
@@ -53,8 +53,8 @@ public class OfferDiscountController : Controller
     {
         OfferDiscountViewBagList();
 
-        var values = await _offerDiscountService.GetByIdOfferDiscountAsync(id);
-        return View(values);
+        var offerDiscount = await _offerDiscountService.GetByIdOfferDiscountAsync(id);
+        return View(offerDiscount);
     }
 
     [HttpPost]

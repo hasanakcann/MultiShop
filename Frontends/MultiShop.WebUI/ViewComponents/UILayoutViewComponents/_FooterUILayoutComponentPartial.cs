@@ -13,7 +13,7 @@ public class _FooterUILayoutComponentPartial : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var values = await _aboutService.GetAllAboutAsync();
-        return View(values);
+        var abouts = await _aboutService.GetAllAboutAsync();
+        return View(abouts);
     }
 }

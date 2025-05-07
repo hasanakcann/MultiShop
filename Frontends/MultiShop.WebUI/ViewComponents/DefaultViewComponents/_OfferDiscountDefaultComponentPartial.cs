@@ -13,7 +13,7 @@ public class _OfferDiscountDefaultComponentPartial : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var values = await _offerDiscountService.GetAllOfferDiscountAsync();
-        return View(values);
+        var offerDiscounts = await _offerDiscountService.GetAllOfferDiscountAsync();
+        return View(offerDiscounts);
     }
 }

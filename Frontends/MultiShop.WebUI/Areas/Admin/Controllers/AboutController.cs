@@ -19,8 +19,8 @@ public class AboutController : Controller
     {
         AboutViewBagList();
 
-        var values = await _aboutService.GetAllAboutAsync();
-        return View(values);
+        var abouts = await _aboutService.GetAllAboutAsync();
+        return View(abouts);
     }
 
     [HttpGet]
@@ -51,8 +51,8 @@ public class AboutController : Controller
     public async Task<IActionResult> UpdateAbout(string id)
     {
         AboutViewBagList();
-        var values = await _aboutService.GetByIdAboutAsync(id);
-        return View(values);
+        var about = await _aboutService.GetByIdAboutAsync(id);
+        return View(about);
     }
 
     [HttpPost]

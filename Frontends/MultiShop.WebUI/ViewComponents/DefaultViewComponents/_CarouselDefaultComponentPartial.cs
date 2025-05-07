@@ -14,7 +14,7 @@ public class _CarouselDefaultComponentPartial : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var values = await _featureSliderService.GetAllFeatureSliderAsync();
-        return View(values);
+        var featureSliders = await _featureSliderService.GetAllFeatureSliderAsync();
+        return View(featureSliders);
     }
 }

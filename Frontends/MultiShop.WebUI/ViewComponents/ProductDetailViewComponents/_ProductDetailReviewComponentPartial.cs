@@ -13,7 +13,7 @@ public class _ProductDetailReviewComponentPartial : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync(string id)
     {
-        var values = await _commentService.CommentListByProductId(id);
-        return View(values);
+        var comment = await _commentService.CommentListByProductId(id);
+        return View(comment);
     }
 }

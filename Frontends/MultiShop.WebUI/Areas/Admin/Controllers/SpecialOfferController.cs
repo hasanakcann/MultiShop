@@ -19,8 +19,8 @@ public class SpecialOfferController : Controller
     {
         SpecialOfferViewBagList();
 
-        var values = await _specialOfferService.GetAllSpecialOfferAsync();
-        return View(values);
+        var specialOffers = await _specialOfferService.GetAllSpecialOfferAsync();
+        return View(specialOffers);
     }
 
     [HttpGet]
@@ -53,8 +53,8 @@ public class SpecialOfferController : Controller
     {
         SpecialOfferViewBagList();
 
-        var values = await _specialOfferService.GetByIdSpecialOfferAsync(id);
-        return View(values);
+        var specialOffer = await _specialOfferService.GetByIdSpecialOfferAsync(id);
+        return View(specialOffer);
     }
 
     [HttpPost]

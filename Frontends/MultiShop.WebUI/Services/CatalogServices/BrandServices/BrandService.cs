@@ -8,36 +8,75 @@ public class BrandService : IBrandService
     private readonly HttpClient _httpClient;
     public BrandService(HttpClient httpClient)
     {
-        _httpClient = httpClient;
+        _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
     }
 
     public async Task CreateBrandAsync(CreateBrandDto createBrandDto)
     {
-        await _httpClient.PostAsJsonAsync<CreateBrandDto>("brands", createBrandDto);
+        try
+        {
+            await _httpClient.PostAsJsonAsync("brands", createBrandDto);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while creating the brand.", ex);
+        }
     }
 
     public async Task DeleteBrandAsync(string id)
     {
-        await _httpClient.DeleteAsync("brands?id=" + id);
+        try
+        {
+            await _httpClient.DeleteAsync($"brands?id={id}");
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while deleting the brand.", ex);
+        }
     }
 
     public async Task<List<ResultBrandDto>> GetAllBrandAsync()
     {
-        var responseMessage = await _httpClient.GetAsync("brands");
-        var jsonData = await responseMessage.Content.ReadAsStringAsync();
-        var values = JsonConvert.DeserializeObject<List<ResultBrandDto>>(jsonData);
-        return values;
+        try
+        {
+            var responseMessage = await _httpClient.GetAsync("brands");
+            responseMessage.EnsureSuccessStatusCode();
+
+            var jsonData = await responseMessage.Content.ReadAsStringAsync();
+            var values = JsonConvert.DeserializeObject<List<ResultBrandDto>>(jsonData);
+            return values ?? new List<ResultBrandDto>();
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving the brand list.", ex);
+        }
     }
 
     public async Task<UpdateBrandDto> GetByIdBrandAsync(string id)
     {
-        var responseMessage = await _httpClient.GetAsync("brands/" + id);
-        var values = await responseMessage.Content.ReadFromJsonAsync<UpdateBrandDto>();
-        return values;
+        try
+        {
+            var responseMessage = await _httpClient.GetAsync($"brands/{id}");
+            responseMessage.EnsureSuccessStatusCode();
+
+            var values = await responseMessage.Content.ReadFromJsonAsync<UpdateBrandDto>();
+            return values!;
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving brand details.", ex);
+        }
     }
 
     public async Task UpdateBrandAsync(UpdateBrandDto updateBrandDto)
     {
-        await _httpClient.PutAsJsonAsync<UpdateBrandDto>("brands", updateBrandDto);
+        try
+        {
+            await _httpClient.PutAsJsonAsync("brands", updateBrandDto);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while updating the brand.", ex);
+        }
     }
 }

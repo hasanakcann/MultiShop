@@ -13,7 +13,7 @@ public class _ProductDetailImageSliderComponentPartial : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync(string id)
     {
-        var values = await _productImageService.GetByProductIdProductImageAsync(id);
-        return View(values);
+        var productImage = await _productImageService.GetByProductIdProductImageAsync(id);
+        return View(productImage);
     }
 }

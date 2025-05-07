@@ -13,7 +13,7 @@ public class _ProductListComponentPartial : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync(string id)
     {
-        var values = await _productService.GetProductsWithCategoryByCategoryIdAsync(id);
-        return View(values);
+        var product = await _productService.GetProductsWithCategoryByCategoryIdAsync(id);
+        return View(product);
     }
 }

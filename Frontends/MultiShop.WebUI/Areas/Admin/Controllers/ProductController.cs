@@ -23,8 +23,8 @@ public class ProductController : Controller
     public async Task<IActionResult> Index()
     {
         ProductViewBagList();
-        var values = await _productService.GetAllProductAsync();
-        return View(values);
+        var products = await _productService.GetAllProductAsync();
+        return View(products);
     }
 
     [HttpGet]
@@ -33,8 +33,8 @@ public class ProductController : Controller
     {
         ProductViewBagList();
 
-        var values = await _categoryService.GetAllCategoryAsync();
-        List<SelectListItem> categoryValues = (from x in values
+        var categories = await _categoryService.GetAllCategoryAsync();
+        List<SelectListItem> categoryValues = (from x in categories
                                                select new SelectListItem
                                                {
                                                    Text = x.CategoryName,
@@ -66,8 +66,8 @@ public class ProductController : Controller
     {
         ProductViewBagList();
 
-        var values = await _categoryService.GetAllCategoryAsync();
-        List<SelectListItem> categoryValues = (from x in values
+        var categories = await _categoryService.GetAllCategoryAsync();
+        List<SelectListItem> categoryValues = (from x in categories
                                                select new SelectListItem
                                                {
                                                    Text = x.CategoryName,
@@ -75,8 +75,8 @@ public class ProductController : Controller
                                                }).ToList();
         ViewBag.CategoryValues = categoryValues;
 
-        var productValues = await _productService.GetByIdProductAsync(id);
-        return View(productValues);
+        var product = await _productService.GetByIdProductAsync(id);
+        return View(product);
     }
 
     [HttpPost]

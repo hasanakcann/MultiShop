@@ -17,8 +17,8 @@ public class CargoController : Controller
     [Route("CargoCompanyList")]
     public async Task<IActionResult> CargoCompanyList()
     {
-        var values = await _cargoCompanyService.GetAllCargoCompanyAsync();
-        return View(values);
+        var cargoCompanies = await _cargoCompanyService.GetAllCargoCompanyAsync();
+        return View(cargoCompanies);
     }
 
     [HttpGet]
@@ -47,8 +47,8 @@ public class CargoController : Controller
     [Route("UpdateCargoCompany/{id}")]
     public async Task<IActionResult> UpdateCargoCompany(int id)
     {
-        var values = await _cargoCompanyService.GetByIdCargoCompanyAsync(id);
-        return View(values);
+        var cargoCompany = await _cargoCompanyService.GetByIdCargoCompanyAsync(id);
+        return View(cargoCompany);
     }
 
     [HttpPost]
