@@ -23,25 +23,25 @@ public class ShoppingCartController : Controller
         ViewBag.directory1 = "Ana Sayfa";
         ViewBag.directory2 = "Ürünler";
         ViewBag.directory3 = "Sepetim";
-        var values = await _basketService.GetBasket();
-        ViewBag.total = values.TotalPrice; 
-        var totalPriceWithTax = values.TotalPrice / 100 * 20 + values.TotalPrice;
+        var basket = await _basketService.GetBasket();
+        ViewBag.total = basket.TotalPrice; 
+        var totalPriceWithTax = basket.TotalPrice / 100 * 20 + basket.TotalPrice;
         ViewBag.totalPriceWithTax = totalPriceWithTax;
-        var tax = values.TotalPrice / 100 * 20;
+        var tax = basket.TotalPrice / 100 * 20;
         ViewBag.tax = tax;
         return View();
     }
 
     public async Task<IActionResult> AddBasketItem(string id)
     {
-        var values = await _productService.GetByIdProductAsync(id);
+        var product = await _productService.GetByIdProductAsync(id);
         var basketItems = new BasketItemDto
         {
-            ProductId = values.ProductId,
-            ProductName = values.ProductName,
-            Price = values.ProductPrice,
+            ProductId = product.ProductId,
+            ProductName = product.ProductName,
+            Price = product.ProductPrice,
             Quantity = 1,
-            ProductImageUrl = values.ProductImageUrl
+            ProductImageUrl = product.ProductImageUrl
         };
         await _basketService.AddBasketItem(basketItems);
         return RedirectToAction("Index");
