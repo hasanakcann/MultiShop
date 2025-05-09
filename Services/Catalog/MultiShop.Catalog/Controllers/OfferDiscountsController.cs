@@ -20,81 +20,45 @@ public class OfferDiscountsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllOfferDiscountList()
     {
-        try
-        {
-            var offerDiscounts = await _offerDiscountService.GetAllOfferDiscountAsync();
-            return Ok(offerDiscounts);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while fetching offer discounts: {ex.Message}");
-        }
+        var offerDiscounts = await _offerDiscountService.GetAllOfferDiscountAsync();
+        return Ok(offerDiscounts);  
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetOfferDiscountById(string id)
     {
-        try
-        {
-            var offerDiscount = await _offerDiscountService.GetByIdOfferDiscountAsync(id);
-            if (offerDiscount == null)
-                return NotFound($"Offer discount with ID '{id}' was not found.");
-
-            return Ok(offerDiscount);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while fetching the offer discount: {ex.Message}");
-        }
+        var offerDiscount = await _offerDiscountService.GetByIdOfferDiscountAsync(id);
+        return offerDiscount is null
+            ? NotFound($"Offer discount with ID '{id}' was not found.")  
+            : Ok(offerDiscount);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateOfferDiscount(CreateOfferDiscountDto createOfferDiscountDto)
     {
-        try
-        {
-            await _offerDiscountService.CreateOfferDiscountAsync(createOfferDiscountDto);
-            return Ok("Offer discount was successfully added.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while creating the offer discount: {ex.Message}");
-        }
+        await _offerDiscountService.CreateOfferDiscountAsync(createOfferDiscountDto);
+        return Ok("Offer discount was successfully added.");
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteOfferDiscount(string id)
     {
-        try
-        {
-            var existing = await _offerDiscountService.GetByIdOfferDiscountAsync(id);
-            if (existing == null)
-                return NotFound($"Offer discount with ID '{id}' was not found.");
+        var existing = await _offerDiscountService.GetByIdOfferDiscountAsync(id);
+        if (existing is null)
+            return NotFound($"Offer discount with ID '{id}' was not found.");
 
-            await _offerDiscountService.DeleteOfferDiscountAsync(id);
-            return Ok("Offer discount was successfully deleted.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while deleting the offer discount: {ex.Message}");
-        }
+        await _offerDiscountService.DeleteOfferDiscountAsync(id);
+        return Ok("Offer discount was successfully deleted.");
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateOfferDiscount(UpdateOfferDiscountDto updateOfferDiscountDto)
     {
-        try
-        {
-            var existing = await _offerDiscountService.GetByIdOfferDiscountAsync(updateOfferDiscountDto.OfferDiscountId);
-            if (existing == null)
-                return NotFound($"Offer discount with ID '{updateOfferDiscountDto.OfferDiscountId}' was not found.");
+        var existing = await _offerDiscountService.GetByIdOfferDiscountAsync(updateOfferDiscountDto.OfferDiscountId);
+        if (existing is null)
+            return NotFound($"Offer discount with ID '{updateOfferDiscountDto.OfferDiscountId}' was not found.");
 
-            await _offerDiscountService.UpdateOfferDiscountAsync(updateOfferDiscountDto);
-            return Ok("Offer discount was successfully updated.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while updating the offer discount: {ex.Message}");
-        }
+        await _offerDiscountService.UpdateOfferDiscountAsync(updateOfferDiscountDto);
+        return Ok("Offer discount was successfully updated.");
     }
 }

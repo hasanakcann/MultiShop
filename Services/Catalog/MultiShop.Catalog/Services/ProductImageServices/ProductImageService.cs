@@ -28,7 +28,7 @@ public class ProductImageService : IProductImageService
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while creating product image.", ex);
+            throw new ApplicationException("Failed to create product image.", ex);
         }
     }
 
@@ -42,7 +42,7 @@ public class ProductImageService : IProductImageService
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while deleting product image.", ex);
+            throw new ApplicationException("Failed to delete product image.", ex);
         }
     }
 
@@ -50,12 +50,12 @@ public class ProductImageService : IProductImageService
     {
         try
         {
-            var productImages = await _productImageCollection.Find(x => true).ToListAsync();
+            var productImages = await _productImageCollection.Find(_ => true).ToListAsync();
             return _mapper.Map<List<ResultProductImageDto>>(productImages);
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while retrieving product images.", ex);
+            throw new ApplicationException("Failed to retrieve product images.", ex);
         }
     }
 
@@ -71,7 +71,7 @@ public class ProductImageService : IProductImageService
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while retrieving product image by ID.", ex);
+            throw new ApplicationException("Failed to retrieve product image by ID.", ex);
         }
     }
 
@@ -80,22 +80,25 @@ public class ProductImageService : IProductImageService
         try
         {
             var productImage = _mapper.Map<ProductImage>(updateProductImageDto);
-            var result = await _productImageCollection.FindOneAndReplaceAsync(x => x.ProductImageId == updateProductImageDto.ProductImageId, productImage);
+            var result = await _productImageCollection.FindOneAndReplaceAsync(
+                x => x.ProductImageId == updateProductImageDto.ProductImageId,
+                productImage
+            );
 
             if (result == null)
                 throw new KeyNotFoundException("Product image to update not found.");
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while updating product image.", ex);
+            throw new ApplicationException("Failed to update product image.", ex);
         }
     }
 
-    public async Task<GetByIdProductImageDto> GetByProductIdProductImageAsync(string id)
+    public async Task<GetByIdProductImageDto> GetByProductIdProductImageAsync(string productId)
     {
         try
         {
-            var productImage = await _productImageCollection.Find(x => x.ProductId == id).FirstOrDefaultAsync();
+            var productImage = await _productImageCollection.Find(x => x.ProductId == productId).FirstOrDefaultAsync();
             if (productImage == null)
                 throw new KeyNotFoundException("Product image not found for the given product ID.");
 
@@ -103,7 +106,7 @@ public class ProductImageService : IProductImageService
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while retrieving product image by product ID.", ex);
+            throw new ApplicationException("Failed to retrieve product image by product ID.", ex);
         }
     }
 }

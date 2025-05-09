@@ -20,81 +20,45 @@ public class SpecialOffersController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllSpecialOfferList()
     {
-        try
-        {
-            var specialOffers = await _specialOfferService.GetAllSpecialOfferAsync();
-            return Ok(specialOffers);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while fetching special offers: {ex.Message}");
-        }
+        var specialOffers = await _specialOfferService.GetAllSpecialOfferAsync();
+        return Ok(specialOffers);  
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetSpecialOfferById(string id)
     {
-        try
-        {
-            var specialOffer = await _specialOfferService.GetByIdSpecialOfferAsync(id);
-            if (specialOffer == null)
-                return NotFound($"Special offer with ID '{id}' was not found.");
-
-            return Ok(specialOffer);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while fetching the special offer: {ex.Message}");
-        }
+        var specialOffer = await _specialOfferService.GetByIdSpecialOfferAsync(id);
+        return specialOffer is null
+            ? NotFound($"Special offer with ID '{id}' was not found.")  
+            : Ok(specialOffer);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateSpecialOffer(CreateSpecialOfferDto createSpecialOfferDto)
     {
-        try
-        {
-            await _specialOfferService.CreateSpecialOfferAsync(createSpecialOfferDto);
-            return Ok("Special offer was successfully added.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while creating the special offer: {ex.Message}");
-        }
+        await _specialOfferService.CreateSpecialOfferAsync(createSpecialOfferDto);
+        return Ok("Special offer was successfully added.");
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteSpecialOffer(string id)
     {
-        try
-        {
-            var existing = await _specialOfferService.GetByIdSpecialOfferAsync(id);
-            if (existing == null)
-                return NotFound($"Special offer with ID '{id}' was not found.");
+        var existing = await _specialOfferService.GetByIdSpecialOfferAsync(id);
+        if (existing is null)
+            return NotFound($"Special offer with ID '{id}' was not found.");
 
-            await _specialOfferService.DeleteSpecialOfferAsync(id);
-            return Ok("Special offer was successfully deleted.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while deleting the special offer: {ex.Message}");
-        }
+        await _specialOfferService.DeleteSpecialOfferAsync(id);
+        return Ok("Special offer was successfully deleted.");
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateSpecialOffer(UpdateSpecialOfferDto updateSpecialOfferDto)
     {
-        try
-        {
-            var existing = await _specialOfferService.GetByIdSpecialOfferAsync(updateSpecialOfferDto.SpecialOfferId);
-            if (existing == null)
-                return NotFound($"Special offer with ID '{updateSpecialOfferDto.SpecialOfferId}' was not found.");
+        var existing = await _specialOfferService.GetByIdSpecialOfferAsync(updateSpecialOfferDto.SpecialOfferId);
+        if (existing is null)
+            return NotFound($"Special offer with ID '{updateSpecialOfferDto.SpecialOfferId}' was not found.");
 
-            await _specialOfferService.UpdateSpecialOfferAsync(updateSpecialOfferDto);
-            return Ok("Special offer was successfully updated.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while updating the special offer: {ex.Message}");
-        }
+        await _specialOfferService.UpdateSpecialOfferAsync(updateSpecialOfferDto);
+        return Ok("Special offer was successfully updated.");
     }
 }

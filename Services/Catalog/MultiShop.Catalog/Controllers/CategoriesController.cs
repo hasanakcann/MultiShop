@@ -20,73 +20,45 @@ public class CategoriesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllCategoryList()
     {
-        try
-        {
-            var categories = await _categoryService.GetAllCategoryAsync();
-            return Ok(categories);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while retrieving categories: {ex.Message}");
-        }
+        var categories = await _categoryService.GetAllCategoryAsync();
+        return Ok(categories);  
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetCategoryById(string id)
     {
-        try
-        {
-            var category = await _categoryService.GetByIdCategoryAsync(id);
-            if (category == null)
-                return NotFound("Category not found.");
-
-            return Ok(category);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while retrieving the category: {ex.Message}");
-        }
+        var category = await _categoryService.GetByIdCategoryAsync(id);
+        return category is null
+            ? NotFound($"Category with ID '{id}' was not found.") 
+            : Ok(category);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateCategory(CreateCategoryDto createCategoryDto)
     {
-        try
-        {
-            await _categoryService.CreateCategoryAsync(createCategoryDto);
-            return Ok("Category successfully created.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while creating the category: {ex.Message}");
-        }
+        await _categoryService.CreateCategoryAsync(createCategoryDto);
+        return Ok("Category was successfully created.");
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCategory(string id)
     {
-        try
-        {
-            await _categoryService.DeleteCategoryAsync(id);
-            return Ok("Category successfully deleted.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while deleting the category: {ex.Message}");
-        }
+        var existing = await _categoryService.GetByIdCategoryAsync(id);
+        if (existing is null)
+            return NotFound($"Category with ID '{id}' was not found.");
+
+        await _categoryService.DeleteCategoryAsync(id);
+        return Ok("Category was successfully deleted.");
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateCategory(UpdateCategoryDto updateCategoryDto)
     {
-        try
-        {
-            await _categoryService.UpdateCategoryAsync(updateCategoryDto);
-            return Ok("Category successfully updated.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while updating the category: {ex.Message}");
-        }
+        var existing = await _categoryService.GetByIdCategoryAsync(updateCategoryDto.CategoryId);
+        if (existing is null)
+            return NotFound($"Category with ID '{updateCategoryDto.CategoryId}' was not found.");
+
+        await _categoryService.UpdateCategoryAsync(updateCategoryDto);
+        return Ok("Category was successfully updated.");
     }
 }

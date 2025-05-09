@@ -22,49 +22,99 @@ public class StatisticService : IStatisticService
 
     public async Task<long> GetBrandCount()
     {
-        return await _brandCollection.CountDocumentsAsync(FilterDefinition<Brand>.Empty);
+        try
+        {
+            return await _brandCollection.CountDocumentsAsync(FilterDefinition<Brand>.Empty);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving brand count.", ex);
+        }
     }
 
     public async Task<long> GetCategoryCount()
     {
-        return await _categoryCollection.CountDocumentsAsync(FilterDefinition<Category>.Empty);
+        try
+        {
+            return await _categoryCollection.CountDocumentsAsync(FilterDefinition<Category>.Empty);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving category count.", ex);
+        }
     }
 
     public async Task<decimal> GetProductAveragePrice()
     {
-        var pipeline = new BsonDocument[]
+        try
         {
-             new BsonDocument("$group",new BsonDocument
-             {
-                 {"_id",null },
-                 {"averagePrice",new BsonDocument("$avg","$ProductPrice") }
-             })
-        };
-        var result = await _productCollection.AggregateAsync<BsonDocument>(pipeline);
-        var price = result.FirstOrDefault().GetValue("averagePrice", decimal.Zero).AsDecimal;
-        return price;
+            var pipeline = new BsonDocument[]
+            {
+                new BsonDocument("$group", new BsonDocument
+                {
+                    { "_id", null },
+                    { "averagePrice", new BsonDocument("$avg", "$ProductPrice") }
+                })
+            };
+            var result = await _productCollection.AggregateAsync<BsonDocument>(pipeline);
+            var price = result.FirstOrDefault()?.GetValue("averagePrice", decimal.Zero).AsDecimal ?? decimal.Zero;
+            return price;
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while calculating the average product price.", ex);
+        }
     }
 
     public async Task<long> GetProductCount()
     {
-        return await _productCollection.CountDocumentsAsync(FilterDefinition<Product>.Empty);
+        try
+        {
+            return await _productCollection.CountDocumentsAsync(FilterDefinition<Product>.Empty);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving product count.", ex);
+        }
     }
 
     public async Task<string> GetMaxPriceProductName()
     {
-        var filter = Builders<Product>.Filter.Empty;
-        var sort = Builders<Product>.Sort.Descending(x => x.ProductPrice);
-        var projection = Builders<Product>.Projection.Include(y => y.ProductName).Exclude("ProductId");
-        var product = await _productCollection.Find(filter).Sort(sort).Project(projection).FirstOrDefaultAsync();
-        return product.GetValue("ProductName").AsString;
+        try
+        {
+            var filter = Builders<Product>.Filter.Empty;
+            var sort = Builders<Product>.Sort.Descending(x => x.ProductPrice);
+            var projection = Builders<Product>.Projection.Include(y => y.ProductName).Exclude("ProductId");
+            var product = await _productCollection.Find(filter).Sort(sort).Project(projection).FirstOrDefaultAsync();
+
+            if (product == null)
+                throw new KeyNotFoundException("No product found with the maximum price.");
+
+            return product.GetValue("ProductName").AsString;
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving the product with the highest price.", ex);
+        }
     }
 
     public async Task<string> GetMinPriceProductName()
     {
-        var filter = Builders<Product>.Filter.Empty;
-        var sort = Builders<Product>.Sort.Ascending(x => x.ProductPrice);
-        var projection = Builders<Product>.Projection.Include(y => y.ProductName).Exclude("ProductId");
-        var product = await _productCollection.Find(filter).Sort(sort).Project(projection).FirstOrDefaultAsync();
-        return product.GetValue("ProductName").AsString;
+        try
+        {
+            var filter = Builders<Product>.Filter.Empty;
+            var sort = Builders<Product>.Sort.Ascending(x => x.ProductPrice);
+            var projection = Builders<Product>.Projection.Include(y => y.ProductName).Exclude("ProductId");
+            var product = await _productCollection.Find(filter).Sort(sort).Project(projection).FirstOrDefaultAsync();
+
+            if (product == null)
+                throw new KeyNotFoundException("No product found with the minimum price.");
+
+            return product.GetValue("ProductName").AsString;
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving the product with the lowest price.", ex);
+        }
     }
 }

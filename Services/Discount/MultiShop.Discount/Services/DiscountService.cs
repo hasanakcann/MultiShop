@@ -15,7 +15,7 @@ public class DiscountService : IDiscountService
 
     public async Task CreateDiscountCouponAsync(CreateDiscountCouponDto createCouponDto)
     {
-        string query = "Insert Into Coupons (Code, Rate, IsActive, ValidDate) values (@code, @rate, @isActive, @validDate)";
+        string query = "INSERT INTO Coupons (Code, Rate, IsActive, ValidDate) VALUES (@code, @rate, @isActive, @validDate)";
         var parameters = new DynamicParameters();
         parameters.Add("@code", createCouponDto.Code);
         parameters.Add("@rate", createCouponDto.Rate);
@@ -24,147 +24,133 @@ public class DiscountService : IDiscountService
 
         try
         {
-            using (var connection = _context.CreateConnection())
-            {
-                await connection.ExecuteAsync(query, parameters);
-            }
+            using var connection = _context.CreateConnection();
+            await connection.ExecuteAsync(query, parameters);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw new Exception("An error occurred while creating the discount coupon.");
+            throw new ApplicationException("An error occurred while creating the discount coupon.", ex);
         }
     }
 
     public async Task DeleteDiscountCouponAsync(int id)
     {
-        string query = "Delete From Coupons where CouponId=@couponId";
+        string query = "DELETE FROM Coupons WHERE CouponId = @couponId";
         var parameters = new DynamicParameters();
         parameters.Add("@couponId", id);
 
         try
         {
-            using (var connection = _context.CreateConnection())
-            {
-                await connection.ExecuteAsync(query, parameters);
-            }
+            using var connection = _context.CreateConnection();
+            await connection.ExecuteAsync(query, parameters);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw new Exception("An error occurred while deleting the discount coupon.");
+            throw new ApplicationException("An error occurred while deleting the discount coupon.", ex);
         }
     }
 
     public async Task<List<ResultDiscountCouponDto>> GetAllDiscountCouponAsync()
     {
-        string query = "Select * From Coupons";
+        string query = "SELECT * FROM Coupons";
 
         try
         {
-            using (var connection = _context.CreateConnection())
-            {
-                var coupons = await connection.QueryAsync<ResultDiscountCouponDto>(query);
-                return coupons?.ToList() ?? new List<ResultDiscountCouponDto>();
-            }
+            using var connection = _context.CreateConnection();
+            var coupons = await connection.QueryAsync<ResultDiscountCouponDto>(query);
+            return coupons?.ToList() ?? new List<ResultDiscountCouponDto>();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw new Exception("An error occurred while retrieving the discount coupons.");
+            throw new ApplicationException("An error occurred while retrieving the discount coupons.", ex);
         }
     }
 
     public async Task<GetByIdDiscountCouponDto> GetByIdDiscountCouponAsync(int id)
     {
-        string query = "Select * From Coupons Where CouponId=@couponId";
+        string query = "SELECT * FROM Coupons WHERE CouponId = @couponId";
         var parameters = new DynamicParameters();
         parameters.Add("@couponId", id);
 
         try
         {
-            using (var connection = _context.CreateConnection())
-            {
-                var coupon = await connection.QueryFirstOrDefaultAsync<GetByIdDiscountCouponDto>(query, parameters);
+            using var connection = _context.CreateConnection();
+            var coupon = await connection.QueryFirstOrDefaultAsync<GetByIdDiscountCouponDto>(query, parameters);
 
-                if (coupon == null)
-                    throw new Exception("Discount coupon not found.");
+            if (coupon == null)
+                throw new KeyNotFoundException($"Discount coupon with ID {id} was not found.");
 
-                return coupon;
-            }
+            return coupon;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw new Exception("An error occurred while retrieving the discount coupon.");
+            throw new ApplicationException("An error occurred while retrieving the discount coupon.", ex);
         }
     }
 
     public async Task<ResultDiscountCouponDto> GetCodeDetailByCodeAsync(string code)
     {
-        string query = "Select * From Coupons Where Code=@code";
+        string query = "SELECT * FROM Coupons WHERE Code = @code";
         var parameters = new DynamicParameters();
         parameters.Add("@code", code);
 
         try
         {
-            using (var connection = _context.CreateConnection())
-            {
-                var couponDetail = await connection.QueryFirstOrDefaultAsync<ResultDiscountCouponDto>(query, parameters);
+            using var connection = _context.CreateConnection();
+            var couponDetail = await connection.QueryFirstOrDefaultAsync<ResultDiscountCouponDto>(query, parameters);
 
-                if (couponDetail == null)
-                    throw new Exception("Discount code not found.");
+            if (couponDetail == null)
+                throw new KeyNotFoundException($"Discount code {code} was not found.");
 
-                return couponDetail;
-            }
+            return couponDetail;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw new Exception("An error occurred while retrieving the discount code details.");
+            throw new ApplicationException("An error occurred while retrieving the discount code details.", ex);
         }
     }
 
     public async Task<int> GetDiscountCouponCount()
     {
-        string query = "Select Count(*) From Coupons";
+        string query = "SELECT COUNT(*) FROM Coupons";
 
         try
         {
-            using (var connection = _context.CreateConnection())
-            {
-                var couponCount = await connection.QueryFirstOrDefaultAsync<int>(query);
-                return couponCount;
-            }
+            using var connection = _context.CreateConnection();
+            var couponCount = await connection.QueryFirstOrDefaultAsync<int>(query);
+            return couponCount;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw new Exception("An error occurred while retrieving the discount coupon count.");
+            throw new ApplicationException("An error occurred while retrieving the discount coupon count.", ex);
         }
     }
 
     public int GetDiscountCouponRate(string code)
     {
-        string query = "Select Rate From Coupons Where Code=@code";
+        string query = "SELECT Rate FROM Coupons WHERE Code = @code";
         var parameters = new DynamicParameters();
         parameters.Add("@code", code);
 
         try
         {
-            using (var connection = _context.CreateConnection())
-            {
-                var discountRate = connection.QueryFirstOrDefault<int?>(query, parameters);
+            using var connection = _context.CreateConnection();
+            var discountRate = connection.QueryFirstOrDefault<int?>(query, parameters);
 
-                if (discountRate == null)
-                    throw new Exception("Rate for the given discount code was not found.");
+            if (discountRate == null)
+                throw new KeyNotFoundException($"Rate for discount code {code} was not found.");
 
-                return discountRate.Value;
-            }
+            return discountRate.Value;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw new Exception("An error occurred while retrieving the discount rate.");
+            throw new ApplicationException("An error occurred while retrieving the discount rate.", ex);
         }
     }
 
     public async Task UpdateDiscountCouponAsync(UpdateDiscountCouponDto updateCouponDto)
     {
-        string query = "Update Coupons Set Code=@code, Rate=@rate, IsActive=@isActive, ValidDate=@validDate where CouponId=@couponId";
+        string query = "UPDATE Coupons SET Code = @code, Rate = @rate, IsActive = @isActive, ValidDate = @validDate WHERE CouponId = @couponId";
         var parameters = new DynamicParameters();
         parameters.Add("@code", updateCouponDto.Code);
         parameters.Add("@rate", updateCouponDto.Rate);
@@ -174,14 +160,12 @@ public class DiscountService : IDiscountService
 
         try
         {
-            using (var connection = _context.CreateConnection())
-            {
-                await connection.ExecuteAsync(query, parameters);
-            }
+            using var connection = _context.CreateConnection();
+            await connection.ExecuteAsync(query, parameters);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw new Exception("An error occurred while updating the discount coupon.");
+            throw new ApplicationException("An error occurred while updating the discount coupon.", ex);
         }
     }
 }

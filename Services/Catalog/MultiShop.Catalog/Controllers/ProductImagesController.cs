@@ -20,87 +20,52 @@ public class ProductImagesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllProductImageList()
     {
-        try
-        {
-            var images = await _productImageService.GetAllProductImageAsync();
-            return Ok(images);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while retrieving product images: {ex.Message}");
-        }
+        var images = await _productImageService.GetAllProductImageAsync();
+        return Ok(images);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetProductImageById(string id)
     {
-        try
-        {
-            var image = await _productImageService.GetByIdProductImageAsync(id);
-            if (image == null)
-                return NotFound("Product image not found.");
-
-            return Ok(image);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while retrieving the product image: {ex.Message}");
-        }
+        var image = await _productImageService.GetByIdProductImageAsync(id);
+        return image is null
+            ? NotFound("Product image not found.")
+            : Ok(image);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateProductImage(CreateProductImageDto createProductImageDto)
     {
-        try
-        {
-            await _productImageService.CreateProductImageAsync(createProductImageDto);
-            return Ok("Product image successfully added.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while adding the product image: {ex.Message}");
-        }
+        await _productImageService.CreateProductImageAsync(createProductImageDto);
+        return Ok("Product image successfully added.");
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProductImage(string id)
     {
-        try
-        {
-            await _productImageService.DeleteProductImageAsync(id);
-            return Ok("Product image successfully deleted.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while deleting the product image: {ex.Message}");
-        }
+        var existing = await _productImageService.GetByIdProductImageAsync(id);
+        if (existing is null)
+            return NotFound("Product image not found.");
+
+        await _productImageService.DeleteProductImageAsync(id);
+        return Ok("Product image successfully deleted.");
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateProductImage(UpdateProductImageDto updateProductImageDto)
     {
-        try
-        {
-            await _productImageService.UpdateProductImageAsync(updateProductImageDto);
-            return Ok("Product image successfully updated.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while updating the product image: {ex.Message}");
-        }
+        var existing = await _productImageService.GetByIdProductImageAsync(updateProductImageDto.ProductImageId);
+        if (existing is null)
+            return NotFound($"Product image with ID '{updateProductImageDto.ProductImageId}' was not found.");
+
+        await _productImageService.UpdateProductImageAsync(updateProductImageDto);
+        return Ok("Product image successfully updated.");
     }
 
     [HttpGet("ProductImagesByProductId/{id}")]
     public async Task<IActionResult> ProductImagesByProductId(string id)
     {
-        try
-        {
-            var images = await _productImageService.GetByProductIdProductImageAsync(id);
-            return Ok(images);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while retrieving images by product ID: {ex.Message}");
-        }
+        var images = await _productImageService.GetByProductIdProductImageAsync(id);
+        return Ok(images);
     }
 }

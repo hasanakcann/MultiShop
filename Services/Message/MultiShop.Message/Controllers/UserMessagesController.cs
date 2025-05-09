@@ -39,21 +39,21 @@ public class UserMessagesController : ControllerBase
     public async Task<IActionResult> CreateMessageAsync(CreateMessageDto createMessageDto)
     {
         await _userMessageService.CreateMessageAsync(createMessageDto);
-        return Ok("Mesaj başarıyla eklendi.");
+        return Ok("Message successfully added.");
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteMessageAsync(int id)
     {
         await _userMessageService.DeleteMessageAsync(id);
-        return Ok("Mesaj başarıyla silindi.");
+        return Ok("Message successfully deleted.");
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateMessageAsync(UpdateMessageDto updateMessageDto)
     {
         await _userMessageService.UpdateMessageAsync(updateMessageDto);
-        return Ok("Mesaj başarıyla güncellendi.");
+        return Ok("Message successfully updated.");
     }
 
     [HttpGet("GetTotalMessageCount")]

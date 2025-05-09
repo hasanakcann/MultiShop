@@ -20,87 +20,52 @@ public class ProductDetailsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllProductDetailList()
     {
-        try
-        {
-            var details = await _productDetailService.GetAllProductDetailAsync();
-            return Ok(details);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while retrieving product details: {ex.Message}");
-        }
+        var details = await _productDetailService.GetAllProductDetailAsync();
+        return Ok(details);  
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetProductDetailById(string id)
     {
-        try
-        {
-            var detail = await _productDetailService.GetByIdProductDetailAsync(id);
-            if (detail == null)
-                return NotFound("Product detail not found.");
-
-            return Ok(detail);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while retrieving the product detail: {ex.Message}");
-        }
+        var detail = await _productDetailService.GetByIdProductDetailAsync(id);
+        return detail is null
+            ? NotFound("Product detail not found.")  
+            : Ok(detail);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateProductDetail(CreateProductDetailDto createProductDetailDto)
     {
-        try
-        {
-            await _productDetailService.CreateProductDetailAsync(createProductDetailDto);
-            return Ok("Product detail successfully created.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while creating the product detail: {ex.Message}");
-        }
+        await _productDetailService.CreateProductDetailAsync(createProductDetailDto);
+        return Ok("Product detail successfully created.");
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProductDetail(string id)
     {
-        try
-        {
-            await _productDetailService.DeleteProductDetailAsync(id);
-            return Ok("Product detail successfully deleted.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while deleting the product detail: {ex.Message}");
-        }
+        var existing = await _productDetailService.GetByIdProductDetailAsync(id);
+        if (existing is null)
+            return NotFound("Product detail not found.");
+
+        await _productDetailService.DeleteProductDetailAsync(id);
+        return Ok("Product detail successfully deleted.");
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateProductDetail(UpdateProductDetailDto updateProductDetailDto)
     {
-        try
-        {
-            await _productDetailService.UpdateProductDetailAsync(updateProductDetailDto);
-            return Ok("Product detail successfully updated.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while updating the product detail: {ex.Message}");
-        }
+        var existing = await _productDetailService.GetByIdProductDetailAsync(updateProductDetailDto.ProductDetailId);
+        if (existing is null)
+            return NotFound($"Product detail with ID '{updateProductDetailDto.ProductDetailId}' was not found.");
+
+        await _productDetailService.UpdateProductDetailAsync(updateProductDetailDto);
+        return Ok("Product detail successfully updated.");
     }
 
     [HttpGet("GetProductDetailByProductId/{id}")]
     public async Task<IActionResult> GetProductDetailByProductId(string id)
     {
-        try
-        {
-            var details = await _productDetailService.GetByProductIdProductDetailAsync(id);
-            return Ok(details);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while retrieving product details by product ID: {ex.Message}");
-        }
+        var details = await _productDetailService.GetByProductIdProductDetailAsync(id);
+        return Ok(details);  
     }
 }

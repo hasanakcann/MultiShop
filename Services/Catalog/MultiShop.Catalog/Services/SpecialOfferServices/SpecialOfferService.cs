@@ -21,30 +21,73 @@ public class SpecialOfferService : ISpecialOfferService
 
     public async Task CreateSpecialOfferAsync(CreateSpecialOfferDto createSpecialOfferDto)
     {
-        var specialOffer = _mapper.Map<SpecialOffer>(createSpecialOfferDto);
-        await _specialOfferCollection.InsertOneAsync(specialOffer);
+        try
+        {
+            var specialOffer = _mapper.Map<SpecialOffer>(createSpecialOfferDto);
+            await _specialOfferCollection.InsertOneAsync(specialOffer);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while creating special offer.", ex);
+        }
     }
 
     public async Task DeleteSpecialOfferAsync(string id)
     {
-        await _specialOfferCollection.DeleteOneAsync(x => x.SpecialOfferId == id);
+        try
+        {
+            var result = await _specialOfferCollection.DeleteOneAsync(x => x.SpecialOfferId == id);
+            if (result.DeletedCount == 0)
+                throw new KeyNotFoundException("Special offer not found.");
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while deleting special offer.", ex);
+        }
     }
 
     public async Task<List<ResultSpecialOfferDto>> GetAllSpecialOfferAsync()
     {
-        var specialOffers = await _specialOfferCollection.Find(x => true).ToListAsync();
-        return _mapper.Map<List<ResultSpecialOfferDto>>(specialOffers);
+        try
+        {
+            var specialOffers = await _specialOfferCollection.Find(x => true).ToListAsync();
+            return _mapper.Map<List<ResultSpecialOfferDto>>(specialOffers);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving all special offers.", ex);
+        }
     }
 
     public async Task<GetByIdSpecialOfferDto> GetByIdSpecialOfferAsync(string id)
     {
-        var specialOffer = await _specialOfferCollection.Find(x => x.SpecialOfferId == id).FirstOrDefaultAsync();
-        return _mapper.Map<GetByIdSpecialOfferDto>(specialOffer);
+        try
+        {
+            var specialOffer = await _specialOfferCollection.Find(x => x.SpecialOfferId == id).FirstOrDefaultAsync();
+            if (specialOffer == null)
+                throw new KeyNotFoundException("Special offer not found.");
+
+            return _mapper.Map<GetByIdSpecialOfferDto>(specialOffer);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while retrieving special offer by ID.", ex);
+        }
     }
 
     public async Task UpdateSpecialOfferAsync(UpdateSpecialOfferDto updateSpecialOfferDto)
     {
-        var specialOffer = _mapper.Map<SpecialOffer>(updateSpecialOfferDto);
-        await _specialOfferCollection.FindOneAndReplaceAsync(x => x.SpecialOfferId == updateSpecialOfferDto.SpecialOfferId, specialOffer);
+        try
+        {
+            var specialOffer = _mapper.Map<SpecialOffer>(updateSpecialOfferDto);
+            var result = await _specialOfferCollection.FindOneAndReplaceAsync(x => x.SpecialOfferId == updateSpecialOfferDto.SpecialOfferId, specialOffer);
+
+            if (result == null)
+                throw new KeyNotFoundException("Special offer to update not found.");
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("An error occurred while updating special offer.", ex);
+        }
     }
 }

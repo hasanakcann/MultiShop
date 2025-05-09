@@ -28,7 +28,7 @@ public class CategoryService : ICategoryService
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while creating the category.", ex);
+            throw new ApplicationException("Failed to create the category. Please try again later.", ex);
         }
     }
 
@@ -37,14 +37,17 @@ public class CategoryService : ICategoryService
         try
         {
             var result = await _categoryCollection.DeleteOneAsync(x => x.CategoryId == id);
+
             if (result.DeletedCount == 0)
-            {
-                throw new KeyNotFoundException("Category not found.");
-            }
+                throw new KeyNotFoundException("The category to delete was not found.");
+        }
+        catch (KeyNotFoundException ex)
+        {
+            throw new ApplicationException(ex.Message, ex);
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while deleting the category.", ex);
+            throw new ApplicationException("An error occurred while deleting the category. Please try again later.", ex);
         }
     }
 
@@ -57,7 +60,7 @@ public class CategoryService : ICategoryService
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while retrieving categories.", ex);
+            throw new ApplicationException("Failed to retrieve categories. Please try again later.", ex);
         }
     }
 
@@ -66,14 +69,19 @@ public class CategoryService : ICategoryService
         try
         {
             var category = await _categoryCollection.Find(x => x.CategoryId == id).FirstOrDefaultAsync();
+
             if (category == null)
-                throw new KeyNotFoundException("Category not found.");
+                throw new KeyNotFoundException("The requested category was not found.");
 
             return _mapper.Map<GetByIdCategoryDto>(category);
         }
+        catch (KeyNotFoundException ex)
+        {
+            throw new ApplicationException(ex.Message, ex);
+        }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while retrieving the category.", ex);
+            throw new ApplicationException("An error occurred while retrieving the category. Please try again later.", ex);
         }
     }
 
@@ -82,14 +90,18 @@ public class CategoryService : ICategoryService
         try
         {
             var category = _mapper.Map<Category>(updateCategoryDto);
-            var result = await _categoryCollection.FindOneAndReplaceAsync(x => x.CategoryId == updateCategoryDto.CategoryId, category);
+            var result = await _categoryCollection.ReplaceOneAsync(x => x.CategoryId == updateCategoryDto.CategoryId, category);
 
-            if (result == null)
-                throw new KeyNotFoundException("Category to update not found.");
+            if (result.MatchedCount == 0)
+                throw new KeyNotFoundException("The category to update was not found.");
+        }
+        catch (KeyNotFoundException ex)
+        {
+            throw new ApplicationException(ex.Message, ex);
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while updating the category.", ex);
+            throw new ApplicationException("Failed to update the category. Please try again later.", ex);
         }
     }
 }

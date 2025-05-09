@@ -84,7 +84,11 @@ public class ProductService : IProductService
             var products = await _productCollection.Find(x => true).ToListAsync();
             foreach (var product in products)
             {
-                product.Category = await _categoryCollection.Find(x => x.CategoryId == product.CategoryId).FirstOrDefaultAsync() ?? throw new KeyNotFoundException("Category not found for product.");
+                var category = await _categoryCollection.Find(x => x.CategoryId == product.CategoryId).FirstOrDefaultAsync();
+                if (category == null)
+                    throw new KeyNotFoundException("Category not found for product.");
+
+                product.Category = category;
             }
 
             return _mapper.Map<List<ResultProductsWithCategoryDto>>(products);
@@ -116,9 +120,13 @@ public class ProductService : IProductService
         try
         {
             var productsWithCategory = await _productCollection.Find(x => x.CategoryId == categoryId).ToListAsync();
-            foreach (var products in productsWithCategory)
+            foreach (var product in productsWithCategory)
             {
-                products.Category = await _categoryCollection.Find(x => x.CategoryId == products.CategoryId).FirstOrDefaultAsync() ?? throw new KeyNotFoundException("Category not found for product.");
+                var category = await _categoryCollection.Find(x => x.CategoryId == product.CategoryId).FirstOrDefaultAsync();
+                if (category == null)
+                    throw new KeyNotFoundException("Category not found for product.");
+
+                product.Category = category;
             }
 
             return _mapper.Map<List<ResultProductsWithCategoryDto>>(productsWithCategory);

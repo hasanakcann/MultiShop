@@ -23,12 +23,12 @@ public class ProductDetailService : IProductDetailService
     {
         try
         {
-            var productdetail = _mapper.Map<ProductDetail>(createProductDetailDto);
-            await _productDetailCollection.InsertOneAsync(productdetail);
+            var productDetail = _mapper.Map<ProductDetail>(createProductDetailDto);
+            await _productDetailCollection.InsertOneAsync(productDetail);
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while creating product detail.", ex);
+            throw new ApplicationException("Failed to create product detail.", ex);
         }
     }
 
@@ -42,7 +42,7 @@ public class ProductDetailService : IProductDetailService
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while deleting product detail.", ex);
+            throw new ApplicationException("Failed to delete product detail.", ex);
         }
     }
 
@@ -50,12 +50,12 @@ public class ProductDetailService : IProductDetailService
     {
         try
         {
-            var productdetails = await _productDetailCollection.Find(x => true).ToListAsync();
-            return _mapper.Map<List<ResultProductDetailDto>>(productdetails);
+            var productDetails = await _productDetailCollection.Find(_ => true).ToListAsync();
+            return _mapper.Map<List<ResultProductDetailDto>>(productDetails);
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while retrieving all product details.", ex);
+            throw new ApplicationException("Failed to retrieve all product details.", ex);
         }
     }
 
@@ -63,15 +63,15 @@ public class ProductDetailService : IProductDetailService
     {
         try
         {
-            var productdetail = await _productDetailCollection.Find(x => x.ProductDetailId == id).FirstOrDefaultAsync();
-            if (productdetail == null)
+            var productDetail = await _productDetailCollection.Find(x => x.ProductDetailId == id).FirstOrDefaultAsync();
+            if (productDetail == null)
                 throw new KeyNotFoundException("Product detail not found.");
 
-            return _mapper.Map<GetByIdProductDetailDto>(productdetail);
+            return _mapper.Map<GetByIdProductDetailDto>(productDetail);
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while retrieving product detail by ID.", ex);
+            throw new ApplicationException("Failed to retrieve product detail by ID.", ex);
         }
     }
 
@@ -79,31 +79,34 @@ public class ProductDetailService : IProductDetailService
     {
         try
         {
-            var productdetail = _mapper.Map<ProductDetail>(updateProductDetailDto);
-            var result = await _productDetailCollection.FindOneAndReplaceAsync(x => x.ProductDetailId == updateProductDetailDto.ProductDetailId, productdetail);
+            var productDetail = _mapper.Map<ProductDetail>(updateProductDetailDto);
+            var result = await _productDetailCollection.FindOneAndReplaceAsync(
+                x => x.ProductDetailId == updateProductDetailDto.ProductDetailId,
+                productDetail
+            );
 
             if (result == null)
                 throw new KeyNotFoundException("Product detail to update not found.");
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while updating product detail.", ex);
+            throw new ApplicationException("Failed to update product detail.", ex);
         }
     }
 
-    public async Task<GetByIdProductDetailDto> GetByProductIdProductDetailAsync(string id)
+    public async Task<GetByIdProductDetailDto> GetByProductIdProductDetailAsync(string productId)
     {
         try
         {
-            var productdetail = await _productDetailCollection.Find(x => x.ProductId == id).FirstOrDefaultAsync();
-            if (productdetail == null)
+            var productDetail = await _productDetailCollection.Find(x => x.ProductId == productId).FirstOrDefaultAsync();
+            if (productDetail == null)
                 throw new KeyNotFoundException("Product detail not found for the given product ID.");
 
-            return _mapper.Map<GetByIdProductDetailDto>(productdetail);
+            return _mapper.Map<GetByIdProductDetailDto>(productDetail);
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An error occurred while retrieving product detail by product ID.", ex);
+            throw new ApplicationException("Failed to retrieve product detail by product ID.", ex);
         }
     }
 }

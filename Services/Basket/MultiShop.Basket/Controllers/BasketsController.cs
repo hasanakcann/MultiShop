@@ -21,49 +21,23 @@ public class BasketsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetMyBasketDetail()
     {
-        try
-        {
-            var userId = _loginService.GetUserId;
-            var basket = await _basketService.GetBasket(userId);
-
-            if (basket == null)
-                return NotFound("Basket not found.");
-
-            return Ok(basket);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while retrieving the basket. Details: {ex.Message}");
-        }
+        var userId = _loginService.GetUserId;
+        var basket = await _basketService.GetBasket(userId);
+        return Ok(basket);
     }
 
     [HttpPost]
     public async Task<IActionResult> SaveMyBasket(BasketTotalDto basketTotalDto)
     {
-        try
-        {
-            basketTotalDto.UserId = _loginService.GetUserId;
-            await _basketService.SaveBasket(basketTotalDto);
-
-            return Ok("Changes to the basket have been saved successfully.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while saving the basket. Details: {ex.Message}");
-        }
+        basketTotalDto.UserId = _loginService.GetUserId;
+        await _basketService.SaveBasket(basketTotalDto);
+        return Ok("Changes to the basket have been saved successfully.");
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteBasket()
     {
-        try
-        {
-            await _basketService.DeleteBasket(_loginService.GetUserId);
-            return Ok("Basket deleted successfully.");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred while deleting the basket. Details: {ex.Message}");
-        }
+        await _basketService.DeleteBasket(_loginService.GetUserId);
+        return Ok("Basket deleted successfully.");
     }
 }
