@@ -1,5 +1,4 @@
-﻿using MultiShop.DtoLayer.DiscountDtos;
-using MultiShop.DtoLayer.MessageDtos;
+﻿using MultiShop.DtoLayer.MessageDtos;
 
 namespace MultiShop.WebUI.Services.MessageServices;
 
