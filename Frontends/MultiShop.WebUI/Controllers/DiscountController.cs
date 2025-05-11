@@ -23,16 +23,16 @@ public class DiscountController : Controller
     [HttpPost]
     public async Task<IActionResult> ConfirmDiscountCoupon(string code)
     {
-        var discountRate = await _discountService.GetDiscountCouponRate(code);
-        var basketValues = await _basketService.GetBasket();
-        var totalPriceWithTax = basketValues.TotalPrice / 100 * 20 + basketValues.TotalPrice;
+        var discountRate = await _discountService.GetDiscountCouponRateAsync(code);
+        var basket = await _basketService.GetBasket();
+        var totalPriceWithTax = basket.TotalPrice / 100 * 20 + basket.TotalPrice;
         var totalNewPriceWithDiscount = totalPriceWithTax - (totalPriceWithTax / 100 * discountRate);
 
         return RedirectToAction("Index", "ShoppingCart", new
         {
-            code = code,
-            discountRate = discountRate,
-            totalNewPriceWithDiscount = totalNewPriceWithDiscount
+            code,
+            discountRate,
+            totalNewPriceWithDiscount
         });
     }
 }

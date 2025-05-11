@@ -20,15 +20,21 @@ public class ShoppingCartController : Controller
         ViewBag.code = code;
         ViewBag.discountRate = discountRate;
         ViewBag.totalNewPriceWithDiscount = totalNewPriceWithDiscount;
+
         ViewBag.directory1 = "Ana Sayfa";
         ViewBag.directory2 = "Ürünler";
         ViewBag.directory3 = "Sepetim";
+
         var basket = await _basketService.GetBasket();
-        ViewBag.total = basket.TotalPrice; 
-        var totalPriceWithTax = basket.TotalPrice / 100 * 20 + basket.TotalPrice;
-        ViewBag.totalPriceWithTax = totalPriceWithTax;
-        var tax = basket.TotalPrice / 100 * 20;
+
+        ViewBag.total = basket.TotalPrice;
+
+        var tax = basket.TotalPrice * 0.20m;
+        var totalPriceWithTax = basket.TotalPrice + tax;
+
         ViewBag.tax = tax;
+        ViewBag.totalPriceWithTax = totalPriceWithTax;
+
         return View();
     }
 

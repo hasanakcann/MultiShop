@@ -33,8 +33,8 @@ public class DiscountsController : ControllerBase
             : Ok(discountCoupon);
     }
 
-    [HttpGet("by-code/{code}")]
-    public async Task<IActionResult> GetCodeDetailByCodeAsync(string code)
+    [HttpGet("GetCodeDetailByCode")]
+    public async Task<IActionResult> GetCodeDetailByCode(string code)
     {
         var discountCoupon = await _discountService.GetCodeDetailByCodeAsync(code);
         return discountCoupon is null
@@ -63,17 +63,17 @@ public class DiscountsController : ControllerBase
         return Ok("Discount coupon has been updated successfully.");
     }
 
-    [HttpGet("rate/{code}")]
-    public IActionResult GetDiscountCouponRate(string code)
+    [HttpGet("GetDiscountCouponRate")]
+    public async Task<IActionResult> GetDiscountCouponRate(string code)
     {
-        var discountRate = _discountService.GetDiscountCouponRate(code);
+        var discountRate = await _discountService.GetDiscountCouponRateAsync(code);
         return Ok(discountRate);
     }
 
-    [HttpGet("count")]
+    [HttpGet("GetDiscountCouponCount")]
     public async Task<IActionResult> GetDiscountCouponCount()
     {
-        var couponCount = await _discountService.GetDiscountCouponCount();
+        var couponCount = await _discountService.GetDiscountCouponCountAsync();
         return Ok(new { Count = couponCount });
     }
 }

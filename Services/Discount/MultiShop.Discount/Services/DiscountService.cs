@@ -110,7 +110,7 @@ public class DiscountService : IDiscountService
         }
     }
 
-    public async Task<int> GetDiscountCouponCount()
+    public async Task<int> GetDiscountCouponCountAsync()
     {
         string query = "SELECT COUNT(*) FROM Coupons";
 
@@ -126,7 +126,7 @@ public class DiscountService : IDiscountService
         }
     }
 
-    public int GetDiscountCouponRate(string code)
+    public async Task<int> GetDiscountCouponRateAsync(string code)
     {
         string query = "SELECT Rate FROM Coupons WHERE Code = @code";
         var parameters = new DynamicParameters();
@@ -135,7 +135,8 @@ public class DiscountService : IDiscountService
         try
         {
             using var connection = _context.CreateConnection();
-            var discountRate = connection.QueryFirstOrDefault<int?>(query, parameters);
+
+            var discountRate = await connection.QueryFirstOrDefaultAsync<int?>(query, parameters);
 
             if (discountRate == null)
                 throw new KeyNotFoundException($"Rate for discount code {code} was not found.");
