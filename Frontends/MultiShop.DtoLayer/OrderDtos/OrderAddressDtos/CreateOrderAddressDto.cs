@@ -1,6 +1,6 @@
-﻿namespace MultiShop.DtoLayer.OrderDtos.OrderAdressDtos;
+﻿namespace MultiShop.DtoLayer.OrderDtos.OrderAddressDtos;
 
-public class CreateOrderAdressDto
+public class CreateOrderAddressDto
 {
     public string UserId { get; set; }
     public string Name { get; set; }

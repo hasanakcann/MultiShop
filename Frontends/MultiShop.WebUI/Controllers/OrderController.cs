@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MultiShop.DtoLayer.OrderDtos.OrderAdressDtos;
+using MultiShop.DtoLayer.OrderDtos.OrderAddressDtos;
 using MultiShop.WebUI.Services.Interfaces;
-using MultiShop.WebUI.Services.OrderServices.OrderAdressServices;
+using MultiShop.WebUI.Services.OrderServices.OrderAddressServices;
 
 namespace MultiShop.WebUI.Controllers;
 
 public class OrderController : Controller
 {
-    private readonly IOrderAdressService _orderAdressService;
+    private readonly IOrderAddressService _orderAdressService;
     private readonly IUserService _userService;
-    public OrderController(IOrderAdressService orderAdressService, IUserService userService)
+    public OrderController(IOrderAddressService orderAdressService, IUserService userService)
     {
         _orderAdressService = orderAdressService;
         _userService = userService;
@@ -25,12 +25,11 @@ public class OrderController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Index(CreateOrderAdressDto createOrderAdressDto)
+    public async Task<IActionResult> Index(CreateOrderAddressDto createOrderAddressDto)
     {
-        var values = await _userService.GetUserInfo();
-        createOrderAdressDto.UserId = values.Id;
-        await _orderAdressService.CreateOrderAddressAsync(createOrderAdressDto);
-
+        var user = await _userService.GetUserInfo();
+        createOrderAddressDto.UserId = user.Id;
+        await _orderAdressService.CreateOrderAddressAsync(createOrderAddressDto);
         return RedirectToAction("Index", "Payment");
     }
 }

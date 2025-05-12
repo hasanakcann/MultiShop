@@ -18,7 +18,7 @@ using MultiShop.WebUI.Services.Concrete;
 using MultiShop.WebUI.Services.DiscountServices;
 using MultiShop.WebUI.Services.Interfaces;
 using MultiShop.WebUI.Services.MessageServices;
-using MultiShop.WebUI.Services.OrderServices.OrderAdressServices;
+using MultiShop.WebUI.Services.OrderServices.OrderAddressServices;
 using MultiShop.WebUI.Services.OrderServices.OrderOrderingServices;
 using MultiShop.WebUI.Services.StatisticServices.CatalogStatisticServices;
 using MultiShop.WebUI.Services.StatisticServices.CommentStatisticServices;
@@ -64,7 +64,7 @@ public static class HttpClientServiceExtensions
             options.BaseAddress = new Uri($"{serviceApiSettings.OcelotUrl}/{serviceApiSettings.Discount.Path}");
         }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
-        services.AddHttpClient<IOrderAdressService, OrderAdressService>(options =>
+        services.AddHttpClient<IOrderAddressService, OrderAddressService>(options =>
         {
             options.BaseAddress = new Uri($"{serviceApiSettings.OcelotUrl}/{serviceApiSettings.Order.Path}");
         }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
