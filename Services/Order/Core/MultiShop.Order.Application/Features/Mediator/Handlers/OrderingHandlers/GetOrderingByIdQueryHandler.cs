@@ -15,14 +15,14 @@ public class GetOrderingByIdQueryHandler : IRequestHandler<GetOrderingByIdQuery,
         _orderingRepository = orderingRepository;
     }
 
-    public async Task<GetOrderingByIdQueryResult> Handle(GetOrderingByIdQuery request, CancellationToken cancellationToken)
+    public async Task<GetOrderingByIdQueryResult> Handle(GetOrderingByIdQuery query, CancellationToken cancellationToken)
     {
         try
         {
-            var ordering = await _orderingRepository.GetByIdAsync(request.Id);
+            var ordering = await _orderingRepository.GetByIdAsync(query.Id);
 
             if (ordering == null)
-                throw new ApplicationException($"Ordering with ID {request.Id} was not found.");
+                throw new ApplicationException($"Ordering with ID {query.Id} was not found.");
 
             return new GetOrderingByIdQueryResult
             {

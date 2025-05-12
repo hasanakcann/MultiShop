@@ -18,7 +18,7 @@ public class MyOrderController : Controller
     public async Task<IActionResult> MyOrderList()
     {
         var user = await _userService.GetUserInfo();
-        var values = await _orderOrderingService.GetOrderingByUserId(user.Id);
-        return View(values);
+        var order = await _orderOrderingService.GetOrderingByUserId(user.Id);
+        return View(order);
     }
 }

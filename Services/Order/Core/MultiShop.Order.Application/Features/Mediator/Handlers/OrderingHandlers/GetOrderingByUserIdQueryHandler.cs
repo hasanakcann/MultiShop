@@ -14,14 +14,14 @@ public class GetOrderingByUserIdQueryHandler : IRequestHandler<GetOrderingByUser
         _orderingRepository = orderingRepository;
     }
 
-    public async Task<List<GetOrderingByUserIdQueryResult>> Handle(GetOrderingByUserIdQuery request, CancellationToken cancellationToken)
+    public async Task<List<GetOrderingByUserIdQueryResult>> Handle(GetOrderingByUserIdQuery query, CancellationToken cancellationToken)
     {
         try
         {
-            var orderings = await _orderingRepository.GetOrderingsByUserIdAsync(request.Id);
+            var orderings = await _orderingRepository.GetOrderingsByUserIdAsync(query.Id);
 
             if (orderings == null || !orderings.Any())
-                throw new ApplicationException($"No orders found for user with ID {request.Id}.");
+                throw new ApplicationException($"No orders found for user with ID {query.Id}.");
 
             return orderings.Select(order => new GetOrderingByUserIdQueryResult
             {

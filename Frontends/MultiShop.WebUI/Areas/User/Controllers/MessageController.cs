@@ -18,14 +18,14 @@ public class MessageController : Controller
     public async Task<IActionResult> Inbox()
     {
         var user = await _userService.GetUserInfo();
-        var values = await _messageService.GetInboxMessageAsync(user.Id);
-        return View(values);
+        var message = await _messageService.GetInboxMessageAsync(user.Id);
+        return View(message);
     }
 
     public async Task<IActionResult> Sendbox()
     {
         var user = await _userService.GetUserInfo();
-        var values = await _messageService.GetSendboxMessageAsync(user.Id);
-        return View(values);
+        var message = await _messageService.GetSendboxMessageAsync(user.Id);
+        return View(message);
     }
 }
