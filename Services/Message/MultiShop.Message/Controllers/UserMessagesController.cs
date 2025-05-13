@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MultiShop.Message.Dtos;
 using MultiShop.Message.Services;
 
 namespace MultiShop.Message.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class UserMessagesController : ControllerBase
@@ -59,7 +61,7 @@ public class UserMessagesController : ControllerBase
     [HttpGet("GetTotalMessageCount")]
     public async Task<IActionResult> GetTotalMessageCount()
     {
-        int values = await _userMessageService.GetTotalMessageCount();
+        int values = await _userMessageService.GetTotalMessageCountAsync();
         return Ok(values);
     }
 }
