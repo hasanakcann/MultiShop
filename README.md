@@ -1,11 +1,14 @@
-![image](https://github.com/user-attachments/assets/db402f27-e8fb-4157-a739-fb69c52e0420)
-
 ## 🛒 MultiShop
 
-E-ticaret artık sadece satıştan ibaret değil. Kullanıcılar; hız, güvenlik ve kişiselleştirme istiyor.  
-**MultiShop**, bu beklentilere modern çözümler sunan yeni nesil bir e-ticaret platformudur.
+E-ticaret günümüzde yalnızca ürün satışıyla sınırlı bir yapı olmaktan çıkmıştır. Kullanıcılar hızlı, güvenli ve kişiselleştirilmiş bir alışveriş deneyimi beklemektedir.
+
+MultiShop, bu ihtiyaçlara yanıt vermek üzere geliştirilen, modern yazılım mimarisiyle yapılandırılmış yeni nesil bir e-ticaret platformudur.
+
+Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de yöneticilere kesintisiz ve verimli bir dijital alışveriş deneyimi sunar.
 
 ## ⚙️ Teknik Altyapı
+
+![image](https://github.com/user-attachments/assets/db402f27-e8fb-4157-a739-fb69c52e0420)
 
 Mikroservis mimarisi ile inşa edilen MultiShop:  
 - Esnek ve ölçeklenebilir bir yapı sunar  
