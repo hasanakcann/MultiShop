@@ -177,6 +177,7 @@ MultiShop, mikroservis mimarisi kullanılarak inşa edilmiş, esnek, ölçeklene
 
 - [MongoDB](#mongodb)
 - [Dapper](#dapper)
+- [PostgreSQL](#postgresql)
 </details>
 
 <details>
@@ -293,6 +294,8 @@ Docker üzerinden CommentDb ayağa kaldırıldı.
 ### ✉️ Message Micro Service
 
 .NET 8.0 ile ASP.NET Core Web API projesi oluşturuldu.
+
+PostgreSql veritabanı konfigürasyonu yapıldı.
 
 ### 🌐 WebUI
 
@@ -944,6 +947,39 @@ Bu durum, gereksiz veri saklamak ve gereksiz bellek kullanımına neden olabilir
 ![image](https://github.com/user-attachments/assets/bf2254bc-a785-4483-ab02-50466e770f0e)
 
 ![image](https://github.com/user-attachments/assets/cd93f831-f71d-480a-8e85-9fa5dbde9956)
+
+## PostgreSQL
+
+PostgreSQL; ilişkisel (tablo-temelli) ve nesne-yönelimli özellikleri birleştiren, standart SQL diline sadık kalan ve genişletilebilir yapısıyla dikkat çeken bir veritabanı sistemidir.
+
+- ANSI SQL ve ISO SQL standartlarını büyük oranda destekler.
+- Karmaşık sorguları, işlemleri ve veri tiplerini etkin şekilde işleyebilir.
+- JSON, XML gibi yarı-yapısal veri tiplerini destekler.
+- Geliştirilebilir yapısı sayesinde kullanıcı tanımlı veri türleri, fonksiyonlar ve index türleri eklenebilir.
+
+![image](https://github.com/user-attachments/assets/44cdb852-f78f-4fdc-ba14-5fe96506fc3e)
+
+### PostgreSQL ile SQL Arasındaki Fark Nedir?
+
+![image](https://github.com/user-attachments/assets/9cf23901-dd59-45b7-bcf7-91b966e4ace2)
+
+![image](https://github.com/user-attachments/assets/c5421ab1-3ac0-47b8-957c-9a2414ff9e0f)
+
+### 🔧 PostgreSQL’in Diğerlerinden Teknik Üstünlükleri
+
+- CTE (Common Table Expressions) ve recursive queries ile daha gelişmiş sorgu yazımı
+- Window functions ile ileri düzey veri analizleri
+- PostGIS ile coğrafi veri desteği (dünyanın en güçlülerinden biri)
+- Tam metin arama, full ACID uyumu, MVCC (multi-version concurrency control)
+- Her şeyi loglayan WAL (Write-Ahead Logging) sistemiyle veri güvenliği
+- Genişletilebilirlik: Yeni veri tipleri, operatorler, fonksiyonlar eklenebilir.
+
+### 🎯 Ne Zaman PostgreSQL Tercih Edilmeli?
+
+- Karmaşık ilişkisel veriler ve çok sayıda ilişki içeren tablolar varsa
+- JSON gibi yarı-yapısal veri ile çalışıyorsan (NoSQL karma kullanım)
+- Büyük veri işleme, analitik, coğrafi veriler veya bilimsel veriler söz konusuysa
+- Açık kaynak bir çözümle uzun vadeli güçlü bir sistem istiyorsan
 
 ## Docker
 
