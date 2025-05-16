@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DtoLayer.CommentDtos;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace MultiShop.WebUI.Areas.Admin.Controllers;
 
-[AllowAnonymous]
 [Area("Admin")]
 [Route("Admin/Comment")]
 public class CommentController : Controller
 {
     private readonly IHttpClientFactory _httpClientFactory;
+    private const string baseUrl = "http://localhost:7075/api/Comments";
+
     public CommentController(IHttpClientFactory httpClientFactory)
     {
         _httpClientFactory = httpClientFactory;
@@ -26,7 +26,7 @@ public class CommentController : Controller
         ViewBag.v3 = "Yorum Listesi";
 
         var client = _httpClientFactory.CreateClient();
-        var responseMessage = await client.GetAsync("http://localhost:7075/api/Comments");
+        var responseMessage = await client.GetAsync(baseUrl);
 
         if (responseMessage.IsSuccessStatusCode)
         {
@@ -42,12 +42,8 @@ public class CommentController : Controller
     public async Task<IActionResult> DeleteComment(string id)
     {
         var client = _httpClientFactory.CreateClient();
-        var responseMessage = await client.DeleteAsync("http://localhost:7075/api/Comments?id=" + id);
-        if (responseMessage.IsSuccessStatusCode)
-        {
-            return RedirectToAction("Index", "Comment", new { area = "Admin" });
-        }
-        return View();
+        var responseMessage = await client.DeleteAsync($"{baseUrl}/{id}");
+        return RedirectToAction("Index", "Comment", new { area = "Admin" });
     }
 
     [HttpGet]
@@ -60,7 +56,7 @@ public class CommentController : Controller
         ViewBag.v3 = "Yorum Güncelleme Sayfası";
 
         var client = _httpClientFactory.CreateClient();
-        var responseMessage = await client.GetAsync("http://localhost:7075/api/Comments/" + id);
+        var responseMessage = await client.GetAsync($"{baseUrl}/{id}");
         if (responseMessage.IsSuccessStatusCode)
         {
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -79,7 +75,7 @@ public class CommentController : Controller
         var jsonData = JsonConvert.SerializeObject(updateCommentDto);
         StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-        var responseMessage = await client.PutAsync("http://localhost:7075/api/Comments/", stringContent);
+        var responseMessage = await client.PutAsync(baseUrl, stringContent);
         if (responseMessage.IsSuccessStatusCode)
         {
             return RedirectToAction("Index", "Comment", new { area = "Admin" });

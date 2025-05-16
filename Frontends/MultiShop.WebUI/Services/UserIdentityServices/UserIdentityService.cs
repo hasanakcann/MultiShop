@@ -6,6 +6,8 @@ namespace MultiShop.WebUI.Services.UserIdentityServices;
 public class UserIdentityService : IUserIdentityService
 {
     private readonly HttpClient _httpClient;
+    private static readonly Uri getAllUsersEndpoint = new("http://localhost:5001/api/users/getalluserlist");
+
     public UserIdentityService(HttpClient httpClient)
     {
         _httpClient = httpClient;
@@ -13,21 +15,17 @@ public class UserIdentityService : IUserIdentityService
 
     public async Task<List<ResultUserDto>> GetAllUserListAsync()
     {
-        var responseMessage = await _httpClient.GetAsync("http://localhost:5001/api/users/getalluserlist");
+        var response = await _httpClient.GetAsync(getAllUsersEndpoint);
+        response.EnsureSuccessStatusCode();
 
-        if (!responseMessage.IsSuccessStatusCode)
-            throw new HttpRequestException($"Failed to retrieve user list. StatusCode: {responseMessage.StatusCode}");
+        var content = await response.Content.ReadAsStringAsync();
+        if (string.IsNullOrWhiteSpace(content))
+            throw new InvalidOperationException("Received empty user data from the server.");
 
-        var jsonData = await responseMessage.Content.ReadAsStringAsync();
+        var result = JsonConvert.DeserializeObject<UserListResponseDto>(content)
+                     ?? throw new InvalidOperationException("Failed to deserialize user data.");
 
-        if (string.IsNullOrWhiteSpace(jsonData))
-            throw new Exception("Empty user data received from server.");
-
-        var userInfo = JsonConvert.DeserializeObject<List<ResultUserDto>>(jsonData);
-
-        if (userInfo == null)
-            throw new Exception("Failed to deserialize user data.");
-
-        return userInfo;
+        return result.Data;
     }
+
 }

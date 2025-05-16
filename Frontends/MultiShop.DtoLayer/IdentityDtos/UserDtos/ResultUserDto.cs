@@ -13,10 +13,10 @@ public class ResultUserDto
     public string PasswordHash { get; set; }
     public string SecurityStamp { get; set; }
     public string ConcurrencyStamp { get; set; }
-    public object PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
     public bool PhoneNumberConfirmed { get; set; }
     public bool TwoFactorEnabled { get; set; }
-    public object LockoutEnd { get; set; }
+    public DateTimeOffset? LockoutEnd { get; set; }
     public bool LockoutEnabled { get; set; }
     public int AccessFailedCount { get; set; }
 }

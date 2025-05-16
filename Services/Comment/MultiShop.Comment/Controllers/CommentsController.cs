@@ -5,7 +5,7 @@ using MultiShop.Comment.Entities;
 
 namespace MultiShop.Comment.Controllers;
 
-[Authorize]
+[AllowAnonymous]
 [Route("api/[controller]")]
 [ApiController]
 public class CommentsController : ControllerBase
@@ -22,8 +22,8 @@ public class CommentsController : ControllerBase
     {
         try
         {
-            var values = _context.UserComments.ToList();
-            return Ok(values);
+            var allComments = _context.UserComments.ToList();
+            return Ok(allComments);
         }
         catch (Exception ex)
         {
@@ -36,11 +36,11 @@ public class CommentsController : ControllerBase
     {
         try
         {
-            var value = _context.UserComments.Find(id);
-            if (value == null)
+            var comment = _context.UserComments.Find(id);
+            if (comment == null)
                 return NotFound($"Comment with ID {id} not found.");
 
-            return Ok(value);
+            return Ok(comment);
         }
         catch (Exception ex)
         {
@@ -94,11 +94,11 @@ public class CommentsController : ControllerBase
     {
         try
         {
-            var value = _context.UserComments.Find(id);
-            if (value == null)
+            var commentToDelete = _context.UserComments.Find(id);
+            if (commentToDelete == null)
                 return NotFound($"Comment with ID {id} not found.");
 
-            _context.UserComments.Remove(value);
+            _context.UserComments.Remove(commentToDelete);
             _context.SaveChanges();
 
             return NoContent();
@@ -114,8 +114,8 @@ public class CommentsController : ControllerBase
     {
         try
         {
-            var value = _context.UserComments.Where(x => x.ProductId == id).ToList();
-            return Ok(value);
+            var commentsByProduct = _context.UserComments.Where(x => x.ProductId == id).ToList();
+            return Ok(commentsByProduct);
         }
         catch (Exception ex)
         {
@@ -128,8 +128,8 @@ public class CommentsController : ControllerBase
     {
         try
         {
-            int count = _context.UserComments.Count(x => x.Status == true);
-            return Ok(count);
+            int activeCommentCount = _context.UserComments.Count(x => x.Status == true);
+            return Ok(activeCommentCount);
         }
         catch (Exception ex)
         {
@@ -142,8 +142,8 @@ public class CommentsController : ControllerBase
     {
         try
         {
-            int count = _context.UserComments.Count(x => x.Status == false);
-            return Ok(count);
+            int passiveCommentCount = _context.UserComments.Count(x => x.Status == false);
+            return Ok(passiveCommentCount);
         }
         catch (Exception ex)
         {
@@ -156,8 +156,8 @@ public class CommentsController : ControllerBase
     {
         try
         {
-            int count = _context.UserComments.Count();
-            return Ok(count);
+            int totalCommentCount = _context.UserComments.Count();
+            return Ok(totalCommentCount);
         }
         catch (Exception ex)
         {

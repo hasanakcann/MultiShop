@@ -92,7 +92,7 @@ public class CargoCustomersController : ControllerBase
     }
 
 
-    [HttpGet("by-id/{id}")]
+    [HttpGet("GetCargoCustomerByUserId/{id}")]
     public IActionResult GetCargoCustomerById(string id)
     {
         var customer = _cargoCustomerService.TGetCargoCustomerById(id);
