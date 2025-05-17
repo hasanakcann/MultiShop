@@ -11,21 +11,21 @@ public class CommentStatisticService : ICommentStatisticService
     public async Task<int> GetActiveCommentCount()
     {
         var responseMessage = await _httpClient.GetAsync("comments/getactivecommentcount");
-        var values = await responseMessage.Content.ReadFromJsonAsync<int>();
-        return values;
+        var activeCommentCount = await responseMessage.Content.ReadFromJsonAsync<int>();
+        return activeCommentCount;
     }
 
     public async Task<int> GetPassiveCommentCount()
     {
         var responseMessage = await _httpClient.GetAsync("comments/getpassivecommentcount");
-        var values = await responseMessage.Content.ReadFromJsonAsync<int>();
-        return values;
+        var passiveCommentCount = await responseMessage.Content.ReadFromJsonAsync<int>();
+        return passiveCommentCount;
     }
 
     public async Task<int> GetTotalCommentCount()
     {
         var responseMessage = await _httpClient.GetAsync("comments/gettotalcommentcount");
-        var values = await responseMessage.Content.ReadFromJsonAsync<int>();
-        return values;
+        var totalCommentCount = await responseMessage.Content.ReadFromJsonAsync<int>();
+        return totalCommentCount;
     }
 }

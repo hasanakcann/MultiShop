@@ -1,5 +1,4 @@
-﻿
-namespace MultiShop.WebUI.Services.StatisticServices.MessageStatisticServices;
+﻿namespace MultiShop.WebUI.Services.StatisticServices.MessageStatisticServices;
 
 public class MessageStatisticService : IMessageStatisticService
 {
@@ -12,7 +11,7 @@ public class MessageStatisticService : IMessageStatisticService
     public async Task<int> GetTotalMessageCount()
     {
         var responseMessage = await _httpClient.GetAsync("usermessages/gettotalmessagecount");
-        var values = await responseMessage.Content.ReadFromJsonAsync<int>();
-        return values;
+        var totalMessageCount = await responseMessage.Content.ReadFromJsonAsync<int>();
+        return totalMessageCount;
     }
 }

@@ -32,14 +32,14 @@ public class StatisticController : Controller
         var getCategoryCount = await _catalogStatisticService.GetCategoryCount();
         var getMaxPriceProductName = await _catalogStatisticService.GetMaxPriceProductName();
         var getMinPriceProductName = await _catalogStatisticService.GetMinPriceProductName();
-        //var getProductAveragePrice = await _catalogStatisticService.GetProductAveragePrice();
+        var getProductAveragePrice = await _catalogStatisticService.GetProductAveragePrice();
 
         ViewBag.getBrandCount = getBrandCount;
         ViewBag.getProductCount = getProductCount;
         ViewBag.getCategoryCount = getCategoryCount;
         ViewBag.getMaxPriceProductName = getMaxPriceProductName;
         ViewBag.getMinPriceProductName = getMinPriceProductName;
-        //ViewBag.getProductAveragePrice = getProductAveragePrice;
+        ViewBag.getProductAveragePrice = getProductAveragePrice;
         #endregion
 
         #region User

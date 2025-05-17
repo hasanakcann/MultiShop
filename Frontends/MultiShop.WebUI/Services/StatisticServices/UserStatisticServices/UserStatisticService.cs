@@ -14,7 +14,7 @@ public class UserStatisticService : IUserStatisticService
     {
         var responseMessage = await _httpClient.GetAsync("http://localhost:5001/api/statistics");
         var jsonData = await responseMessage.Content.ReadAsStringAsync();
-        var values = JsonConvert.DeserializeObject<int>(jsonData);
-        return values;
+        var userCount = JsonConvert.DeserializeObject<int>(jsonData);
+        return userCount;
     }
 }

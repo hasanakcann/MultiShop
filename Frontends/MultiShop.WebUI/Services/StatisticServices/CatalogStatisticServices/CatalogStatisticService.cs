@@ -11,42 +11,42 @@ public class CatalogStatisticService : ICatalogStatisticService
     public async Task<long> GetBrandCount()
     {
         var responseMessage = await _httpClient.GetAsync("statistics/getbrandcount");
-        var values = await responseMessage.Content.ReadFromJsonAsync<long>();
-        return values;
+        var brandCount = await responseMessage.Content.ReadFromJsonAsync<long>();
+        return brandCount;
     }
 
     public async Task<long> GetCategoryCount()
     {
         var responseMessage = await _httpClient.GetAsync("statistics/getcategorycount");
-        var values = await responseMessage.Content.ReadFromJsonAsync<long>();
-        return values;
+        var categoryCount = await responseMessage.Content.ReadFromJsonAsync<long>();
+        return categoryCount;
     }
 
     public async Task<string> GetMaxPriceProductName()
     {
         var responseMessage = await _httpClient.GetAsync("statistics/getmaxpriceproductname");
-        var values = await responseMessage.Content.ReadAsStringAsync();
-        return values;
+        var maxPriceProductName = await responseMessage.Content.ReadAsStringAsync();
+        return maxPriceProductName;
     }
 
     public async Task<string> GetMinPriceProductName()
     {
         var responseMessage = await _httpClient.GetAsync("statistics/getminpriceproductname");
-        var values = await responseMessage.Content.ReadAsStringAsync();
-        return values;
+        var minPriceProductName = await responseMessage.Content.ReadAsStringAsync();
+        return minPriceProductName;
     }
 
     public async Task<decimal> GetProductAveragePrice()
     {
         var responseMessage = await _httpClient.GetAsync("statistics/getproductaverageprice");
-        var values = await responseMessage.Content.ReadFromJsonAsync<decimal>();
-        return values;
+        var averagePrice = await responseMessage.Content.ReadFromJsonAsync<decimal>();
+        return averagePrice;
     }
 
     public async Task<long> GetProductCount()
     {
         var responseMessage = await _httpClient.GetAsync("statistics/getproductcount");
-        var values = await responseMessage.Content.ReadFromJsonAsync<long>();
-        return values;
+        var productCount = await responseMessage.Content.ReadFromJsonAsync<long>();
+        return productCount;
     }
 }
