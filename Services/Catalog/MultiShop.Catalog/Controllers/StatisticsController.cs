@@ -16,42 +16,42 @@ public class StatisticsController : ControllerBase
     [HttpGet("GetBrandCount")]
     public async Task<IActionResult> GetBrandCount()
     {
-        var value = await _statisticService.GetBrandCount();
-        return Ok(value); 
+        var brandCount = await _statisticService.GetBrandCount();
+        return Ok(brandCount);
     }
 
     [HttpGet("GetCategoryCount")]
     public async Task<IActionResult> GetCategoryCount()
     {
-        var value = await _statisticService.GetCategoryCount();
-        return Ok(value); 
+        var categoryCount = await _statisticService.GetCategoryCount();
+        return Ok(categoryCount);
     }
 
     [HttpGet("GetProductCount")]
     public async Task<IActionResult> GetProductCount()
     {
-        var value = await _statisticService.GetProductCount();
-        return Ok(value); 
+        var productCount = await _statisticService.GetProductCount();
+        return Ok(productCount);
     }
 
     [HttpGet("GetProductAveragePrice")]
     public async Task<IActionResult> GetProductAveragePrice()
     {
-        var value = await _statisticService.GetProductAveragePrice();
-        return Ok(value);
+        var averagePrice = await _statisticService.GetProductAveragePrice();
+        return Ok(averagePrice);
     }
 
     [HttpGet("GetMaxPriceProductName")]
     public async Task<IActionResult> GetMaxPriceProductName()
     {
-        var value = await _statisticService.GetMaxPriceProductName();
-        return Ok(value); 
+        var maxPriceProductName = await _statisticService.GetMaxPriceProductName();
+        return Ok(maxPriceProductName);
     }
 
     [HttpGet("GetMinPriceProductName")]
     public async Task<IActionResult> GetMinPriceProductName()
     {
-        var value = await _statisticService.GetMinPriceProductName();
-        return Ok(value); 
+        var minPriceProductName = await _statisticService.GetMinPriceProductName();
+        return Ok(minPriceProductName);
     }
 }

@@ -50,15 +50,33 @@ public class StatisticService : IStatisticService
         {
             var pipeline = new BsonDocument[]
             {
-                new BsonDocument("$group", new BsonDocument
-                {
-                    { "_id", null },
-                    { "averagePrice", new BsonDocument("$avg", "$ProductPrice") }
-                })
+            new BsonDocument("$match", new BsonDocument
+            {
+                { "ProductPrice", new BsonDocument("$ne", BsonNull.Value) }
+            }),
+            new BsonDocument("$group", new BsonDocument
+            {
+                { "_id", BsonNull.Value },
+                { "averagePrice", new BsonDocument("$avg", "$ProductPrice") }
+            })
             };
+
             var result = await _productCollection.AggregateAsync<BsonDocument>(pipeline);
-            var price = result.FirstOrDefault()?.GetValue("averagePrice", decimal.Zero).AsDecimal ?? decimal.Zero;
-            return price;
+            var document = await result.FirstOrDefaultAsync();
+
+            if (document != null && document.TryGetValue("averagePrice", out var avgValue) && !avgValue.IsBsonNull)
+            {
+                if (avgValue.IsDecimal128)
+                {
+                    return Convert.ToDecimal(avgValue.AsDecimal128.ToString());
+                }
+                else if (avgValue.IsDouble)
+                {
+                    return Convert.ToDecimal(avgValue.AsDouble);
+                }
+            }
+
+            return decimal.Zero;
         }
         catch (Exception ex)
         {
