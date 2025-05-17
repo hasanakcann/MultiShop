@@ -10,7 +10,7 @@ public class UserStatisticService : IUserStatisticService
         _httpClient = httpClient;
     }
 
-    public async Task<int> GetUserCount()
+    public async Task<int> GetUserCountAsync()
     {
         var responseMessage = await _httpClient.GetAsync("http://localhost:5001/api/statistics");
         var jsonData = await responseMessage.Content.ReadAsStringAsync();

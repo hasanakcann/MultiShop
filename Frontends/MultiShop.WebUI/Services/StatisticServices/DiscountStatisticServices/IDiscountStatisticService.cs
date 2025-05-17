@@ -2,5 +2,5 @@
 
 public interface IDiscountStatisticService
 {
-    Task<int> GetDiscountCouponCount();
+    Task<int> GetDiscountCouponCountAsync();
 }

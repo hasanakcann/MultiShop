@@ -8,7 +8,7 @@ public class MessageStatisticService : IMessageStatisticService
         _httpClient = httpClient;
     }
 
-    public async Task<int> GetTotalMessageCount()
+    public async Task<int> GetTotalMessageCountAsync()
     {
         var responseMessage = await _httpClient.GetAsync("usermessages/gettotalmessagecount");
         var totalMessageCount = await responseMessage.Content.ReadFromJsonAsync<int>();

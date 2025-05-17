@@ -103,6 +103,18 @@ public class UserMessageService : IUserMessageService
         }, "An error occurred while retrieving the total message count.");
     }
 
+    public async Task<int> GetTotalMessageCountByReceiverIdAsync(string id)
+    {
+        return await ExecuteSafeAsync(async () =>
+        {
+            int totalMessageCountByReceiver = await _messageContext.UserMessages
+                .Where(x => x.ReceiverId == id)
+                .CountAsync();
+
+            return totalMessageCountByReceiver;
+        }, "An error occurred while retrieving the total message count by receiver ID.");
+    }
+
     private async Task ExecuteSafeAsync(Func<Task> action, string errorMessage)
     {
         try

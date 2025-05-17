@@ -8,42 +8,42 @@ public class CatalogStatisticService : ICatalogStatisticService
         _httpClient = httpClient;
     }
 
-    public async Task<long> GetBrandCount()
+    public async Task<long> GetBrandCountAsync()
     {
         var responseMessage = await _httpClient.GetAsync("statistics/getbrandcount");
         var brandCount = await responseMessage.Content.ReadFromJsonAsync<long>();
         return brandCount;
     }
 
-    public async Task<long> GetCategoryCount()
+    public async Task<long> GetCategoryCountAsync()
     {
         var responseMessage = await _httpClient.GetAsync("statistics/getcategorycount");
         var categoryCount = await responseMessage.Content.ReadFromJsonAsync<long>();
         return categoryCount;
     }
 
-    public async Task<string> GetMaxPriceProductName()
+    public async Task<string> GetMaxPriceProductNameAsync()
     {
         var responseMessage = await _httpClient.GetAsync("statistics/getmaxpriceproductname");
         var maxPriceProductName = await responseMessage.Content.ReadAsStringAsync();
         return maxPriceProductName;
     }
 
-    public async Task<string> GetMinPriceProductName()
+    public async Task<string> GetMinPriceProductNameAsync()
     {
         var responseMessage = await _httpClient.GetAsync("statistics/getminpriceproductname");
         var minPriceProductName = await responseMessage.Content.ReadAsStringAsync();
         return minPriceProductName;
     }
 
-    public async Task<decimal> GetProductAveragePrice()
+    public async Task<decimal> GetProductAveragePriceAsync()
     {
         var responseMessage = await _httpClient.GetAsync("statistics/getproductaverageprice");
         var averagePrice = await responseMessage.Content.ReadFromJsonAsync<decimal>();
         return averagePrice;
     }
 
-    public async Task<long> GetProductCount()
+    public async Task<long> GetProductCountAsync()
     {
         var responseMessage = await _httpClient.GetAsync("statistics/getproductcount");
         var productCount = await responseMessage.Content.ReadFromJsonAsync<long>();

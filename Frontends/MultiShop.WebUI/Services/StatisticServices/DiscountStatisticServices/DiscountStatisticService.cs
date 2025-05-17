@@ -10,7 +10,7 @@ public class DiscountStatisticService : IDiscountStatisticService
         _httpClient = httpClient;
     }
 
-    public async Task<int> GetDiscountCouponCount()
+    public async Task<int> GetDiscountCouponCountAsync()
     {
         var responseMessage = await _httpClient.GetAsync("discounts/getdiscountcouponcount");
         using var stream = await responseMessage.Content.ReadAsStreamAsync();

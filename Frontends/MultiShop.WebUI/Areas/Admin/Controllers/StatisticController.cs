@@ -32,12 +32,12 @@ public class StatisticController : Controller
         ViewBag.v3 = "İstatistiksel İşlemler";
 
         #region Catalog
-        var getBrandCount = await _catalogStatisticService.GetBrandCount();
-        var getProductCount = await _catalogStatisticService.GetProductCount();
-        var getCategoryCount = await _catalogStatisticService.GetCategoryCount();
-        var getMaxPriceProductName = await _catalogStatisticService.GetMaxPriceProductName();
-        var getMinPriceProductName = await _catalogStatisticService.GetMinPriceProductName();
-        var getProductAveragePrice = await _catalogStatisticService.GetProductAveragePrice();
+        var getBrandCount = await _catalogStatisticService.GetBrandCountAsync();
+        var getProductCount = await _catalogStatisticService.GetProductCountAsync();
+        var getCategoryCount = await _catalogStatisticService.GetCategoryCountAsync();
+        var getMaxPriceProductName = await _catalogStatisticService.GetMaxPriceProductNameAsync();
+        var getMinPriceProductName = await _catalogStatisticService.GetMinPriceProductNameAsync();
+        var getProductAveragePrice = await _catalogStatisticService.GetProductAveragePriceAsync();
 
         ViewBag.getBrandCount = getBrandCount;
         ViewBag.getProductCount = getProductCount;
@@ -48,26 +48,26 @@ public class StatisticController : Controller
         #endregion
 
         #region User
-        var getUserCount = await _userStatisticService.GetUserCount();
+        var getUserCount = await _userStatisticService.GetUserCountAsync();
         ViewBag.getUserCount = getUserCount;
         #endregion
 
         #region Comment
-        var getTotalCommentCount = await _commentStatisticService.GetTotalCommentCount();
-        var getActiveCommentCount = await _commentStatisticService.GetActiveCommentCount();
-        var getPassiveCommentCount = await _commentStatisticService.GetPassiveCommentCount();
+        var getTotalCommentCount = await _commentStatisticService.GetTotalCommentCountAsync();
+        var getActiveCommentCount = await _commentStatisticService.GetActiveCommentCountAsync();
+        var getPassiveCommentCount = await _commentStatisticService.GetPassiveCommentCountAsync();
         ViewBag.getTotalCommentCount = getTotalCommentCount;
         ViewBag.getActiveCommentCount = getActiveCommentCount;
         ViewBag.getPassiveCommentCount = getPassiveCommentCount;
         #endregion
 
         #region Discount
-        var getDiscountCouponCount = await _discountStatisticService.GetDiscountCouponCount();
+        var getDiscountCouponCount = await _discountStatisticService.GetDiscountCouponCountAsync();
         ViewBag.getDiscountCouponCount = getDiscountCouponCount;
         #endregion
 
         #region Message
-        var getTotalMessageCount = await _messageStatisticService.GetTotalMessageCount();
+        var getTotalMessageCount = await _messageStatisticService.GetTotalMessageCountAsync();
         ViewBag.getTotalMessageCount = getTotalMessageCount;
         #endregion
 

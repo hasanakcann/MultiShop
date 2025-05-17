@@ -6,4 +6,5 @@ public interface IMessageService
 {
     Task<List<ResultInboxMessageDto>> GetInboxMessageAsync(string id);
     Task<List<ResultSendboxMessageDto>> GetSendboxMessageAsync(string id);
+    Task<int> GetTotalMessageCountByReceiverIdAsync(string id);
 }

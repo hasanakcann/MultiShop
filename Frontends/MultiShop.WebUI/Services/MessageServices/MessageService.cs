@@ -37,4 +37,11 @@ public class MessageService : IMessageService
         var sendboxMessages = await responseMessage.Content.ReadFromJsonAsync<List<ResultSendboxMessageDto>>();
         return sendboxMessages ?? new List<ResultSendboxMessageDto>();
     }
+
+    public async Task<int> GetTotalMessageCountByReceiverIdAsync(string id)
+    {
+        var responseMessage = await _httpClient.GetAsync($"{BaseUrl}gettotalmessagecountbyreceiverid?id={id}");
+        var totalMessageCount = await responseMessage.Content.ReadFromJsonAsync<int>();
+        return totalMessageCount;
+    }
 }

@@ -2,5 +2,5 @@
 
 public interface IUserStatisticService
 {
-    Task<int> GetUserCount();
+    Task<int> GetUserCountAsync();
 }
