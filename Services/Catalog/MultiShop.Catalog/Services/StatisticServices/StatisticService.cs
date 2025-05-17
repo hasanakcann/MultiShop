@@ -20,7 +20,7 @@ public class StatisticService : IStatisticService
         _brandCollection = database.GetCollection<Brand>(_databaseSettings.BrandCollectionName);
     }
 
-    public async Task<long> GetBrandCount()
+    public async Task<long> GetBrandCountAsync()
     {
         try
         {
@@ -32,7 +32,7 @@ public class StatisticService : IStatisticService
         }
     }
 
-    public async Task<long> GetCategoryCount()
+    public async Task<long> GetCategoryCountAsync()
     {
         try
         {
@@ -44,7 +44,7 @@ public class StatisticService : IStatisticService
         }
     }
 
-    public async Task<decimal> GetProductAveragePrice()
+    public async Task<decimal> GetProductAveragePriceAsync()
     {
         try
         {
@@ -84,7 +84,7 @@ public class StatisticService : IStatisticService
         }
     }
 
-    public async Task<long> GetProductCount()
+    public async Task<long> GetProductCountAsync()
     {
         try
         {
@@ -96,7 +96,7 @@ public class StatisticService : IStatisticService
         }
     }
 
-    public async Task<string> GetMaxPriceProductName()
+    public async Task<string> GetMaxPriceProductNameAsync()
     {
         try
         {
@@ -116,7 +116,7 @@ public class StatisticService : IStatisticService
         }
     }
 
-    public async Task<string> GetMinPriceProductName()
+    public async Task<string> GetMinPriceProductNameAsync()
     {
         try
         {

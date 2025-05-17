@@ -19,22 +19,22 @@ public class UserMessagesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllMessage()
     {
-        var values = await _userMessageService.GetAllMessageAsync();
-        return Ok(values);
+        var allMessages = await _userMessageService.GetAllMessageAsync();
+        return Ok(allMessages);
     }
 
     [HttpGet("GetMessageSendbox")]
     public async Task<IActionResult> GetMessageSendbox(string id)
     {
-        var values = await _userMessageService.GetSendboxMessageAsync(id);
-        return Ok(values);
+        var sendboxMessages = await _userMessageService.GetSendboxMessageAsync(id);
+        return Ok(sendboxMessages);
     }
 
     [HttpGet("GetMessageInbox")]
     public async Task<IActionResult> GetMessageInbox(string id)
     {
-        var values = await _userMessageService.GetInboxMessageAsync(id);
-        return Ok(values);
+        var inboxMessages = await _userMessageService.GetInboxMessageAsync(id);
+        return Ok(inboxMessages);
     }
 
     [HttpPost]
@@ -61,7 +61,7 @@ public class UserMessagesController : ControllerBase
     [HttpGet("GetTotalMessageCount")]
     public async Task<IActionResult> GetTotalMessageCount()
     {
-        int values = await _userMessageService.GetTotalMessageCountAsync();
-        return Ok(values);
+        int totalMessageCount = await _userMessageService.GetTotalMessageCountAsync();
+        return Ok(totalMessageCount);
     }
 }
