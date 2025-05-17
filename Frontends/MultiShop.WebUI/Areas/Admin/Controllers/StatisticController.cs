@@ -26,6 +26,11 @@ public class StatisticController : Controller
 
     public async Task<IActionResult> Index()
     {
+        ViewBag.v0 = "İstatistiksel Veriler";
+        ViewBag.v1 = "Admin";
+        ViewBag.v2 = "İstatistiksel Veri";
+        ViewBag.v3 = "İstatistiksel İşlemler";
+
         #region Catalog
         var getBrandCount = await _catalogStatisticService.GetBrandCount();
         var getProductCount = await _catalogStatisticService.GetProductCount();
