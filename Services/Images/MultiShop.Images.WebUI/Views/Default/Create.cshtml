@@ -1,0 +1,41 @@
+﻿@model MultiShop.Images.WebUI.DAL.Entities.ImageDrive
+
+@{
+    Layout = null;
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container">
+    <br /><br />
+
+    <h2 class="alert alert-primary">Google Drive Storage</h2>
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+    }
+    @if (ViewBag.WarningMessage != null)
+    {
+        <div class="alert alert-warning">@ViewBag.WarningMessage</div>
+    }
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+    }
+
+    <form method="post" enctype="multipart/form-data">
+        <label>Ürün Adı</label>
+        <input type="text" class="form-control border" name="Name" value="@Model?.Name" />
+        <br />
+
+        <label>Dosya Seçin</label>
+        <input type="file" class="form-control border" name="Photo" />
+        <br />
+
+        <input name="SavedUrl" type="hidden" value="@Model?.SavedUrl" />
+        <input name="SavedFileName" type="hidden" value="@Model?.SavedFileName" />
+
+        <button class="btn btn-outline-info">Görseli Kaydet</button>
+    </form>
+</div>
