@@ -1,4 +1,4 @@
-## 🛒 MultiShop | Hakkında
+### 🛒 MultiShop | Hakkında
 
 E-ticaret günümüzde yalnızca ürün satışıyla sınırlı bir yapı olmaktan çıkmıştır. Kullanıcılar hızlı, güvenli ve kişiselleştirilmiş bir alışveriş deneyimi beklemektedir.
 
@@ -6,7 +6,9 @@ MultiShop, bu ihtiyaçlara yanıt vermek üzere geliştirilen, modern yazılım 
 
 Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de yöneticilere kesintisiz ve verimli bir dijital alışveriş deneyimi sunar.
 
-## 🎯 MultiShop | Temel Özellikler
+---
+
+### 🎯 MultiShop | Temel Özellikler
 
 | **👤 Kullanıcı İşlevleri**                                | **🛠️ Yönetici Paneli**                                      |
 |:-----------------------------------------------------------|:-------------------------------------------------------------|
@@ -16,7 +18,9 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 | Sepet oluşturma ve ödeme işlemleri                        | Yönetimsel kararlar için görsel veri desteği                |
 | Sipariş ve kargo takibi                                   |                                                              |
 
-### 🔐 MultiShop | Kullanıcı Giriş | Kayıt | Profil Bilgi Ekranları
+---
+
+### 🔐 MultiShop | Kullanıcı Giriş | Kullanıcı Kayıt | Kullanıcı Profil Bilgi Ekranları
 
 ![login_image](https://github.com/user-attachments/assets/83fdcaa9-8fed-4ac1-96b8-6c2ee9ee3244)
 
@@ -32,15 +36,13 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ![product_detail_image](https://github.com/user-attachments/assets/3e3074e6-95ed-4621-9979-ba0d4667cd73)
 
-![product_detail_image_2](https://github.com/user-attachments/assets/b3f5563c-8351-411c-bdaa-946951c24208)
-
 ![product_detail_image_3](https://github.com/user-attachments/assets/ec8a903d-7cb7-40ee-a49b-9e96385f50d2)
 
 ![basket_image](https://github.com/user-attachments/assets/f9d4b75d-aa2d-47ef-a0a9-106cc1736657)
 
 ![contact_image](https://github.com/user-attachments/assets/0086b1dc-5e37-44fa-aa49-6109894f4bec)
 
-![contact_image_2](https://github.com/user-attachments/assets/ed76ed60-2755-4f59-af25-7263a0e260f4)
+![order_image](https://github.com/user-attachments/assets/7e81afc3-688d-445f-9cbd-bd0089bc3a48)
 
 ![credit_card_1_image](https://github.com/user-attachments/assets/0794d62d-f981-402c-9ddd-482899d26ad3)
 
@@ -100,7 +102,7 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ---
 
-## 🚀 MultiShop | Kullanılan Teknolojiler
+### 🚀 MultiShop | Kullanılan Teknolojiler
 
 🔙 **Backend Teknolojileri** 👉 C#, .NET Core 8, Web API
 
@@ -124,7 +126,7 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ---
 
-## ⚙️ MultiShop | Teknik Altyapı
+### ⚙️ MultiShop | Teknik Altyapı
 
 ![image](https://github.com/user-attachments/assets/db402f27-e8fb-4157-a739-fb69c52e0420)
 
