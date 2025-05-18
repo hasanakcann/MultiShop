@@ -20,8 +20,7 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-envelope"></i>
-                        <div class="notify"> <span class="badge">@ViewBag.messageCount</span> <span class="point"></span> </div>
+                        <i class="icon-envelope"><span class="badge" style="position:relative;top:-10px"><strong id="messageCount">@ViewBag.messageCount</strong></span></i>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="header">@ViewBag.messageCount mesajınız var</li>
@@ -29,34 +28,10 @@
                             <ul class="menu">
                                 <li>
                                     <a href="#">
-                                        <div class="pull-left"><img src="~/ovio-admin-template/html/dist/img/img1.jpg" class="img-circle" alt="User Image"></div>
-                                        <h4>Emre Kaya</h4>
-                                        <p>Toplantı saatini değiştirelim mi?</p>
-                                        <p><small><i class="fa fa-clock-o"></i> 2 dakika önce</small></p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
                                         <div class="pull-left"><img src="~/ovio-admin-template/html/dist/img/img2.jpg" class="img-circle" alt="User Image"></div>
                                         <h4>Elif Yıldız</h4>
                                         <p>Rapor dosyasını gönderdiniz mi?</p>
                                         <p><small><i class="fa fa-clock-o"></i> 15 dakika önce</small></p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left"><img src="~/ovio-admin-template/html/dist/img/img3.jpg" class="img-circle" alt="User Image"></div>
-                                        <h4>Deniz Aydın</h4>
-                                        <p>Yeni projeyle ilgili detayları paylaştım.</p>
-                                        <p><small><i class="fa fa-clock-o"></i> 35 dakika önce</small></p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left"><img src="~/ovio-admin-template/html/dist/img/img1.jpg" class="img-circle" alt="User Image"></div>
-                                        <h4>Ayşe Demir</h4>
-                                        <p>Bugünkü sunumu hazırladınız mı?</p>
-                                        <p><small><i class="fa fa-clock-o"></i> 2 dakika önce</small></p>
                                     </a>
                                 </li>
                             </ul>
@@ -66,14 +41,12 @@
                 </li>
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-megaphone"></i>
-                        <div class="notify"> <span class="badge">@ViewBag.totalCommentCount</span> <span class="point"></span> </div>
+                        <i class="fa fa-comment"><span class="badge" style="position:relative;top:-10px"><strong id="commentCount">@ViewBag.totalCommentCount</strong></span></i>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="header">Güncel Yorumlar</li>
                         <li>
                             <ul class="menu">
-                                <li><a href="#"><i class="icon-lightbulb"></i> Yeni güncelleme yayınlandı.</a></li>
                                 <li><a href="#"><i class="icon-map-pin blue"></i> Toplantı yarın saat 10:00'da.</a></li>
                                 <li><a href="#"><i class="icon-refresh orange"></i> Sistem bakımı sürüyor.</a></li>
                                 <li><a href="#"><i class="icon-map-pin blue"></i> Performans raporu hazırlandı.</a></li>
