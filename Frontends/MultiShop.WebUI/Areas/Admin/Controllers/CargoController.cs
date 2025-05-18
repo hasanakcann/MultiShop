@@ -17,6 +17,7 @@ public class CargoController : Controller
     [Route("CargoCompanyList")]
     public async Task<IActionResult> CargoCompanyList()
     {
+        CargoViewBagList();
         var cargoCompanies = await _cargoCompanyService.GetAllCargoCompanyAsync();
         return View(cargoCompanies);
     }
@@ -25,6 +26,7 @@ public class CargoController : Controller
     [Route("CreateCargoCompany")]
     public IActionResult CreateCargoCompany()
     {
+        CargoViewBagList();
         return View();
     }
 
@@ -47,6 +49,7 @@ public class CargoController : Controller
     [Route("UpdateCargoCompany/{id}")]
     public async Task<IActionResult> UpdateCargoCompany(int id)
     {
+        CargoViewBagList();
         var cargoCompany = await _cargoCompanyService.GetByIdCargoCompanyAsync(id);
         return View(cargoCompany);
     }
@@ -57,5 +60,13 @@ public class CargoController : Controller
     {
         await _cargoCompanyService.UpdateCargoCompanyAsync(updateCargoCompanyDto);
         return RedirectToAction("CargoCompanyList", "Cargo", new { Area = "Admin" });
+    }
+
+    void CargoViewBagList()
+    {
+        ViewBag.v0 = "Kargo İşlemleri";
+        ViewBag.v1 = "Ana Sayfa";
+        ViewBag.v2 = "Kargolar";
+        ViewBag.v3 = "Kargo Listesi";
     }
 }
