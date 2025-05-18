@@ -3,7 +3,7 @@
     Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
 }
 
-<script src="/lib/signalr/signalr.min.js"></script>
+<script src="~/microsoft/signalr/dist/browser/signalr.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
@@ -25,7 +25,6 @@
                     connection.on("ReceiveTotalCommentCount", (totalCommentCount) => {
                         $("#commentcount").text(totalCommentCount);
                     });
-
                 });
             </script>
         </div>
