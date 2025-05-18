@@ -1,0 +1,23 @@
+{
+  "name": "multishop",
+  "version": "1.0.0",
+  "description": "E-ticaret günümüzde yalnızca ürün satışıyla sınırlı bir yapı olmaktan çıkmıştır. Kullanıcılar hızlı, güvenli ve kişiselleştirilmiş bir alışveriş deneyimi beklemektedir.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasanakcann/MultiShop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hasanakcann/MultiShop/issues"
+  },
+  "homepage": "https://github.com/hasanakcann/MultiShop#readme",
+  "dependencies": {
+    "@microsoft/signalr": "^8.0.7"
+  }
+}
