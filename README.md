@@ -1,4 +1,4 @@
-## 🛒 MultiShop
+## 🛒 MultiShop | Hakkında
 
 E-ticaret günümüzde yalnızca ürün satışıyla sınırlı bir yapı olmaktan çıkmıştır. Kullanıcılar hızlı, güvenli ve kişiselleştirilmiş bir alışveriş deneyimi beklemektedir.
 
@@ -6,7 +6,7 @@ MultiShop, bu ihtiyaçlara yanıt vermek üzere geliştirilen, modern yazılım 
 
 Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de yöneticilere kesintisiz ve verimli bir dijital alışveriş deneyimi sunar.
 
-## 🎯 Temel Özellikler
+## 🎯 MultiShop | Temel Özellikler
 
 | **👤 Kullanıcı İşlevleri**                                | **🛠️ Yönetici Paneli**                                      |
 |:-----------------------------------------------------------|:-------------------------------------------------------------|
@@ -100,7 +100,7 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ---
 
-## 🚀 Kullanılan Teknolojiler
+## 🚀 MultiShop | Kullanılan Teknolojiler
 
 🔙 **Backend Teknolojileri** 👉 C#, .NET Core 8, Web API
 
@@ -124,7 +124,7 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ---
 
-## ⚙️ Teknik Altyapı
+## ⚙️ MultiShop | Teknik Altyapı
 
 ![image](https://github.com/user-attachments/assets/db402f27-e8fb-4157-a739-fb69c52e0420)
 
