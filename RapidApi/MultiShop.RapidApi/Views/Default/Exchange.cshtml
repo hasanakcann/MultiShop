@@ -1,0 +1,47 @@
+﻿@{
+    Layout = null;
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container mt-5">
+    <h2>Döviz Kurları</h2>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Kurlar</th>
+                    <th>Alış</th>
+                    <th>Önceki Kapanış</th>
+                    <th>Son Güncelleme (UTC)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>USD / TRY</td>
+                    <td>@ViewBag.UsdToTryRate</td>
+                    <td>@ViewBag.UsdToTryPreviousClose</td>
+                    <td>@ViewBag.UsdToTryLastUpdate</td>
+                </tr>
+                <tr>
+                    <td>USD / EUR</td>
+                    <td>@ViewBag.UsdToEurRate</td>
+                    <td>@ViewBag.UsdToEurPreviousClose</td>
+                    <td>@ViewBag.UsdToEurLastUpdate</td>
+                </tr>
+                <tr>
+                    <td>EUR / TRY</td>
+                    <td>@ViewBag.EurToTryRate</td>
+                    <td>@ViewBag.EurToTryPreviousClose</td>
+                    <td>@ViewBag.EurToTryLastUpdate</td>
+                </tr>
+            </tbody>
+        </table>
+    }
+</div>
