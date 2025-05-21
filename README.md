@@ -219,21 +219,9 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ![swagger_message](https://github.com/user-attachments/assets/4d779261-1b6c-4a21-a640-4c5788e6fc93)
 
-🖼️ **Image**
-
-![swagger_images](https://github.com/user-attachments/assets/23c550cc-15b5-47f1-b092-12d4e87d522d)
-
-💳 **Payment**
-
-![swagger_payment](https://github.com/user-attachments/assets/a51e1668-a50f-4528-b15b-f11e76d5814a)
-
 🐇 **RabbitMQ**
 
 ![swagger_rabbitmq](https://github.com/user-attachments/assets/1fd4e912-2cf0-4b38-8369-1f3a6a347ed2)
-
-📡 **SignalR**
-
-![swagger_signalr](https://github.com/user-attachments/assets/819b3175-511e-4d80-a4ba-7d50c7779a27)
 
 </details>
 
