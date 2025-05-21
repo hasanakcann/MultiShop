@@ -236,3 +236,14 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 ![swagger_signalr](https://github.com/user-attachments/assets/819b3175-511e-4d80-a4ba-7d50c7779a27)
 
 </details>
+
+---
+
+<details>
+<summary><b>🧾 MultiShop | Portainer</b></summary>
+
+&nbsp;
+
+![image](https://github.com/user-attachments/assets/6115f3e6-d908-4f36-9bef-ae5c4c7b79e3)
+
+</details>
