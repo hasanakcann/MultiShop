@@ -108,6 +108,58 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ---
 
+### 🧾 MultiShop | Swagger Dökümanı
+
+📦 **Catalog**
+
+![swagger_catalog_1](https://github.com/user-attachments/assets/238397d5-ba14-48c4-a815-a45d0526d9e3)
+
+![swagger_catalog_2](https://github.com/user-attachments/assets/f93a4da2-f8b1-4dd5-b2f5-c5b2e748f2db)
+
+![swagger_catalog_3](https://github.com/user-attachments/assets/00790eff-c1ff-4b93-9268-b18f31e0ca3b)
+
+🎟️ **Discount**
+
+![swagger_discount](https://github.com/user-attachments/assets/a4887a4b-9286-4d79-ba6e-6ca0e3884077)
+
+📑 **Order**
+
+![swagger_order](https://github.com/user-attachments/assets/b8026185-c686-4127-8e5d-362b5a593dbe)
+
+🛒 **Basket**
+
+![swagger_basket](https://github.com/user-attachments/assets/af2e722a-2233-4a5f-a7bc-7d0cf4a1ec25)
+
+🚚 **Cargo**
+
+![swagger_cargo](https://github.com/user-attachments/assets/19c6ba9a-c023-493a-aed3-7eff6ca38afa)
+
+💬 **Comment**
+
+![swagger_commet](https://github.com/user-attachments/assets/d0f10d00-8142-442a-8ecb-6fce3e304aad)
+
+📩 **Message**
+
+![swagger_message](https://github.com/user-attachments/assets/4d779261-1b6c-4a21-a640-4c5788e6fc93)
+
+🖼️ **Image**
+
+![swagger_images](https://github.com/user-attachments/assets/23c550cc-15b5-47f1-b092-12d4e87d522d)
+
+💳 **Payment**
+
+![swagger_payment](https://github.com/user-attachments/assets/a51e1668-a50f-4528-b15b-f11e76d5814a)
+
+🐇 **RabbitMQ**
+
+![swagger_rabbitmq](https://github.com/user-attachments/assets/1fd4e912-2cf0-4b38-8369-1f3a6a347ed2)
+
+📡 **SignalR**
+
+![swagger_signalr](https://github.com/user-attachments/assets/819b3175-511e-4d80-a4ba-7d50c7779a27)
+
+---
+
 ### 🚀 MultiShop | Kullanılan Teknolojiler
 
 🔙 **Backend Teknolojileri** 👉 C#, .NET Core 8, Web API
