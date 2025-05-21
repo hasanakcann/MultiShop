@@ -240,7 +240,7 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 ---
 
 <details>
-<summary><b>🧾 MultiShop | Portainer</b></summary>
+<summary><b>🧭 MultiShop | Portainer</b></summary>
 
 &nbsp;
 
