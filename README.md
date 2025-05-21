@@ -56,7 +56,10 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ---
 
-### 🔐 MultiShop | Kullanıcı Giriş | Kullanıcı Kayıt | Kullanıcı Profil Bilgi Ekranları
+<details>
+<summary><b>🔐 MultiShop | Kullanıcı Giriş | Kullanıcı Kayıt | Kullanıcı Profil Bilgi Ekranları</b></summary>
+
+&nbsp;
 
 ![login_image](https://github.com/user-attachments/assets/83fdcaa9-8fed-4ac1-96b8-6c2ee9ee3244)
 
@@ -64,9 +67,14 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ![user_profile_image_2](https://github.com/user-attachments/assets/c1486033-fb54-4638-9515-cd31b27508d7)
 
+</details>
+
 ---
 
-### 🛒 MultiShop | Alışveriş Ekranları
+<details>
+<summary><b>🛒 MultiShop | Alışveriş Ekranları</b></summary>
+
+&nbsp;
 
 ![home_page_image](https://github.com/user-attachments/assets/5461b779-0bf1-45d6-89a0-5659cc8d251f)
 
@@ -82,9 +90,14 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ![credit_card_1_image](https://github.com/user-attachments/assets/0794d62d-f981-402c-9ddd-482899d26ad3)
 
+</details>
+
 ---
 
-### 🛠️ MultiShop | Admin Ekranları
+<details>
+<summary><b>🛠️ MultiShop | Admin Ekranları</b></summary>
+
+&nbsp;
 
 ![admin_about_image](https://github.com/user-attachments/assets/6c48d608-565b-4532-be9c-57cb6bd9d188)
 
@@ -120,9 +133,14 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ![specal_offer_image](https://github.com/user-attachments/assets/9860886e-5024-460e-8340-50dbd593f24a)
 
+</details>
+
 ---
 
-### 👤 MultiShop | Kullanıcı Ekranları
+<details>
+<summary><b>👤 MultiShop | Kullanıcı Ekranları</b></summary>
+
+&nbsp;
 
 ![user_order_list_image](https://github.com/user-attachments/assets/32f23f38-e198-4a94-81fa-ac7d8ecaa539)
 
@@ -130,17 +148,27 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ![user_email_inbox_image](https://github.com/user-attachments/assets/9a72071d-53cd-42d3-9981-616de8fcc6e7)
 
+</details>
+
 ---
 
-### ☁️ MultiShop | Google Cloud Storage Görsel Yükleme Ekranı
+<details>
+<summary><b>☁️ MultiShop | Google Cloud Storage Görsel Yükleme Ekranı</b></summary>
+
+&nbsp;
 
 ![google_drive_storage_image](https://github.com/user-attachments/assets/768b3396-39d8-4f88-8f2a-4a2e1d591ea5)
 
+</details>
+
 ---
 
-### 💰 MultiShop | Rapid Api 
+<details>
+<summary><b>🌐 MultiShop | Rapid Api</b></summary>
 
-Kullanılan RapidApi'ler:
+&nbsp;
+
+**Kullanılan RapidApi'ler:**
 
 - The Weather API
 - Real-Time Finance Data
@@ -150,9 +178,14 @@ Kullanılan RapidApi'ler:
 
 ![image](https://github.com/user-attachments/assets/44818f93-5ae1-46d4-ab5d-fb132a2a23d2)
 
+</details>
+
 ---
 
-### 🧾 MultiShop | Swagger Dökümanı
+<details>
+<summary><b>🧾 MultiShop | Swagger Dökümanı</b></summary>
+
+&nbsp;
 
 📦 **Catalog**
 
@@ -201,3 +234,5 @@ Kullanılan RapidApi'ler:
 📡 **SignalR**
 
 ![swagger_signalr](https://github.com/user-attachments/assets/819b3175-511e-4d80-a4ba-7d50c7779a27)
+
+</details>
