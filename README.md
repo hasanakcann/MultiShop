@@ -140,7 +140,7 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ### 💰 MultiShop | Rapid Api 
 
-Aşağıdaki RapidApi'ler için entegrasyon yapılmıştır.
+Kullanılan RapidApi'ler:
 
 - The Weather API
 - Real-Time Finance Data
