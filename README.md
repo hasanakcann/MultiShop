@@ -138,7 +138,13 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ---
 
-### 💰 MultiShop | Rapid Api Entegrasyonları
+### 💰 MultiShop | Rapid Api 
+
+Aşağıdaki RapidApi'ler için entegrasyon yapılmıştır.
+
+- The Weather API
+- Real-Time Finance Data
+- Real-Time Product Search 
 
 ![rapid_api_exchange](https://github.com/user-attachments/assets/77420b72-0e0c-48b0-a99b-a83f0b974b7e)
 
