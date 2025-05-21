@@ -20,6 +20,42 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 
 ---
 
+### 🚀 MultiShop | Kullanılan Teknolojiler
+
+🔙 **Backend Teknolojileri** 👉 C#, .NET Core 8, Web API
+
+🏗️ **Mimari ve Katmanlı Yapılar** 👉 N-Tier Architecture, Onion Architecture
+
+🎨 **Tasarım Desenleri** 👉 Mediator Design Pattern, CQRS Design Pattern, Repository Design Pattern
+
+🗄️ **Veritabanları** 👉 MSSQL Server, MongoDB, PostgreSQL, Redis
+
+🔌 **ORM ve Veri Erişim Katmanı** 👉 Entity Framework Core (Code-First), Dapper
+
+🖥️ **Arayüz ve UI Teknolojileri** 👉 HTML, CSS, JavaScript, jQuery, Ajax, Bootstrap
+
+🔐 **Kimlik Doğrulama ve Güvenlik** 👉 Identity Server, JWT (JSON Web Token)
+
+🧵 **Mesajlaşma ve API Gateway** 👉 RabbitMQ, Ocelot API Gateway, SignalR
+
+🧪 **Test ve API Dokümantasyonu** 👉 Postman, Swagger
+
+🐳 **Altyapı, Konteynerleşme ve Bulut** 👉 Docker, Portainer, Google Cloud
+
+---
+
+### ⚙️ MultiShop | Teknik Altyapı
+
+![image](https://github.com/user-attachments/assets/db402f27-e8fb-4157-a739-fb69c52e0420)
+
+**Mikroservis mimarisi ile inşa edilen MultiShop:**
+- Esnek ve ölçeklenebilir bir yapı sunar. 
+- Her bileşeni bağımsız yönetilebilir.  
+- Yüksek performanslı ve güncellenebilir sistem sağlar.  
+- Kullanıcılara kesintisiz alışveriş deneyimi sunar.
+
+---
+
 ### 🔐 MultiShop | Kullanıcı Giriş | Kullanıcı Kayıt | Kullanıcı Profil Bilgi Ekranları
 
 ![login_image](https://github.com/user-attachments/assets/83fdcaa9-8fed-4ac1-96b8-6c2ee9ee3244)
@@ -157,39 +193,3 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 📡 **SignalR**
 
 ![swagger_signalr](https://github.com/user-attachments/assets/819b3175-511e-4d80-a4ba-7d50c7779a27)
-
----
-
-### 🚀 MultiShop | Kullanılan Teknolojiler
-
-🔙 **Backend Teknolojileri** 👉 C#, .NET Core 8, Web API
-
-🏗️ **Mimari ve Katmanlı Yapılar** 👉 N-Tier Architecture, Onion Architecture
-
-🎨 **Tasarım Desenleri** 👉 Mediator Design Pattern, CQRS Design Pattern, Repository Design Pattern
-
-🗄️ **Veritabanları** 👉 MSSQL Server, MongoDB, PostgreSQL, Redis
-
-🔌 **ORM ve Veri Erişim Katmanı** 👉 Entity Framework Core (Code-First), Dapper
-
-🖥️ **Arayüz ve UI Teknolojileri** 👉 HTML, CSS, JavaScript, jQuery, Ajax, Bootstrap
-
-🔐 **Kimlik Doğrulama ve Güvenlik** 👉 Identity Server, JWT (JSON Web Token)
-
-🧵 **Mesajlaşma ve API Gateway** 👉 RabbitMQ, Ocelot API Gateway, SignalR
-
-🧪 **Test ve API Dokümantasyonu** 👉 Postman, Swagger
-
-🐳 **Altyapı, Konteynerleşme ve Bulut** 👉 Docker, Portainer, Google Cloud
-
----
-
-### ⚙️ MultiShop | Teknik Altyapı
-
-![image](https://github.com/user-attachments/assets/db402f27-e8fb-4157-a739-fb69c52e0420)
-
-**Mikroservis mimarisi ile inşa edilen MultiShop:**
-- Esnek ve ölçeklenebilir bir yapı sunar. 
-- Her bileşeni bağımsız yönetilebilir.  
-- Yüksek performanslı ve güncellenebilir sistem sağlar.  
-- Kullanıcılara kesintisiz alışveriş deneyimi sunar.
