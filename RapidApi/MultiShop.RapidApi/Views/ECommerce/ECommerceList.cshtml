@@ -1,0 +1,57 @@
+﻿@model ECommerceViewModel
+
+@{
+    Layout = null;
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container mt-5">
+    <h3 class="mb-4">Ürün Teklifleri</h3>
+
+    @if (Model?.Data?.Offers != null && Model.Data.Offers.Any())
+    {
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Ürün Başlığı</th>
+                    <th>Ürün Puanı</th>
+                    <th>Ürün Fiyatı</th>
+                    <th>Ürün Detayı</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var i = 1;
+                    foreach (var offer in Model.Data.Offers)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@offer.OfferTitle</td>
+                            <td>@Model.Data.ProductRating</td>
+                            <td>@offer.Price</td>
+                            <td>
+                                <a href="@offer.OfferPageUrl" target="_blank" class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1">
+                                    Ürün Detayı
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M6 3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1v-3a.5.5 0 0 1 1 0v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h3a.5.5 0 0 1 0 1H6z" />
+                                        <path fill-rule="evenodd" d="M11.5 1a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L5.854 7.854a.5.5 0 1 1-.708-.708L10.293 2H6a.5.5 0 0 1 0-1h5.5z" />
+                                    </svg>
+                                </a>
+
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center" role="alert">
+            No product data found.
+        </div>
+    }
+</div>
