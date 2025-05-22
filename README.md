@@ -235,3 +235,14 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 ![image](https://github.com/user-attachments/assets/6115f3e6-d908-4f36-9bef-ae5c4c7b79e3)
 
 </details>
+
+---
+
+<details>
+<summary><b>✉️ MultiShop | Mail Gönderme Ekranı</b></summary>
+  
+&nbsp;
+  
+![image](https://github.com/user-attachments/assets/b19b3024-13c7-442f-bf44-95d1b934d6d9)
+
+</details>
