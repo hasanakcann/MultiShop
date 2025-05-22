@@ -1,0 +1,59 @@
+﻿@model MailRequest
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mail Gönder</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .mail-form-wrapper {
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="mail-form-wrapper">
+            <h2 class="mb-3 text-center text-primary">MultiShop | Mail Gönderme Ekranı</h2>
+            <p class="text-muted text-center mb-4">Aşağıdaki form aracılığıyla kullanıcıya e-posta gönderebilirsiniz.</p>
+
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="ReceiverMail" class="form-label">Alıcı Mail Adresi</label>
+                    <input type="email" asp-for="ReceiverMail" class="form-control" placeholder="ornek@domain.com" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Subject" class="form-label">Konu</label>
+                    <input type="text" asp-for="Subject" class="form-control" placeholder="E-posta konusu" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="MailContent" class="form-label">Mesaj İçeriği</label>
+                    <textarea asp-for="MailContent" class="form-control" rows="6" placeholder="Mesajınızı buraya yazınız..."></textarea>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-envelope-fill"></i> Gönder
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
