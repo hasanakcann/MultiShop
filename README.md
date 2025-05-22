@@ -246,3 +246,14 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 ![image](https://github.com/user-attachments/assets/b19b3024-13c7-442f-bf44-95d1b934d6d9)
 
 </details>
+
+---
+
+<details>
+<summary><b>🗃️ MultiShop | Projeler</b></summary>
+
+&nbsp;
+
+![image](https://github.com/user-attachments/assets/ecf86871-db1f-4929-9261-58f3149fbf32)
+
+</details>
