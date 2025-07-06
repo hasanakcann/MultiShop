@@ -174,6 +174,8 @@ Modüler ve ölçeklenebilir altyapısı sayesinde, hem son kullanıcıya hem de
 - Real-Time Finance Data
 - Real-Time Product Search 
 
+![image](https://github.com/user-attachments/assets/ff034b7d-3de3-40ab-a7c1-c1d00f56396c)
+
 ![rapid_api_exchange](https://github.com/user-attachments/assets/77420b72-0e0c-48b0-a99b-a83f0b974b7e)
 
 ![image](https://github.com/user-attachments/assets/44818f93-5ae1-46d4-ab5d-fb132a2a23d2)
